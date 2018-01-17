@@ -1,14 +1,44 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="secondary">
+      <ion-buttons end>
+          <button ion-button icon-only (click) = "gotosettings()" >
+            <ion-icon name="settings"></ion-icon>
+          </button>
+        </ion-buttons>
     <ion-title>
-      Ionic Blank
+      Car Maintenance
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+
+    <ion-list>
+    <div class="item row" style="width: 100%">
+      <div class="col">
+        <ion-label style="font-size:16px">Name</ion-label>
+        <ion-card></ion-card>
+      </div>
+      <!-- <div class="col">
+        <ion-label style="font-weight: bold; font-size:14px">DOB</ion-label>
+      </div> -->
+    </div>
+    <button ion-item *ngFor="let Person of items" (click)="viewItem(Person)">
+      <div class="item row cell bg-primary-darker">
+        <div class="col" >
+          {{car}}
+        </div>
+        <ion-buttons end>
+        <button ion-button icon-only color="danger" (click)="delete(Person)">
+          <ion-icon name="ios-trash-outline"></ion-icon>
+        </button>
+      </ion-buttons>
+      </div>
+    </button>
+  </ion-list>
+  <ion-buttons end>
+  <button ion-button (click)="gotoadditempage()"><ion-icon name="add-circle">
+    </ion-icon></button>
+ </ion-buttons>
 </ion-content>
