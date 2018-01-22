@@ -7,11 +7,7 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-      <ion-buttons left>
-          <button ion-button icon-only (click)="gotohomepage()">
-              <ion-icon name="arrow-back"></ion-icon>
-          </button>
-      </ion-buttons>
+     
       <ion-buttons end>
           <button ion-button icon-only (click)= "saveitems()">
             <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
@@ -21,50 +17,27 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-card>
-        <ion-item text-center color="secondary">
-              Car Name
-          </ion-item>
-          <ion-item>
-              <ion-label floating>Name:</ion-label>
-              <ion-input  type="text" [(ngModel)]="carname" ></ion-input>
-            </ion-item>
-        </ion-card>
+  
         <ion-card>
         <ion-item text-center color="secondary">
             Item Name
         </ion-item>
         <ion-item>
-        <ion-label floating>Name:</ion-label>
-            <ion-input type="text"></ion-input>
+        <ion-label floating>Make:</ion-label>
+            <ion-input type="text" required [(ngModel)]="carMake"></ion-input>
           </ion-item>
-        
           <ion-item>
-        <ion-label floating>Detail:</ion-label>
-              <ion-input type="text" ></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>Date of Change/Bought:</ion-label>
-                <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="2100"  donText ="Select" ></ion-datetime>
-              </ion-item>
-              <ion-item>
-        <ion-label floating>Current Mileage:</ion-label>
-                  <ion-input type="text" ></ion-input>
-                </ion-item>
-        
-                <ion-item>
-        <ion-label floating>Cost:</ion-label>
-                    <ion-input type="text"  ></ion-input>
-                  </ion-item>
-                  <ion-item>
-        <ion-label floating>Mileage To Change:</ion-label>
-                      <ion-input type="text" ></ion-input>
-                    </ion-item>
-        
-                    <ion-item>
-                        <ion-label floating>Date to Change Next:</ion-label>
-                        <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="2100"  donText ="Select" ></ion-datetime>
-                      </ion-item>
+            <ion-label floating>Model:</ion-label>
+            <ion-input type="text" required  [(ngModel)]="carModel"></ion-input>
+          </ion-item>  
+          <ion-item>
+              <ion-label floating>Year:</ion-label>
+              <ion-input type="text" [(ngModel)]="carYear" ></ion-input>
+          </ion-item> 
+          <ion-item>
+              <ion-label floating>Mileage:</ion-label>
+              <ion-input type="text"  [(ngModel)]="carMileage" ></ion-input>
+          </ion-item>
         </ion-card>
-
+      
 </ion-content>

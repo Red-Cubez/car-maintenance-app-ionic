@@ -1,0 +1,58 @@
+<!--
+  Generated template for the MaintenanceCostDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>maintenance Cost $ Schedule </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+  <ion-card>
+<ion-item text-center color="secondary">
+Detail
+</ion-item>
+<ion-item>
+
+  <ion-row>
+    <ion-col>
+      Item
+    </ion-col>
+    <ion-col>
+        Date
+    </ion-col>
+      <ion-col>
+          Cost
+        </ion-col>
+  </ion-row>
+
+  <ion-row>
+      <ion-col>
+      {{maintenancedataitems.maintenanceItem}}
+      </ion-col>
+      <ion-col>
+        {{maintenancedataitems.maintenanceDate}}
+      </ion-col>
+        <ion-col>
+          {{maintenancedataitems.maintenanceCost}}
+          </ion-col>
+    </ion-row>
+</ion-item>
+
+  </ion-card>
+
+  <ion-buttons end>
+      <button ion-button icon-only style="padding-left: 8px" (click)="gotosetmaintenancecost()">Add<ion-icon name="add-circle">
+      </ion-icon></button>
+    </ion-buttons>
+    
+
+</ion-content>

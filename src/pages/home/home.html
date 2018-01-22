@@ -12,8 +12,6 @@
 </ion-header>
 
 <ion-content padding>
-
-
     <ion-list>
     <div class="item row" style="width: 100%">
       <div class="col">
@@ -24,10 +22,10 @@
         <ion-label style="font-weight: bold; font-size:14px">DOB</ion-label>
       </div> -->
     </div>
-    <button ion-item *ngFor="let Person of items" (click)="viewItem(Person)">
+    <button ion-item  (click)="gotocardetailpage()">
       <div class="item row cell bg-primary-darker">
-        <div class="col" >
-          {{car}}
+        <div class="col">
+        {{CarItems}}
         </div>
         <ion-buttons end>
         <button ion-button icon-only color="danger" (click)="delete(Person)">

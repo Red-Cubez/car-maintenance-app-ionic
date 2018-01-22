@@ -8,29 +8,58 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddItemPage } from '../pages/add-item/add-item';
 import { SettingsPage } from '../pages/settings/settings';
+import { SetGasMileagePage } from '../pages/set-gas-mileage/set-gas-mileage';
+import { GasMileageDetailPage } from '../pages/gas-mileage-detail/gas-mileage-detail';
+import { MaintenanceCostDetailPage } from '../pages/maintenance-cost-detail/maintenance-cost-detail';
+import { SetMaintenanceCostPage } from '../pages/set-maintenance-cost/set-maintenance-cost';
+import { CarDetailPage } from '../pages/car-detail/car-detail';
+import { CarDataProvider } from '../providers/car-data/car-data';
+import { MaintenanceDataProvider } from '../providers/maintenance-data/maintenance-data';
+import { MileageDataProvider } from '../providers/mileage-data/mileage-data';
+import { IonicStorageModule } from '@ionic/storage';
+
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     AddItemPage,
-    SettingsPage
+    SettingsPage,
+    SetGasMileagePage,
+    GasMileageDetailPage,
+    MaintenanceCostDetailPage,
+    SetMaintenanceCostPage,
+    CarDetailPage
+
   ],
+  
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
+   
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     AddItemPage,
-    SettingsPage
+    SettingsPage,
+    SetGasMileagePage,
+    GasMileageDetailPage,
+    MaintenanceCostDetailPage,
+    SetMaintenanceCostPage,
+    CarDetailPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CarDataProvider,
+    MaintenanceDataProvider,
+    MileageDataProvider,
+    IonicStorageModule
   ]
 })
 export class AppModule {}
