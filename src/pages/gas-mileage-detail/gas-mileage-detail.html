@@ -7,42 +7,48 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-title>Gas Mileage Detail</ion-title>
+  <ion-title>Gas Mileage Detail</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-<ion-card>
+  <ion-card>
+
+
     <ion-item text-center color="secondary">
-       Detail
+    Detail
     </ion-item>
+ 
 
     <ion-item >
-      <ion-row>
+    <ion-row>
+    <ion-col >
+     Date
+    </ion-col>
+    <ion-col >
+     Litre / Gallons
+    </ion-col>
+    </ion-row>
 
-        <ion-col >
-          Date
-        </ion-col>
-        <ion-col >
-            Litre / Gallons
-          </ion-col>
-      </ion-row>
-
-      <ion-row>
-  
-          <ion-col >
-         {{mileageitemssave.mileageDate}}
-          </ion-col>
-          <ion-col  >
-            {{mileageitemssave.mileageFuel}}
-            </ion-col>
-        </ion-row>
+    <ion-row>
+    <ion-col >
+    {{mileageitemssave.mileageDate}}
+    </ion-col>
+    <ion-col>
+    {{mileageitemssave.mileageFuel}}
+    </ion-col>
+    </ion-row>
     </ion-item>
-</ion-card>
-<ion-buttons end>
-  <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
-  </ion-icon></button>
-</ion-buttons>
+
+
+  </ion-card>
+
+
+
+  <ion-buttons end>
+   <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
+   </ion-icon></button>
+  </ion-buttons>
 
 </ion-content>

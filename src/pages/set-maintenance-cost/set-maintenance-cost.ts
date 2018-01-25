@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
+import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 /**
  * Generated class for the SetMaintenanceCostPage page.
  *
@@ -19,26 +19,44 @@ export class SetMaintenanceCostPage {
   maintenanceDate: string;
   maintenanceCost: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+   public settingdatareq = [];
+
+   abdc;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingservice: SettingDataProvider) 
+  {
+    // gettig data from seeting-data provider 
+   this.settingservice.getdata().then((settingdata) =>
+   {
+   this.settingdatareq = JSON.parse(settingdata);
+   console.log('this is data setting - ' + this.settingdatareq);
+   console.log('this is data setting from maintenance ' + settingdata);
+   console.log( 'this is fuel type - ' + settingdata[1].gasUnit)
+   });
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() 
+  {
     console.log('ionViewDidLoad SetMaintenanceCostPage');
   }
-savemaintenancesetting(){
 
-  if ((this.maintenanceItem == null) || (this.maintenanceItem == "") || (this.maintenanceItem == " ")){
 
-  }
-else{
-  let maintenanceitems={
+// saving maintenance data to array
+  savemaintenancesetting()
+  {
+  if ((this.maintenanceItem == null) || (this.maintenanceItem == "") || (this.maintenanceItem == " "))
+  {
+     // do nothing if maintenanceItem is empty
+  } // end if
+  else 
+  {
+    let maintenanceitems=
+    {
     maintenanceItem:  this.maintenanceItem, 
     maintenanceDate:  this.maintenanceDate, 
-    maintenanceCost:  this.maintenanceCost
-
-  };
-  this.viewCtrl.dismiss(maintenanceitems);
-}
-}
-
+    maintenanceCost:  this.maintenanceCost 
+    };
+    this.viewCtrl.dismiss(maintenanceitems);
+  } // end else
+  }  
 }

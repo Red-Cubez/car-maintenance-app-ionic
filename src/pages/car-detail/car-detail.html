@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-title>Car Detail</ion-title>
+  <ion-title>Car Detail</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,44 +19,50 @@
   <ion-card>
 
     <ion-item text-center color="secondary">
-     {{caritemsdetail.carMake}}
+     {{carItem.carMake}}
     </ion-item>
-    <ion-item>
-<ion-row>
-<ion-col>
-  Make : {{caritemsdetail.carMake}}
-</ion-col>
-</ion-row>
 
-<ion-row>
+
+    <ion-item>
+    <ion-row>
     <ion-col>
-     Year : {{caritemsdetail.carYear}}
+     Make : {{carItem.carMake}}
     </ion-col>
     </ion-row>
-    <ion-row>
-        <ion-col>
-          Model : {{caritemsdetail.carModel}}
-        </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-              Mileage : {{caritemsdetail.carMileage}}
-            </ion-col>
-            </ion-row>
 
-          </ion-item>
+    <ion-row>
+    <ion-col>
+     Year : {{carItem.carYear}}
+    </ion-col>
+    </ion-row>
+
+    <ion-row>
+    <ion-col>
+     Model : {{carItem.carModel}}
+    </ion-col>
+    </ion-row>
+
+    <ion-row>
+    <ion-col>
+     Mileage : {{carItem.carMileage}}
+    </ion-col>
+    </ion-row>
+    </ion-item>
+
   </ion-card>
 
   <ion-buttons full>
-      <button ion-button icon-only style="padding-left: 8px" (click)="gotomaintenancecostdetailpage()">Maintenance Cost $ Shcedule<ion-icon name="add-circle">
+      <button ion-button icon-only style="padding-left: 8px" (click)="gotomaintenancecostdetailpage()">Maintenance Cost $ Schedule<ion-icon name="add-circle">
       </ion-icon></button>
-    </ion-buttons>
+  </ion-buttons>
 
-    <ion-buttons left>
-    <button ion-button icon-only style="padding-left: 8px" left (click)="gotogasmileagedetail()">Gas Mileage<ion-icon name="add-circle">
-    </ion-icon></button>
-    <button ion-button icon-only style="padding-left: 20px" >Report<ion-icon name="add-circle">
+
+  <ion-buttons left>
+      <button ion-button icon-only style="padding-left: 8px" left (click)="gotogasmileagedetail()">Gas Mileage<ion-icon name="add-circle">
       </ion-icon></button>
-    </ion-buttons>
+
+      <button ion-button icon-only style="padding-left: 20px" (click)="gotoreportpage()">Report<ion-icon name="add-circle">
+      </ion-icon></button>
+  </ion-buttons>
 
 </ion-content>

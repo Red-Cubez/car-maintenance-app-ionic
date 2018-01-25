@@ -12,20 +12,25 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class CarDataProvider {
 newcardata;
-  constructor( public storage: Storage) {
-    console.log('Hello CarDataProvider Provider');
+  constructor( public storage: Storage) 
+  {
+   console.log('Hello CarDataProvider Provider');
   }
 
 
-  getdata(){
-return this.storage.get('cardata');
-
-  }
-  save(items){
-this.newcardata = JSON.stringify(items);
-this.storage.set('cardata', this.newcardata);
-
-console.log('this is data here' , items);
+  getdata()
+  {
+   return this.storage.get('cardata');
+  
   }
 
+
+  save(items)
+  {
+   this.newcardata = JSON.stringify(items);
+   this.storage.set('cardata', this.newcardata);
+   console.log('this is car data' , items);
+   
+
+  }
 }

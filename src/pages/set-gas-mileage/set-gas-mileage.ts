@@ -20,28 +20,31 @@ export class SetGasMileagePage {
   mileageFuel: string;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController)
+  {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SetGasMileagePage');
+  ionViewDidLoad()
+  {
+   console.log('ionViewDidLoad SetGasMileagePage');
   }
 
-setgasmileagesetting(){
-  if((this.mileageDate == null) || (this.mileageDate == "") || (this.mileageDate == " " ) ){
 
-  }else{
-    let mileageitems = {
-
-      mileageDate: this.mileageDate,
+  // setting gas mileage data to array
+  setgasmileagesetting()
+  {
+  if((this.mileageDate == null) || (this.mileageDate == "") || (this.mileageDate == " " ) )
+  {
+    // di nothing if gasmileage date is empty
+  } // end if
+  else
+  {
+   let mileageitems = 
+   {
+    mileageDate: this.mileageDate,
     mileageFuel: this.mileageFuel
-    };
-  this.viewCtrl.dismiss(mileageitems);
-  
-  
+   };
+   this.viewCtrl.dismiss(mileageitems);
+  } // end else
   }
-
-
-}
-
 }

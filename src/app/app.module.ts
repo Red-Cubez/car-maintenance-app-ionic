@@ -17,6 +17,10 @@ import { CarDataProvider } from '../providers/car-data/car-data';
 import { MaintenanceDataProvider } from '../providers/maintenance-data/maintenance-data';
 import { MileageDataProvider } from '../providers/mileage-data/mileage-data';
 import { IonicStorageModule } from '@ionic/storage';
+import { ReportPage } from '../pages/report/report';
+import { ChartModule } from 'angular2-highcharts';
+import * as highcharts from 'Highcharts';
+import { SettingDataProvider } from '../providers/setting-data/setting-data';
 
 
 
@@ -30,14 +34,16 @@ import { IonicStorageModule } from '@ionic/storage';
     GasMileageDetailPage,
     MaintenanceCostDetailPage,
     SetMaintenanceCostPage,
-    CarDetailPage
+    CarDetailPage,
+    ReportPage
 
   ],
   
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ChartModule.forRoot(highcharts)
    
   ],
   bootstrap: [IonicApp],
@@ -50,7 +56,8 @@ import { IonicStorageModule } from '@ionic/storage';
     GasMileageDetailPage,
     MaintenanceCostDetailPage,
     SetMaintenanceCostPage,
-    CarDetailPage
+    CarDetailPage,
+    ReportPage
   ],
   providers: [
     StatusBar,
@@ -59,7 +66,8 @@ import { IonicStorageModule } from '@ionic/storage';
     CarDataProvider,
     MaintenanceDataProvider,
     MileageDataProvider,
-    IonicStorageModule
+    IonicStorageModule,
+    SettingDataProvider
   ]
 })
 export class AppModule {}

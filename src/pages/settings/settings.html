@@ -7,7 +7,15 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-title>settings</ion-title>
+
+      <ion-buttons end>
+      <button ion-button icon-only (click)="savesetting()">
+      <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+      </button>
+      </ion-buttons>
+
+      <ion-title>settings</ion-title>
+
   </ion-navbar>
 
 </ion-header>
@@ -15,29 +23,33 @@
 
 <ion-content padding>
 
-    <ion-item>
+        <ion-item>
         <ion-label>Currency Preference</ion-label>
-        <ion-select >
-          <ion-option >Dollar</ion-option>
-          <ion-option >PKR</ion-option>
+        <ion-select [(ngModel)]="currencyPrefernce" >
+        <ion-option >Dollar</ion-option>
+        <ion-option >PKR</ion-option>
         </ion-select>
-      </ion-item>
+        </ion-item>
+
+
     
-      <ion-item >
+        <ion-item >
         <ion-label>Gasoline Unit</ion-label>
-        <ion-select >
-          <ion-option >Gallons</ion-option>
-          <ion-option >Litres</ion-option>
+        <ion-select  [(ngModel)]="gasUnit">
+        <ion-option >Gallons</ion-option>
+        <ion-option >Litres</ion-option>
         </ion-select>
-      </ion-item>
+        </ion-item>
+
+
     
-      <ion-item>
+        <ion-item>
         <ion-label>Distance Unit</ion-label>
-        <ion-select >
-          <ion-option >Killometers</ion-option>
-          <ion-option >Miles</ion-option>
+        <ion-select [(ngModel)]="distanceUnit" >
+        <ion-option >Killometers</ion-option>
+        <ion-option >Miles</ion-option>
         </ion-select>
-      </ion-item>
+        </ion-item>
     
 
 </ion-content>

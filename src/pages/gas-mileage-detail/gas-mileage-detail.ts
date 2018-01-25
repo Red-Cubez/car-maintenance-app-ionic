@@ -18,32 +18,40 @@ import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 export class GasMileageDetailPage {
 
   mileageitemssave = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageservice: MileageDataProvider) {
- 
- this.mileageservice.getdata().then((mileagedata) =>{
 
-this.mileageitemssave = JSON.parse(mileagedata);
-
- });
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageservice: MileageDataProvider) 
+  {
+  this.mileageservice.getdata().then((mileagedata) =>
+  {
+    // getting mileage data from provider
+  this.mileageitemssave = JSON.parse(mileagedata);
+  });
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad()
+  {
     console.log('ionViewDidLoad GasMileageDetailPage');
   }
-  gotosetgasmileage(){
 
-    let modal = this.modalCtrl.create(SetGasMileagePage);
+  // go  to mileage setting page
+  gotosetgasmileage()
+  {
+  let modal = this.modalCtrl.create(SetGasMileagePage);
+  modal.onDidDismiss(mileageitems =>{
+  if(mileageitems)
+  {
+   this.savemileageitems(mileageitems);
+  } // end if
+  });
+     modal.present();
+  }
 
-    modal.onDidDismiss(mileageitems =>{
-if(mileageitems){
-      this.savemileageitems(mileageitems);
-}
-    });
 
-    modal.present();
-      }
- savemileageitems(mileageitems){
-this.mileageitemssave = mileageitems;
-this.mileageservice.savemileageitems(this.mileageitemssave);
-      }
+  // setting maileage data to milage provider
+  savemileageitems(mileageitems)
+  {
+   
+   this.mileageitemssave = mileageitems;
+   this.mileageservice.savemileageitems(this.mileageitemssave);
+  }
 }

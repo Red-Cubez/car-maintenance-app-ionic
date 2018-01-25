@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
+import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 
 /**
  * Generated class for the SettingsPage page.
@@ -16,22 +17,29 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 export class SettingsPage {
 
   gasUnit: string;
+  currencyPrefernce: string;
+  distanceUnit: String; 
+ 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingservice: SettingDataProvider, public events: Events)
+  {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() 
+  {
     console.log('ionViewDidLoad SettingsPage');
-
-    // let settingData ={
-
-    //   gasUnit: this.gasUnit,
-    // };
-
-    // this.viewCtrl.dismiss(settingData);
-
-    // console.log(this.gasUnit);
-
   }
 
+
+  // setting data to array
+  savesetting()
+  {
+   let settingdata = 
+   {
+    gasUnit: this.gasUnit,
+    currencyPrefernce: this.currencyPrefernce,
+    distanceUnit: this.distanceUnit
+   }
+   this.viewCtrl.dismiss(settingdata);
+  }
 }
