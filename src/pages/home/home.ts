@@ -40,9 +40,7 @@ export class HomePage {
   ionViewDidLoad() 
   {
 
-
     console.log( 'calling now - ViewDidLoad ' );
-
     if(this.CarItems == null)
     { // do nothing if car items are not set
     }
@@ -81,6 +79,7 @@ export class HomePage {
   //jump to detail page
   gotocardetailpage(carItem)
   {
+    console.log("going to the car item -" + carItem.carMake);
     let index = this.CarItems.indexOf(carItem);
     this.navCtrl.push(CarDetailPage, {
       index,
@@ -93,21 +92,25 @@ export class HomePage {
   // save car data in car-data provider
   save(carItem)
   {
-
-    
    console.log("inserting into array - received : " + carItem.carMake);
    if(this.CarItems == null)
    {
     console.log("creating new array");
     this.CarItems = [];
     console.log("car items - " + this.CarItems);
-   }//end if 
-    this.carMakes.push(carItem.carMake);
-    this.carYears.push(carItem.carYear);
-    this.carModels.push(carItem.carModel);
-    this.carMileages.push(carItem.carMileage);
-    console.log("pushed into array - received : " + carItem.carMake + '  car make =   ' + this.carMakes + '  car year =   ' + this.carYears + '  car model =   ' + this.carModels + '  car mileage =   ' + this.carMileages);
-    this.dataservice.save(carItem);
+   }
+
+    console.log("data before push -" + this.CarItems.length);
+    this.CarItems.push(carItem);
+    console.log("new data in car item - " + this.CarItems.length);
+
+   // end if 
+    // this.carMakes.push(carItem.carMake);
+    // this.carYears.push(carItem.carYear);
+    // this.carModels.push(carItem.carModel);
+    // this.carMileages.push(carItem.carMileage);
+    // console.log("pushed into array - received : " + carItem.carMake + '  car make =   ' + this.carMakes + '  car year =   ' + this.carYears + '  car model =   ' + this.carModels + '  car mileage =   ' + this.carMileages);
+    this.dataservice.save(this.CarItems);
   }
 
 
