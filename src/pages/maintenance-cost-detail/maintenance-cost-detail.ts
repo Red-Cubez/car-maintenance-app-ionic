@@ -18,24 +18,24 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 })
 export class MaintenanceCostDetailPage {
 
-  maintenancedataitems = [];
+ public maintenancedataitems = [];
 
   settingdatareq = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceservice: MaintenanceDataProvider, public events: Events, public settingservice: SettingDataProvider) 
   {
     // grtting data from maintenance provider
-  this.maintenanceservice.getdata().then((maintenancedata) => 
-  {
-   this.maintenancedataitems = JSON.parse(maintenancedata);
-  });
+  // this.maintenanceservice.getdata().then((maintenancedata) => 
+  // {
+  //  this.maintenancedataitems = JSON.parse(maintenancedata);
+  // });
 
   // getting data from setting data provider
-  this.settingservice.getdata().then((settingdata) =>
-  {
-   this.settingdatareq = JSON.parse(settingdata);
-   console.log("this is data setting - " + this.settingdatareq);
-  });   
+  // this.settingservice.getdata().then((settingdata) =>
+  // {
+  //  this.settingdatareq = JSON.parse(settingdata);
+  //  console.log("this is data setting - " + this.settingdatareq);
+  // });   
   }
 
   ionViewDidLoad() 
@@ -48,11 +48,16 @@ export class MaintenanceCostDetailPage {
   {
    let modal = this.modalCtrl.create(SetMaintenanceCostPage);
    modal.onDidDismiss(maintenanceitems =>{
-  if(maintenanceitems)
+  if(maintenanceitems != null)
   {
    this.savemaintenance(maintenanceitems);
   } // end if 
+
+  else{
+      console.log(' null value on maintenance detail page')
+  }
   });
+ 
      modal.present();
   }
 
@@ -60,6 +65,16 @@ export class MaintenanceCostDetailPage {
   // saving a=maintenance data to provider
   savemaintenance(maintenancedata)
   {
+
+    if( this.maintenancedataitems == null)
+    {
+      console.log("creating new array");
+      this.maintenancedataitems = [];
+      console.log("maintenance items - " + this.maintenancedataitems);
+    }
+    else{
+      console.log("existing maintenance data items- " + this.maintenancedataitems);
+    }
     
   this.maintenancedataitems = maintenancedata;
   this.maintenanceservice.savemaintenace(this.maintenancedataitems);

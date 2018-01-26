@@ -21,6 +21,7 @@ import { ReportPage } from '../pages/report/report';
 import { ChartModule } from 'angular2-highcharts';
 import * as highcharts from 'Highcharts';
 import { SettingDataProvider } from '../providers/setting-data/setting-data';
+import { FinalDataProvider } from '../providers/final-data/final-data';
 
 
 
@@ -67,7 +68,8 @@ import { SettingDataProvider } from '../providers/setting-data/setting-data';
     MaintenanceDataProvider,
     MileageDataProvider,
     IonicStorageModule,
-    SettingDataProvider
+    SettingDataProvider,
+    FinalDataProvider
   ]
 })
 export class AppModule {}

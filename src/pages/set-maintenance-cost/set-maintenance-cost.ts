@@ -25,14 +25,7 @@ export class SetMaintenanceCostPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingservice: SettingDataProvider) 
   {
-    // gettig data from seeting-data provider 
-   this.settingservice.getdata().then((settingdata) =>
-   {
-   this.settingdatareq = JSON.parse(settingdata);
-   console.log('this is data setting - ' + this.settingdatareq);
-   console.log('this is data setting from maintenance ' + settingdata);
-   console.log( 'this is fuel type - ' + settingdata[1].gasUnit)
-   });
+   
   }
 
   ionViewDidLoad() 

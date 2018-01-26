@@ -4,7 +4,9 @@ import { GasMileageDetailPage } from '../gas-mileage-detail/gas-mileage-detail';
 import { MaintenanceCostDetailPage } from '../maintenance-cost-detail/maintenance-cost-detail';
 import { CarDataProvider } from '../../providers/car-data/car-data';
 import { ReportPage } from '../report/report';
-
+import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
+import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
+import { FinalDataProvider } from '../../providers/final-data/final-data';
 /**
  * Generated class for the CarDetailPage page.
  *
@@ -19,19 +21,33 @@ import { ReportPage } from '../report/report';
 })
 export class CarDetailPage {
 caritemsdetail = [];
+mileagedataarray = [];
+maintenancedataarray = [];
+ public finaldataarray = [];
+
 public carItem;
 index;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public cardetailservice: CarDataProvider) 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public cardetailservice: CarDataProvider, public mileageprovider: MileageDataProvider,  public maintenanceprovider: MaintenanceDataProvider, public finalproviders: FinalDataProvider) 
   {
-    // this.cardetailservice.getdata().then((cardata) =>
-    // {
-    // // getting cardata from provider
-    //   this.caritemsdetail = JSON.parse(cardata);
-    // });
-    // 
-    // 
+    this.mileageprovider.getdata().then((mileagedata) =>
+    {
+    // getting cardata from provider
+      this.mileagedataarray = JSON.parse(mileagedata);
+      console.log('mileage data on detail page - ' + this.mileagedataarray);
+     
+    });
+
+
+    this.maintenanceprovider.getdata().then((maintenancedata) =>
+    {
+    // getting cardata from provider
+      this.maintenancedataarray = JSON.parse(maintenancedata);
+      console.log('maintenance data on detail page - ' + this.maintenancedataarray);
+    });
+    
+    
     this.carItem = this.navParams.get('CarItem');
     // this.personAge = this.navParams.get('PersonItem').personAge;
     // this.PrescriptionItems = this.navParams.get('PersonItem').PrescriptionItems;
@@ -45,9 +61,12 @@ index;
       console.log("received null car item on details page");
     }else{
       console.log("received car item on details page - " + this.carItem);
+
+
     }
 
     console.log("current car item : " + this.carItem.carMake);
+
   }
 
   // ionViewWillEnter() {
@@ -76,6 +95,16 @@ index;
   ionViewDidLoad() 
   {
     console.log('ionViewDidLoad CarDetailPage');
+
+    let finaldata = {
+
+      carname: this.carItem.carMake,
+      maintenancedata: this.maintenancedataarray,
+      mileagedata: this.mileagedataarray
+    }
+    console.log('abcdeffg - ' + finaldata.maintenancedata);
+    this.savefinaldata(finaldata);
+
   }
 
   // go to mileage detail page
@@ -94,5 +123,11 @@ index;
   gotoreportpage()
   {
    this.navCtrl.push(ReportPage);
+  }
+
+  savefinaldata(finaldata){
+       this.finaldataarray.push(finaldata);
+       this.finalproviders.save(this.finaldataarray);
+
   }
 }

@@ -21,11 +21,6 @@ export class GasMileageDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageservice: MileageDataProvider) 
   {
-  this.mileageservice.getdata().then((mileagedata) =>
-  {
-    // getting mileage data from provider
-  this.mileageitemssave = JSON.parse(mileagedata);
-  });
   }
 
   ionViewDidLoad()
@@ -38,9 +33,8 @@ export class GasMileageDetailPage {
   {
   let modal = this.modalCtrl.create(SetGasMileagePage);
   modal.onDidDismiss(mileageitems =>{
-  if(mileageitems)
-  {
-   this.savemileageitems(mileageitems);
+  if(mileageitems != null){
+      this.savemileageitems(mileageitems);
   } // end if
   });
      modal.present();
@@ -50,6 +44,11 @@ export class GasMileageDetailPage {
   // setting maileage data to milage provider
   savemileageitems(mileageitems)
   {
+
+    if(this.mileageitemssave == null){
+
+      this.mileageitemssave = [];
+    }
    
    this.mileageitemssave = mileageitems;
    this.mileageservice.savemileageitems(this.mileageitemssave);

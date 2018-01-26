@@ -104,12 +104,6 @@ export class HomePage {
     this.CarItems.push(carItem);
     console.log("new data in car item - " + this.CarItems.length);
 
-   // end if 
-    // this.carMakes.push(carItem.carMake);
-    // this.carYears.push(carItem.carYear);
-    // this.carModels.push(carItem.carModel);
-    // this.carMileages.push(carItem.carMileage);
-    // console.log("pushed into array - received : " + carItem.carMake + '  car make =   ' + this.carMakes + '  car year =   ' + this.carYears + '  car model =   ' + this.carModels + '  car mileage =   ' + this.carMileages);
     this.dataservice.save(this.CarItems);
   }
 
