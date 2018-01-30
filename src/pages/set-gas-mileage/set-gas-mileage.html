@@ -39,8 +39,8 @@
 
 
 
-     <ion-item>
-     <ion-label floating>Litres / Gallons:</ion-label>
+     <ion-item *ngFor="let gas of settingdataarr">
+     <ion-label floating>Litres / Gallons: . {{gas.gasUnit}} </ion-label>
      <ion-input type="text" [(ngModel)]="mileageFuel"></ion-input>
      </ion-item>
       

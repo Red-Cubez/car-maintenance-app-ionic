@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-  <ion-title>Gas Mileage Detail</ion-title>
+  <ion-title>Gas Mileage Detail </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,8 +16,8 @@
   <ion-card>
 
 
-    <ion-item text-center color="secondary">
-    Detail
+    <ion-item text-center color="secondary" >
+    Detail  
     </ion-item>
  
 
@@ -26,19 +26,20 @@
     <ion-col >
      Date
     </ion-col>
-    <ion-col >
-     Litre / Gallons
+    <ion-col *ngFor="let cur of settingdataarr" >
+     Litre / Gallons . {{cur.gasUnit}}
     </ion-col>
     </ion-row>
-
-    <!-- <ion-row>
-    <ion-col >
-    {{mileageitemssave.mileageDate}}
+  </ion-item>
+    <ion-item >
+    <ion-row *ngFor="let mile of mileageitemssave" >
+    <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
+    {{mile.mileageDate}}
     </ion-col>
     <ion-col>
-    {{mileageitemssave.mileageFuel}}
+    {{mile.mileageFuel}}
     </ion-col>
-    </ion-row> -->
+    </ion-row>
     </ion-item>
 
 

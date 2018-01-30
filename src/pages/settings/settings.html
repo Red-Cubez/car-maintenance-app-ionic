@@ -23,8 +23,9 @@
 
 <ion-content padding>
 
-        <ion-item>
-        <ion-label>Currency Preference</ion-label>
+        <ion-item >
+        <ion-label>Currency Preference. </ion-label>
+        <h1 *ngFor="let choice of settingdataarr">{{choice.currencyPrefernce}}</h1>
         <ion-select [(ngModel)]="currencyPrefernce" >
         <ion-option >Dollar</ion-option>
         <ion-option >PKR</ion-option>
@@ -34,7 +35,8 @@
 
     
         <ion-item >
-        <ion-label>Gasoline Unit</ion-label>
+        <ion-label>Gasoline Unit . </ion-label>
+        <h1 *ngFor="let choice of settingdataarr">{{choice.gasUnit}}</h1>
         <ion-select  [(ngModel)]="gasUnit">
         <ion-option >Gallons</ion-option>
         <ion-option >Litres</ion-option>
@@ -43,8 +45,9 @@
 
 
     
-        <ion-item>
-        <ion-label>Distance Unit</ion-label>
+        <ion-item  >
+        <ion-label>Distance Unit .</ion-label>
+        <h1 *ngFor="let choice of settingdataarr">{{choice.distanceUnit}}</h1>
         <ion-select [(ngModel)]="distanceUnit" >
         <ion-option >Killometers</ion-option>
         <ion-option >Miles</ion-option>

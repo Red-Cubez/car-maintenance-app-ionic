@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Events, ModalController } from 'ionic-angular';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 /**
  * Generated class for the SetMaintenanceCostPage page.
@@ -23,9 +23,17 @@ export class SetMaintenanceCostPage {
 
    abdc;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingservice: SettingDataProvider) 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingservice: SettingDataProvider, public modalCtrl: ModalController) 
   {
-   
+    this.settingservice.getdata().then((settingdata) =>{
+      this.settingdatareq = JSON.parse(settingdata);
+      
+          });
+          console.log('setting data on setting page - ' + this.settingdatareq);
+          console.log('setting data on setting page  indexx - ' + this.navParams.get('inexxnumber'));
+     
+
+          
   }
 
   ionViewDidLoad() 

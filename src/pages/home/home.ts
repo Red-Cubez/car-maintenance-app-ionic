@@ -13,7 +13,7 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 })
 export class HomePage {
   public CarItems = [];
-
+vallue;
   
 // declaring arrays to store car items 
   public carMakes = [];
@@ -28,6 +28,8 @@ export class HomePage {
   this.dataservice.getdata().then((cardata) =>
   {
     this.CarItems = JSON.parse(cardata);
+
+
     console.log("Car Items in list - " + this.CarItems);
     console.log('this is it ' + cardata)
   });
@@ -112,7 +114,7 @@ export class HomePage {
   savesetting(datasetting)
   {
    
-   this.settingsdata.push(datasetting);
+   this.settingsdata = datasetting;
    this.settingservice.savetoStorage(this.settingsdata);
 
    console.log( 'setting data ' + datasetting);

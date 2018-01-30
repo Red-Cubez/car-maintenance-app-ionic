@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { SetGasMileagePage } from '../set-gas-mileage/set-gas-mileage';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
+import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 
 /**
  * Generated class for the GasMileageDetailPage page.
@@ -18,9 +19,24 @@ import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 export class GasMileageDetailPage {
 
   mileageitemssave = [];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageservice: MileageDataProvider) 
+  public indexonMileage;
+public settingdataarr = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageservice: MileageDataProvider,public setteingservice: SettingDataProvider) 
   {
+    this.setteingservice.getdata().then((settingdata) =>{
+      this.settingdataarr = JSON.parse(settingdata);
+      
+          });
+          console.log('setting data on setting page - ' + this.settingdataarr);
+
+          this.mileageservice.getdata().then((finaldata) => {
+            this.mileageitemssave = JSON.parse(finaldata);
+            console.log('final data on mileage detail page =  ' + this.mileageitemssave);
+           });
+
+       this.indexonMileage = this.navParams.get('indexSended');
+       console.log('index on mileage page - ' + this.indexonMileage);
+  
   }
 
   ionViewDidLoad()
@@ -34,7 +50,14 @@ export class GasMileageDetailPage {
   let modal = this.modalCtrl.create(SetGasMileagePage);
   modal.onDidDismiss(mileageitems =>{
   if(mileageitems != null){
-      this.savemileageitems(mileageitems);
+
+    let data = {
+
+      indexNumbermileage: this.indexonMileage,
+      mileageDate: mileageitems.mileageDate,
+      mileageFuel: mileageitems.mileageFuel
+    }
+      this.savemileageitems(data);
   } // end if
   });
      modal.present();
@@ -50,7 +73,7 @@ export class GasMileageDetailPage {
       this.mileageitemssave = [];
     }
    
-   this.mileageitemssave = mileageitems;
+   this.mileageitemssave.push(mileageitems);
    this.mileageservice.savemileageitems(this.mileageitemssave);
   }
 }

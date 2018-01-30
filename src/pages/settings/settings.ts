@@ -19,10 +19,18 @@ export class SettingsPage {
   gasUnit: string;
   currencyPrefernce: string;
   distanceUnit: String; 
+  settingdataarr= [];
  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingservice: SettingDataProvider, public events: Events)
-  {
+  {   
+    this.setteingservice.getdata().then((settingdata) =>{
+    this.settingdataarr = JSON.parse(settingdata);
+    
+        });
+        console.log('setting data on setting page - ' + this.settingdataarr);
+
+   
   }
 
   ionViewDidLoad() 

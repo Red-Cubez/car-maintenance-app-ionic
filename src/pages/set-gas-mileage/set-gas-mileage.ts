@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
-
+import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 /**
  * Generated class for the SetGasMileagePage page.
  *
@@ -18,10 +18,16 @@ export class SetGasMileagePage {
 
   mileageDate:any;
   mileageFuel: string;
+public settingdataarr = [];
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController)
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public setteingservice: SettingDataProvider)
   {
+    this.setteingservice.getdata().then((settingdata) =>{
+      this.settingdataarr = JSON.parse(settingdata);
+      
+          });
+          console.log('setting data on setting page - ' + this.settingdataarr);
+  
   }
 
   ionViewDidLoad()
