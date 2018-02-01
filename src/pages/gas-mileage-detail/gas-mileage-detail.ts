@@ -23,9 +23,20 @@ export class GasMileageDetailPage {
 public settingdataarr = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageservice: MileageDataProvider,public setteingservice: SettingDataProvider) 
   {
+    let datam: any = {
+    
+      currencyPrefernce: 'Dollar',
+      distanceUnit: 'Km',
+      gasUnit:'Litre'
+    }
     this.setteingservice.getdata().then((settingdata) =>{
       this.settingdataarr = JSON.parse(settingdata);
-      
+      if (this.settingdataarr == null){
+
+        this.settingdataarr = datam;
+  
+        console.log("default setting value = " + this.settingdataarr)
+      }
           });
           console.log('setting data on setting page - ' + this.settingdataarr);
 

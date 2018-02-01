@@ -26,8 +26,8 @@
     <ion-col >
      Date
     </ion-col>
-    <ion-col *ngFor="let cur of settingdataarr" >
-     Litre / Gallons . {{cur.gasUnit}}
+    <ion-col >
+     {{settingdataarr.gasUnit}}
     </ion-col>
     </ion-row>
   </ion-item>
@@ -36,7 +36,7 @@
     <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
     {{mile.mileageDate}}
     </ion-col>
-    <ion-col>
+    <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
     {{mile.mileageFuel}}
     </ion-col>
     </ion-row>

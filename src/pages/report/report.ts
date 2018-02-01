@@ -20,50 +20,68 @@ export class ReportPage {
   public maintenancedataforreport = [];
   maintenanceReportoption: any;
   mileageReportoption: any;
-
+ public maintenanceDate: any = [];
+ public maintenanceCost: any = [];
+ public maintenanceItem: any = [];
+ public indexonReportpage: number;
   constructor(public navCtrl: NavController, public navParams: NavParams, public maintenancereport: MaintenanceDataProvider)
   {
+
+
    // getting data from maintenance provider
    this.maintenancereport.getdata().then((maintenancedata) => 
    {
    this.maintenancedataforreport = JSON.parse(maintenancedata);
 
+   this.maintenancedataforreport.map((maintenancedata) =>{
+    this.maintenanceDate.push(maintenancedata.maintenanceDate);
+    console.log('maintenance Date on report = ' + this.maintenanceDate[0]);
+});
+
+this.maintenancedataforreport.map((maintenancedata) =>{
+  this.maintenanceCost.push(maintenancedata.maintenanceCost);
+  console.log('maintenance Cost on report = ' + this.maintenanceCost[0]);
+    this.indexonReportpage = this.maintenanceCost[0];
+
+
+});
    console.log('this is try ' + this.maintenancedataforreport);  
 
    console.log('maintenance data on report - ' + maintenancedata);
   });
 
+  console.log('maintenance Cost on report 0000 - ' + this.indexonReportpage);
   
+   this.maintenanceReportoption = {
 
- // console.log(main)
-  
-  //  this.maintenanceReportoption = {
-
-  // chart: {
-  //   type: 'column'
-  // },
-  // title: {
-  //   text: 'Car Maintenance'
-  // },
-  // xAxis: {
-  //   categories: [this.maintenancedataforreport]
-  // },
-  // yAxis: {
-  // min: 0,
-  // title: {
-  //     text: 'cost'
-  // }
-  // },
-  // series: [{
-  //   name: 'name',
-  //   data: []
-  // }]
-  // }
+  chart: {
+    type: 'column'
+  },
+  title: {
+    text: 'Car Maintenance'
+  },
+  xAxis: {
+   
+    categories:  ['this.maintenancedataforreport[0]']
+    
+  },
+  yAxis: {
+  min: 0,
+  title: {
+      text: 'cost'
+  }
+  },
+  series: [{
+    name: 'name',
+    data: [this.indexonReportpage]
+  }]
+  }
   }
   
   
   ionViewDidLoad() 
   {
    console.log('ionViewDidLoad ReportPage');
+ 
   }
 }

@@ -32,19 +32,19 @@
     <ion-col>
      Date
     </ion-col>
-    <ion-col *ngFor="let cur of settingdatareq">
-     Cost . {{cur.currencyPrefernce}}
+    <ion-col  >
+     {{settingdatareq.currencyPrefernce}}
     </ion-col>
     </ion-row>
 
     <ion-row  *ngFor = "let final of maintenancedataitems">
-    <ion-col >
+    <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail">
     {{final.maintenanceItem}}
     </ion-col>
-    <ion-col *ngIf="final.indexNumber == indexonmaintenancedetail">
+    <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail">
       {{final.maintenanceDate}}
     </ion-col>
-    <ion-col *ngIf="final.indexNumber == indexonmaintenancedetail">
+    <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail">
      {{final.maintenanceCost}}
     </ion-col>
     </ion-row>

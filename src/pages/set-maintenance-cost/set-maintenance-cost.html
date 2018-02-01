@@ -45,8 +45,8 @@
      </ion-item>
   
 
-     <ion-item *ngFor="let cur of settingdatareq" >
-     <ion-label floating>Cost:{{cur.currencyPrefernce}}</ion-label>
+     <ion-item>
+     <ion-label floating>{{settingdatareq.currencyPrefernce}}</ion-label>
      <ion-input type="text" [(ngModel)]="maintenanceCost"></ion-input>
      </ion-item>
 

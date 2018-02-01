@@ -18,6 +18,7 @@ export class SetMaintenanceCostPage {
   maintenanceItem: string;
   maintenanceDate: string;
   maintenanceCost: string;
+currencyType: string
 
    public settingdatareq = [];
 
@@ -25,9 +26,22 @@ export class SetMaintenanceCostPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingservice: SettingDataProvider, public modalCtrl: ModalController) 
   {
+    let datam: any = {
+    
+      currencyPrefernce: 'Dollar',
+      distanceUnit: 'Km',
+      gasUnit:'Litre',
+     
+    }
     this.settingservice.getdata().then((settingdata) =>{
       this.settingdatareq = JSON.parse(settingdata);
-      
+      if (this.settingdatareq == null){
+
+        this.settingdatareq = datam;
+  
+        console.log("default setting value = " + this.settingdatareq)
+      }
+
           });
           console.log('setting data on setting page - ' + this.settingdatareq);
           console.log('setting data on setting page  indexx - ' + this.navParams.get('inexxnumber'));
@@ -55,7 +69,8 @@ export class SetMaintenanceCostPage {
     {
     maintenanceItem:  this.maintenanceItem, 
     maintenanceDate:  this.maintenanceDate, 
-    maintenanceCost:  this.maintenanceCost 
+    maintenanceCost:  this.maintenanceCost,
+    currencyType: this.currencyType 
     };
     this.viewCtrl.dismiss(maintenanceitems);
   } // end else

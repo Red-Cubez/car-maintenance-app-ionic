@@ -23,9 +23,16 @@ export class MaintenanceCostDetailPage {
   settingdatareq = [];
   indexonMaintenancedetail;
   public finaldataarray = [];
+ abcd: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceservice: MaintenanceDataProvider, public events: Events, public finaldataservice: FinalDataProvider, public settingservice: SettingDataProvider) 
   {
+    let datam: any = {
+    
+      currencyPrefernce: 'Dollar',
+      distanceUnit: 'Km',
+      gasUnit:'Litre'
+    }
         this.maintenanceservice.getdata().then((finaldata) => {
          this.maintenancedataitems = JSON.parse(finaldata);
          console.log('final data on maintenance detail page =  ' + this.maintenancedataitems);
@@ -36,6 +43,13 @@ export class MaintenanceCostDetailPage {
 
         this.settingservice.getdata().then((settingdata) =>{
           this.settingdatareq = JSON.parse(settingdata);
+          if (this.settingdatareq == null){
+
+            this.settingdatareq = datam;
+      
+            console.log("default setting value = " + this.settingdatareq)
+          }
+            
           
               });
               console.log('setting data on setting page - ' + this.settingdatareq);

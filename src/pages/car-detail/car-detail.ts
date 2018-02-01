@@ -23,38 +23,14 @@ export class CarDetailPage {
 caritemsdetail = [];
 mileagedataarray = [];
 maintenancedataarray = [];
-public finaldataarray = [];
 public carItem;
 index;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public cardetailservice: CarDataProvider, public mileageprovider: MileageDataProvider,  public maintenanceprovider: MaintenanceDataProvider, public finalproviders: FinalDataProvider, public modelCtrl: ModalController) 
   {
-    this.mileageprovider.getdata().then((mileagedata) =>
-    {
-    // getting cardata from provider
-      this.mileagedataarray = JSON.parse(mileagedata);
-      console.log('mileage data on detail page - ' + this.mileagedataarray);
-
-     
-    });
-
-
-    this.maintenanceprovider.getdata().then((maintenancedata) =>
-    {
-    // getting cardata from provider
-      this.maintenancedataarray = JSON.parse(maintenancedata);
-      console.log('maintenance data on detail page - ' + this.maintenancedataarray);
-   
-    });
-    
     
     this.carItem = this.navParams.get('CarItem');
-    // this.personAge = this.navParams.get('PersonItem').personAge;
-    // this.PrescriptionItems = this.navParams.get('PersonItem').PrescriptionItems;
-    // this.MedicenItems = this.navParams.get('PersonItem').MedicenItems;
-   
-    // this.notificationDetails = this.navParams.get('notificationDetails');
     this.index = this.navParams.get('index');
 
     if(this.carItem == null)
@@ -63,45 +39,13 @@ index;
     }else{
       console.log("received car item on details page - " + this.carItem);
     }
-
     console.log("current car item : " + this.carItem.carMake);
     console.log("current car index : " + this.index);
-
-  
   }
 
-  // ionViewWillEnter() {
-
-  //   this.carItem = this.navParams.get('CarItem');
-  //   // this.personAge = this.navParams.get('PersonItem').personAge;
-  //   // this.PrescriptionItems = this.navParams.get('PersonItem').PrescriptionItems;
-  //   // this.MedicenItems = this.navParams.get('PersonItem').MedicenItems;
-   
-  //   // this.notificationDetails = this.navParams.get('notificationDetails');
-  //   this.index = this.navParams.get('index');
-
-  //   if(this.carItem == null)
-  //   {
-  //     console.log("received null car item on details page");
-  //   }else{
-  //     console.log("received car item on details page - " + this.carItem);
-  //   }
-
-  //   console.log("current car item : " + this.carItem.carMake);
-  // }
-
-  ionViewDidLoad() 
-  {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad CarDetailPage');
-      let finaldata = {
-        carName: this.carItem.carMake,
-        indexNumber: this.index,
-
-      }
-  
-    this.savefinaldata(finaldata);
-
-  }
+   }
 
   // go to mileage detail page
   gotogasmileagedetail(){
@@ -121,11 +65,9 @@ index;
 
   // go to report page
   gotoreportpage(){
-   this.navCtrl.push(ReportPage);
-  }
-
-  savefinaldata(finaldata){
-      this.finaldataarray.push(finaldata);
-      this.finalproviders.save(this.finaldataarray);
+    let sendIndex ={
+      indexSending: this.index,
+    }
+   this.navCtrl.push(ReportPage, sendIndex);
   }
 }

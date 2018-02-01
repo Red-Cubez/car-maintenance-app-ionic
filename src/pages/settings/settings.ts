@@ -16,19 +16,33 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 })
 export class SettingsPage {
 
-  gasUnit: string;
-  currencyPrefernce: string;
-  distanceUnit: String; 
+  gasUnit: any;
+  currencyPrefernce: any;
+  distanceUnit: any; 
   settingdataarr= [];
+ 
  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingservice: SettingDataProvider, public events: Events)
   {   
+    let datam: any = {
+    
+      currencyPrefernce: 'Dollar',
+      distanceUnit: 'Km',
+      gasUnit:'Litre'
+    }
     this.setteingservice.getdata().then((settingdata) =>{
     this.settingdataarr = JSON.parse(settingdata);
+    if (this.settingdataarr == null){
+
+      this.settingdataarr = datam;
+
+      console.log("default setting value = " + this.settingdataarr)
+    }
     
         });
         console.log('setting data on setting page - ' + this.settingdataarr);
+        
 
    
   }
@@ -36,12 +50,22 @@ export class SettingsPage {
   ionViewDidLoad() 
   {
     console.log('ionViewDidLoad SettingsPage');
+    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " "))
+  {
+     // do nothing if maintenanceItem is empty
+  }
   }
 
 
   // setting data to array
   savesetting()
   {
+
+    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " "))
+  {
+     // do nothing if maintenanceItem is empty
+  } // end if
+  else{
    let settingdata = 
    {
     gasUnit: this.gasUnit,
@@ -50,4 +74,5 @@ export class SettingsPage {
    }
    this.viewCtrl.dismiss(settingdata);
   }
+}
 }

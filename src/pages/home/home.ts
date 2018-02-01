@@ -113,7 +113,12 @@ vallue;
   // save detting data in setting-data provider
   savesetting(datasetting)
   {
-   
+    if(this.settingsdata == null)
+   {
+ 
+    this.settingsdata = [];
+    
+   }
    this.settingsdata = datasetting;
    this.settingservice.savetoStorage(this.settingsdata);
 
