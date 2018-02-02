@@ -4,6 +4,7 @@ import { SetMaintenanceCostPage } from '../set-maintenance-cost/set-maintenance-
 import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { FinalDataProvider } from '../../providers/final-data/final-data';  
+import { MaintenanceGraphProvider } from '../../providers/maintenance-graph/maintenance-graph';
 /**
  * Generated class for the MaintenanceCostDetailPage page.
  *
@@ -24,8 +25,9 @@ export class MaintenanceCostDetailPage {
   indexonMaintenancedetail;
   public finaldataarray = [];
  abcd: any;
+ public maintenancegrapharray = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceservice: MaintenanceDataProvider, public events: Events, public finaldataservice: FinalDataProvider, public settingservice: SettingDataProvider) 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceservice: MaintenanceDataProvider, public events: Events, public finaldataservice: FinalDataProvider, public settingservice: SettingDataProvider, public maintenancegraphservice: MaintenanceGraphProvider) 
   {
     let datam: any = {
     
@@ -74,6 +76,12 @@ export class MaintenanceCostDetailPage {
                   maintenanceItem: maintenanceitems.maintenanceItem
                 }
                 this.savemaintenance(data);
+
+                let datagraph = {
+                  data: maintenanceitems.maintenanceCost,
+                  label:maintenanceitems.maintenanceItem
+                }
+                this.savemaintenancegraph(datagraph)
                } // end if 
 
            else{
@@ -99,5 +107,10 @@ export class MaintenanceCostDetailPage {
     
   this.maintenancedataitems.push(maintenancedata);
   this.maintenanceservice.savemaintenace(this.maintenancedataitems);
+  }
+  savemaintenancegraph(datagraph){
+
+    this.maintenancegrapharray.push(datagraph);
+    this.maintenancegraphservice.savemaintenancegraph(this.maintenancegrapharray);
   }
 }

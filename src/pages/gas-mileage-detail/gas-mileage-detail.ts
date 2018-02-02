@@ -66,7 +66,8 @@ public settingdataarr = [];
 
       indexNumbermileage: this.indexonMileage,
       mileageDate: mileageitems.mileageDate,
-      mileageFuel: mileageitems.mileageFuel
+      mileageFuel: mileageitems.mileageFuel,
+      mileageCost: mileageitems.mileageCost
     }
       this.savemileageitems(data);
   } // end if

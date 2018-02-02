@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="secondary">
   <ion-title>Report</ion-title>
   </ion-navbar>
 
@@ -18,11 +18,13 @@
     <ion-slides pager>
 
         <ion-slide >
-         <chart [options]="maintenanceReportoption" type="chart"></chart>
+
+            <chart [options]="maintenanceReportOption" type="chart"></chart>
+          
         </ion-slide>
       
         <ion-slide >
-            <h2>Slide 2</h2>
+            <chart [options]="mileageReportOption" type="chart"></chart>
 
         </ion-slide>
       

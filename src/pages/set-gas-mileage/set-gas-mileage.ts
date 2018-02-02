@@ -18,6 +18,7 @@ export class SetGasMileagePage {
 
   mileageDate:any;
   mileageFuel: string;
+  mileageCost: string
 public settingdataarr = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public setteingservice: SettingDataProvider)
@@ -59,7 +60,9 @@ public settingdataarr = [];
    let mileageitems = 
    {
     mileageDate: this.mileageDate,
-    mileageFuel: this.mileageFuel
+    mileageFuel: this.mileageFuel,
+    mileageCost: this.mileageCost
+
    };
    this.viewCtrl.dismiss(mileageitems);
   } // end else

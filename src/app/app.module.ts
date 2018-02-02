@@ -19,9 +19,11 @@ import { MileageDataProvider } from '../providers/mileage-data/mileage-data';
 import { IonicStorageModule } from '@ionic/storage';
 import { ReportPage } from '../pages/report/report';
 import { ChartModule } from 'angular2-highcharts';
+import { ChartsModule} from'ng2-charts';
 import * as highcharts from 'Highcharts';
 import { SettingDataProvider } from '../providers/setting-data/setting-data';
 import { FinalDataProvider } from '../providers/final-data/final-data';
+import { MaintenanceGraphProvider } from '../providers/maintenance-graph/maintenance-graph';
 
 
 
@@ -44,7 +46,8 @@ import { FinalDataProvider } from '../providers/final-data/final-data';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    ChartModule.forRoot(highcharts)
+    ChartModule.forRoot(highcharts),
+    ChartsModule
    
   ],
   bootstrap: [IonicApp],
@@ -69,7 +72,8 @@ import { FinalDataProvider } from '../providers/final-data/final-data';
     MileageDataProvider,
     IonicStorageModule,
     SettingDataProvider,
-    FinalDataProvider
+    FinalDataProvider,
+    MaintenanceGraphProvider
   ]
 })
 export class AppModule {}
