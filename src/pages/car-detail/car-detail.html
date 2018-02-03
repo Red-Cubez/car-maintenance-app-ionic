@@ -5,48 +5,45 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="secondary">
-  <ion-title>Car Detail</ion-title>
+    <ion-title>Car Detail</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
 
-
   <ion-card>
-
+    
     <ion-item text-center color="secondary">
-     {{carItem.carMake}}
+      {{carItem.carMake}}
     </ion-item>
 
-
     <ion-item>
-    <ion-row>
-    <ion-col>
-     Make : {{carItem.carMake}}
-    </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          Make : {{carItem.carMake}}
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-    <ion-col>
-     Year : {{carItem.carYear}}
-    </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          Year : {{carItem.carYear}}
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-    <ion-col>
-     Model : {{carItem.carModel}}
-    </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          Model : {{carItem.carModel}}
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-    <ion-col>
-     Mileage : {{carItem.carMileage}}
-    </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          Mileage : {{carItem.carMileage}}
+        </ion-col>
+      </ion-row>
+    
     </ion-item>
 
   </ion-card>
@@ -56,11 +53,9 @@
       </ion-icon></button>
   </ion-buttons>
 
-
   <ion-buttons left>
       <button ion-button icon-only style="padding-left: 8px" left (click)="gotogasmileagedetail()">Gas Mileage<ion-icon name="add-circle">
       </ion-icon></button>
-
       <button ion-button icon-only style="padding-left: 20px" (click)="gotoreportpage()">Report<ion-icon name="add-circle">
       </ion-icon></button>
   </ion-buttons>

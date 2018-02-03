@@ -18,61 +18,41 @@ export class SetMaintenanceCostPage {
   maintenanceItem: string;
   maintenanceDate: string;
   maintenanceCost: string;
-currencyType: string
+  currencyType: string
+  public settingDatareq = [];
 
-   public settingdatareq = [];
-
-   abdc;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingservice: SettingDataProvider, public modalCtrl: ModalController) 
-  {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingService: SettingDataProvider, public modalCtrl: ModalController) {
     let datam: any = {
-    
       currencyPrefernce: 'Dollar',
       distanceUnit: 'Km',
-      gasUnit:'Litre',
-     
+      gasUnit:'Litre', 
     }
-    this.settingservice.getdata().then((settingdata) =>{
-      this.settingdatareq = JSON.parse(settingdata);
-      if (this.settingdatareq == null){
-
-        this.settingdatareq = datam;
-  
-        console.log("default setting value = " + this.settingdatareq)
+    this.settingService.getdata().then((settingData) =>{
+      this.settingDatareq = JSON.parse(settingData);
+      if (this.settingDatareq == null){
+        this.settingDatareq = datam;
+        console.log("default setting value = " + this.settingDatareq)
       }
-
-          });
-          console.log('setting data on setting page - ' + this.settingdatareq);
-          console.log('setting data on setting page  indexx - ' + this.navParams.get('inexxnumber'));
-     
-
-          
+    });
+    console.log('setting data on setting page - ' + this.settingDatareq);
+    console.log('setting data on setting page  indexx - ' + this.navParams.get('inexxnumber'));        
   }
-
-  ionViewDidLoad() 
-  {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad SetMaintenanceCostPage');
   }
-
-
-// saving maintenance data to array
-  savemaintenancesetting()
-  {
-  if ((this.maintenanceItem == null) || (this.maintenanceItem == "") || (this.maintenanceItem == " "))
-  {
-     // do nothing if maintenanceItem is empty
-  } // end if
-  else 
-  {
-    let maintenanceitems=
-    {
-    maintenanceItem:  this.maintenanceItem, 
-    maintenanceDate:  this.maintenanceDate, 
-    maintenanceCost:  this.maintenanceCost,
-    currencyType: this.currencyType 
-    };
-    this.viewCtrl.dismiss(maintenanceitems);
-  } // end else
+  // saving maintenance data to array
+  savemaintenancesetting(){
+    if ((this.maintenanceItem == null) || (this.maintenanceItem == "") || (this.maintenanceItem == " ")){
+      // do nothing if maintenanceItem is empty
+    } // end if
+    else {
+      let maintenanceItems={
+        maintenanceItem:  this.maintenanceItem, 
+        maintenanceDate:  this.maintenanceDate, 
+        maintenanceCost:  this.maintenanceCost,
+        currencyType: this.currencyType 
+      };
+      this.viewCtrl.dismiss(maintenanceItems);
+    } // end else
   }  
 }

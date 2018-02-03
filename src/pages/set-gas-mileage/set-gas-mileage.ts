@@ -19,52 +19,42 @@ export class SetGasMileagePage {
   mileageDate:any;
   mileageFuel: string;
   mileageCost: string
-public settingdataarr = [];
+  public settingDataarr = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public setteingservice: SettingDataProvider)
-  {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public setteingService: SettingDataProvider){
     let datam: any = {
-    
       currencyPrefernce: 'Dollar',
       distanceUnit: 'Km',
       gasUnit:'Litre'
     }
-    this.setteingservice.getdata().then((settingdata) =>{
-      this.settingdataarr = JSON.parse(settingdata);
-      if (this.settingdataarr == null){
-
-        this.settingdataarr = datam;
-  
-        console.log("default setting value = " + this.settingdataarr)
+    this.setteingService.getdata().then((settingData) =>{
+      this.settingDataarr = JSON.parse(settingData);
+      if (this.settingDataarr == null){
+        this.settingDataarr = datam;
+        console.log("default setting value = " + this.settingDataarr)
       }
-          });
-          console.log('setting data on setting page - ' + this.settingdataarr);
+    });
+    console.log('setting data on setting page - ' + this.settingDataarr);
   
   }
 
-  ionViewDidLoad()
-  {
-   console.log('ionViewDidLoad SetGasMileagePage');
+  ionViewDidLoad(){
+    console.log('ionViewDidLoad SetGasMileagePage');
   }
 
 
   // setting gas mileage data to array
-  setgasmileagesetting()
-  {
-  if((this.mileageDate == null) || (this.mileageDate == "") || (this.mileageDate == " " ) )
-  {
-    // di nothing if gasmileage date is empty
-  } // end if
-  else
-  {
-   let mileageitems = 
-   {
-    mileageDate: this.mileageDate,
-    mileageFuel: this.mileageFuel,
-    mileageCost: this.mileageCost
-
-   };
-   this.viewCtrl.dismiss(mileageitems);
-  } // end else
+  setgasmileagesetting(){
+    if((this.mileageDate == null) || (this.mileageDate == "") || (this.mileageDate == " " ) ){
+      // di nothing if gasmileage date is empty
+    } // end if
+    else{
+      let mileageItems = {
+        mileageDate: this.mileageDate,
+        mileageFuel: this.mileageFuel,
+        mileageCost: this.mileageCost
+      };
+      this.viewCtrl.dismiss(mileageItems);
+    } // end else
   }
 }

@@ -20,23 +20,18 @@ import { FinalDataProvider } from '../../providers/final-data/final-data';
   templateUrl: 'car-detail.html',
 })
 export class CarDetailPage {
-caritemsdetail = [];
-mileagedataarray = [];
-maintenancedataarray = [];
-public carItem;
-index;
 
+  caritemsdetail = [];
+  public carItem;
+  index;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public cardetailservice: CarDataProvider, public mileageprovider: MileageDataProvider,  public maintenanceprovider: MaintenanceDataProvider, public finalproviders: FinalDataProvider, public modelCtrl: ModalController) 
-  {
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public cardetailservice: CarDataProvider, public mileageprovider: MileageDataProvider,  public maintenanceprovider: MaintenanceDataProvider, public finalproviders: FinalDataProvider, public modelCtrl: ModalController) {
     this.carItem = this.navParams.get('CarItem');
     this.index = this.navParams.get('index');
-
-    if(this.carItem == null)
-    {
+    if(this.carItem == null){
       console.log("received null car item on details page");
-    }else{
+    }
+    else{
       console.log("received car item on details page - " + this.carItem);
     }
     console.log("current car item : " + this.carItem.carMake);

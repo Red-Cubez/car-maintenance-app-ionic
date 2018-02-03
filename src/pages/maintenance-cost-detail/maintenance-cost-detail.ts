@@ -19,98 +19,75 @@ import { MaintenanceGraphProvider } from '../../providers/maintenance-graph/main
 })
 export class MaintenanceCostDetailPage {
 
- public maintenancedataitems = [];
-
-  settingdatareq = [];
+  public maintenanceDataItems = [];
+  settingDatareq = [];
   indexonMaintenancedetail;
-  public finaldataarray = [];
- abcd: any;
- public maintenancegrapharray = [];
+  public finalDataArray = [];
+  abcd: any;
+  public maintenanceGraphArray = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceservice: MaintenanceDataProvider, public events: Events, public finaldataservice: FinalDataProvider, public settingservice: SettingDataProvider, public maintenancegraphservice: MaintenanceGraphProvider) 
-  {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events, public finaldataservice: FinalDataProvider, public settingService: SettingDataProvider, public maintenancegraphservice: MaintenanceGraphProvider) {
     let datam: any = {
-    
       currencyPrefernce: 'Dollar',
       distanceUnit: 'Km',
       gasUnit:'Litre'
     }
-        this.maintenanceservice.getdata().then((finaldata) => {
-         this.maintenancedataitems = JSON.parse(finaldata);
-         console.log('final data on maintenance detail page =  ' + this.maintenancedataitems);
-        });
-
-        this.indexonMaintenancedetail = this.navParams.get('indexSending');
-        console.log('index on maintenance = ' + this.indexonMaintenancedetail);
-
-        this.settingservice.getdata().then((settingdata) =>{
-          this.settingdatareq = JSON.parse(settingdata);
-          if (this.settingdatareq == null){
-
-            this.settingdatareq = datam;
-      
-            console.log("default setting value = " + this.settingdatareq)
-          }
-            
-          
-              });
-              console.log('setting data on setting page - ' + this.settingdatareq);
+    this.maintenanceService.getdata().then((finalData) => {
+      this.maintenanceDataItems = JSON.parse(finalData);
+      console.log('final data on maintenance detail page =  ' + this.maintenanceDataItems);
+    });
+    this.indexonMaintenancedetail = this.navParams.get('indexSending');
+    console.log('index on maintenance = ' + this.indexonMaintenancedetail);
+    
+    this.settingService.getdata().then((settingData) =>{
+      this.settingDatareq = JSON.parse(settingData);
+      if (this.settingDatareq == null){
+        this.settingDatareq = datam;
+        console.log("default setting value = " + this.settingDatareq)
+      }
+    });
+    console.log('setting data on setting page - ' + this.settingDatareq);
          
   }
 
   ionViewDidLoad() {
-       console.log('ionViewDidLoad MaintenanceCostDetailPage');
-       console.log('index on maintenance = ' + this.navParams.get('indexSending'));
+    console.log('ionViewDidLoad MaintenanceCostDetailPage');
+    console.log('index on maintenance = ' + this.navParams.get('indexSending'));
   }
 
   // jump to maintenance setting page 
   gotosetmaintenancecost(){
-    
-         let modal = this.modalCtrl.create(SetMaintenanceCostPage);
-         modal.onDidDismiss(maintenanceitems =>{
-         if(maintenanceitems != null){
-             let data = {
-                  indexonMaintenance: this.indexonMaintenancedetail,
-                  maintenanceCost: maintenanceitems.maintenanceCost,
-                  maintenanceDate: maintenanceitems.maintenanceDate,
-                  maintenanceItem: maintenanceitems.maintenanceItem
-                }
-                this.savemaintenance(data);
-
-                let datagraph = {
-                  data: maintenanceitems.maintenanceCost,
-                  label:maintenanceitems.maintenanceItem
-                }
-                this.savemaintenancegraph(datagraph)
-               } // end if 
-
-           else{
-               console.log(' null value on maintenance detail page')
-            }
-        });
-        modal.present();
+    let modal = this.modalCtrl.create(SetMaintenanceCostPage);
+    modal.onDidDismiss(maintenanceItems =>{
+      if(maintenanceItems != null){
+        let data = {
+          indexonMaintenance: this.indexonMaintenancedetail,
+          maintenanceCost: maintenanceItems.maintenanceCost,
+          maintenanceDate: maintenanceItems.maintenanceDate,
+          maintenanceItem: maintenanceItems.maintenanceItem
+        }
+        this.savemaintenance(data);
+      } // end if 
+      else{
+        console.log(' null value on maintenance detail page')
+      }
+    });
+    modal.present();
   }
 
 
   // saving a=maintenance data to provider
   savemaintenance(maintenancedata){
-
-    if( this.maintenancedataitems == null)
-    {
+    if( this.maintenanceDataItems == null){
       console.log("creating new array");
-      this.maintenancedataitems = [];
-      console.log("maintenance items - " + this.maintenancedataitems);
+      this.maintenanceDataItems = [];
+      console.log("maintenance items - " + this.maintenanceDataItems);
     }
     else{
-      console.log("existing maintenance data items- " + this.maintenancedataitems);
+      console.log("existing maintenance data items- " + this.maintenanceDataItems);
     }
-    
-  this.maintenancedataitems.push(maintenancedata);
-  this.maintenanceservice.savemaintenace(this.maintenancedataitems);
+    this.maintenanceDataItems.push(maintenancedata);
+    this.maintenanceService.savemaintenace(this.maintenanceDataItems);
   }
-  savemaintenancegraph(datagraph){
 
-    this.maintenancegrapharray.push(datagraph);
-    this.maintenancegraphservice.savemaintenancegraph(this.maintenancegrapharray);
-  }
 }

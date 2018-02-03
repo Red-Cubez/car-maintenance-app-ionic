@@ -9,28 +9,19 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class FinalDataProvider {
-newdata;
+  newData;
   constructor(public storage: Storage) {
     console.log('Hello FinalDataProvider Provider');
   }
 
-
-
-  getdata()
-  {
-   return this.storage.get('finaldata');
-  
+  getdata(){
+    return this.storage.get('finalData');
   }
-
-
-  save(finalitems)
-  {
-   this.newdata = JSON.stringify(finalitems);
-   this.storage.set('finaldata', this.newdata);
-   console.log('final data here' , finalitems);
-
-   
-
+  
+  save(finalItems){
+    this.newData = JSON.stringify(finalItems);
+    this.storage.set('finalData', this.newData);
+    console.log('final data here' , finalItems);
   }
 
 }

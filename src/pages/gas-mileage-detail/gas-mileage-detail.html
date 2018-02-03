@@ -5,52 +5,48 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="secondary">
-  <ion-title>Gas Mileage Detail </ion-title>
+     <ion-title>Gas Mileage Detail </ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
   <ion-card>
-
-
     <ion-item text-center color="secondary" >
-    Detail  
+        Detail  
     </ion-item>
- 
+    <ion-item >
+      <ion-row>
+        <ion-col >
+          Date
+        </ion-col>
+        <ion-col >
+          {{settingDataarr.gasUnit}}
+        </ion-col>
+        <ion-col >
+          {{settingDataarr.currencyPreference}}
+        </ion-col>
+      </ion-row>
+    </ion-item> 
 
     <ion-item >
-    <ion-row>
-    <ion-col >
-     Date
-    </ion-col>
-    <ion-col >
-     {{settingdataarr.gasUnit}}
-    </ion-col>
-    </ion-row>
-  </ion-item>
-    <ion-item >
-    <ion-row *ngFor="let mile of mileageitemssave" >
-    <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
-    {{mile.mileageDate}}
-    </ion-col>
-    <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
-    {{mile.mileageFuel}}
-    </ion-col>
-    </ion-row>
+      <ion-row *ngFor="let mile of mileageItemsSave" >
+        <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
+          {{mile.mileageDate}}
+        </ion-col>
+        <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
+          {{mile.mileageFuel}}
+        </ion-col>
+        <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
+          {{mile.mileageCost}}
+        </ion-col>
+      </ion-row>
     </ion-item>
-    
-
-
   </ion-card>
-
-
-
+  
   <ion-buttons end>
-   <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
-   </ion-icon></button>
+    <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
+    </ion-icon></button>
   </ion-buttons>
 
 </ion-content>

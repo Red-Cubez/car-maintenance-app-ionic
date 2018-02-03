@@ -9,23 +9,9 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class MaintenanceGraphProvider {
-maintenancegraphdata;
+
   constructor(public storage: Storage) {
     console.log('Hello MaintenanceGraphProvider Provider');
   }
-  getdata()
-  {
-   return this.storage.get('maintenancegraphdata');
-  
-  }
 
-
-  savemaintenancegraph(items)
-  {
-   this.maintenancegraphdata = JSON.stringify(items);
-   this.storage.set('maintenancegraphdata', this.maintenancegraphdata);
-   console.log('this is car data' , items);
-   
-
-  }
 }

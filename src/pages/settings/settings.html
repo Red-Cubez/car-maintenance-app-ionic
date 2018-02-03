@@ -7,50 +7,43 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-
-      <ion-buttons end>
+    
+    <ion-buttons end>
       <button ion-button icon-only (click)="savesetting()">
-      <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+        <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
       </button>
-      </ion-buttons>
-
-      <ion-title>settings</ion-title>
+    </ion-buttons>
+    <ion-title>settings</ion-title>
 
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
 
-        <ion-item >
-        <ion-label *ngIf="settingdataarr.currencyPrefernce != Null">Currency Preference.{{settingdataarr.currencyPrefernce}}  </ion-label>
-     
-        <ion-select [(ngModel)]="currencyPrefernce" >
-        <ion-option >Dollar</ion-option>
-        <ion-option >PKR</ion-option>
-        </ion-select>
-        </ion-item>
+  <ion-item >
+    <ion-label *ngIf="settingDataarr.currencyPrefernce != Null">Currency Preference.{{settingDataarr.currencyPrefernce}}  </ion-label>
+    <ion-select [(ngModel)]="currencyPrefernce" >
+      <ion-option >Dollar</ion-option>
+      <ion-option >PKR</ion-option>
+    </ion-select>
+  </ion-item>
 
+  <ion-item >
+    <ion-label *ngIf="settingDataarr.gasUnit != null">Gasoline Unit . {{settingDataarr.gasUnit}} </ion-label>
+    <ion-select  [(ngModel)]="gasUnit">
+      <ion-option >Gallons</ion-option>
+      <ion-option >Litres</ion-option>
+    </ion-select>
+  </ion-item>
 
-    
-        <ion-item >
-        <ion-label *ngIf="settingdataarr.gasUnit != null">Gasoline Unit . {{settingdataarr.gasUnit}} </ion-label>
-        <ion-select  [(ngModel)]="gasUnit">
-        <ion-option >Gallons</ion-option>
-        <ion-option >Litres</ion-option>
-        </ion-select>
-        </ion-item>
-
-
-    
-        <ion-item  >
-        <ion-label *ngIf="settingdataarr.distanceUnit != null">Distance Unit . {{settingdataarr.distanceUnit}}</ion-label>
-        <ion-select [(ngModel)]="distanceUnit" >
-        <ion-option >Killometers</ion-option>
-        <ion-option >Miles</ion-option>
-        </ion-select>
-        </ion-item>
+  <ion-item  >
+    <ion-label *ngIf="settingDataarr.distanceUnit != null">Distance Unit . {{settingDataarr.distanceUnit}}</ion-label>
+    <ion-select [(ngModel)]="distanceUnit" >
+      <ion-option >Killometers</ion-option>
+      <ion-option >Miles</ion-option>
+    </ion-select>
+  </ion-item>
     
 
 </ion-content>

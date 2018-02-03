@@ -19,60 +19,42 @@ export class SettingsPage {
   gasUnit: any;
   currencyPrefernce: any;
   distanceUnit: any; 
-  settingdataarr= [];
- 
- 
+  settingDataarr= [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingservice: SettingDataProvider, public events: Events)
-  {   
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingService: SettingDataProvider, public events: Events){   
     let datam: any = {
-    
       currencyPrefernce: 'Dollar',
       distanceUnit: 'Km',
       gasUnit:'Litre'
     }
-    this.setteingservice.getdata().then((settingdata) =>{
-    this.settingdataarr = JSON.parse(settingdata);
-    if (this.settingdataarr == null){
-
-      this.settingdataarr = datam;
-
-      console.log("default setting value = " + this.settingdataarr)
-    }
-    
-        });
-        console.log('setting data on setting page - ' + this.settingdataarr);
-        
-
-   
+    this.setteingService.getdata().then((settingData) =>{
+      this.settingDataarr = JSON.parse(settingData);
+      if (this.settingDataarr == null){
+        this.settingDataarr = datam;
+        console.log("default setting value = " + this.settingDataarr)
+      }
+    });
+    console.log('setting data on setting page - ' + this.settingDataarr);
   }
 
-  ionViewDidLoad() 
-  {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
-    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " "))
-  {
-     // do nothing if maintenanceItem is empty
+    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " ")){
+      // do nothing if maintenanceItem is empty
+    }
   }
-  }
-
-
   // setting data to array
-  savesetting()
-  {
-
-    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " "))
-  {
-     // do nothing if maintenanceItem is empty
-  } // end if
-  else{
-   let settingdata = 
-   {
-    gasUnit: this.gasUnit,
-    currencyPrefernce: this.currencyPrefernce,
-    distanceUnit: this.distanceUnit
-   }
-   this.viewCtrl.dismiss(settingdata);
+  savesetting(){
+    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " ")) {
+      // do nothing if maintenanceItem is empty
+    } // end if
+    else{
+      let settingData = {
+        gasUnit: this.gasUnit,
+        currencyPrefernce: this.currencyPrefernce,
+        distanceUnit: this.distanceUnit
+      }
+      this.viewCtrl.dismiss(settingData);
+    }
   }
-}
 }
