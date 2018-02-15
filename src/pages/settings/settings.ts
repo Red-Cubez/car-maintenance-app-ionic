@@ -17,13 +17,13 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 export class SettingsPage {
 
   gasUnit: any;
-  currencyPrefernce: any;
+  currencyPreference: any;
   distanceUnit: any; 
   settingDataarr= [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingService: SettingDataProvider, public events: Events){   
     let datam: any = {
-      currencyPrefernce: 'Dollar',
+      currencyPreference: 'Dollar',
       distanceUnit: 'Km',
       gasUnit:'Litre'
     }
@@ -39,19 +39,19 @@ export class SettingsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
-    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " ")){
+    if ((this.currencyPreference == null) || (this.currencyPreference == "") || (this.currencyPreference == " ")){
       // do nothing if maintenanceItem is empty
     }
   }
   // setting data to array
   savesetting(){
-    if ((this.currencyPrefernce == null) || (this.currencyPrefernce == "") || (this.currencyPrefernce == " ")) {
+    if ((this.currencyPreference == null) || (this.currencyPreference == "") || (this.currencyPreference == " ")) {
       // do nothing if maintenanceItem is empty
     } // end if
     else{
       let settingData = {
         gasUnit: this.gasUnit,
-        currencyPrefernce: this.currencyPrefernce,
+        currencyPreference: this.currencyPreference,
         distanceUnit: this.distanceUnit
       }
       this.viewCtrl.dismiss(settingData);

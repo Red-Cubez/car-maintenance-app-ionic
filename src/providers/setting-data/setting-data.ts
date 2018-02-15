@@ -24,6 +24,6 @@ export class SettingDataProvider {
   savetoStorage(settingData){
     this.settingStoringData = JSON.stringify(settingData);
     this.storage.set('settingdata', this.settingStoringData);
-    console.log('this is setting data' + settingData );
+    console.log('this is setting data here - ' + settingData );
   }
 }

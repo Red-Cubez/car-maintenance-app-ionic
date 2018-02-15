@@ -24,6 +24,7 @@ import * as highcharts from 'Highcharts';
 import { SettingDataProvider } from '../providers/setting-data/setting-data';
 import { FinalDataProvider } from '../providers/final-data/final-data';
 import { MaintenanceGraphProvider } from '../providers/maintenance-graph/maintenance-graph';
+import { YearMaintenanceProvider } from '../providers/year-maintenance/year-maintenance';
 
 
 
@@ -73,7 +74,8 @@ import { MaintenanceGraphProvider } from '../providers/maintenance-graph/mainten
     IonicStorageModule,
     SettingDataProvider,
     FinalDataProvider,
-    MaintenanceGraphProvider
+    MaintenanceGraphProvider,
+    YearMaintenanceProvider
   ]
 })
 export class AppModule {}

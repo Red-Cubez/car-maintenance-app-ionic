@@ -18,12 +18,12 @@ export class SetGasMileagePage {
 
   mileageDate:any;
   mileageFuel: string;
-  mileageCost: string
+  mileageCost: string;
   public settingDataarr = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public setteingService: SettingDataProvider){
     let datam: any = {
-      currencyPrefernce: 'Dollar',
+      currencyPreference: 'Dollar',
       distanceUnit: 'Km',
       gasUnit:'Litre'
     }

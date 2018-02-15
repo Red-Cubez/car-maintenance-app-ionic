@@ -15,20 +15,21 @@
 
 <ion-content padding>
 
-    <ion-slides pager>
+  <ion-slides pager>
 
-        <ion-slide >
-          <chart [options]="maintenanceReportOption" type="chart"></chart>
-        </ion-slide>
+    <ion-slide >
+      <chart [options]="maintenanceReportOption" type="chart"></chart>
       
-        <ion-slide >
-          <chart [options]="mileageReportOption" type="chart"></chart>
-        </ion-slide>
+    </ion-slide>
+      <chart [options]="mileageReportOption" type="chart"></chart>
+    <ion-slide >
       
-        <ion-slide >
-          <h2>Slide 3</h2>
-        </ion-slide>
+    </ion-slide>
       
-    </ion-slides>
+    <ion-slide >
+      <chart [options]="yearlyReportOption" type="chart"></chart>
+    </ion-slide>
+      
+  </ion-slides>
 
 </ion-content>

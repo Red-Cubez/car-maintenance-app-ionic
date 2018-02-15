@@ -21,11 +21,14 @@ export class SetMaintenanceCostPage {
   currencyType: string
   public settingDatareq = [];
 
+  
+ 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingService: SettingDataProvider, public modalCtrl: ModalController) {
     let datam: any = {
-      currencyPrefernce: 'Dollar',
+      currencyPreference: 'Dollar',
       distanceUnit: 'Km',
-      gasUnit:'Litre', 
+      gasUnit:'Litre'
     }
     this.settingService.getdata().then((settingData) =>{
       this.settingDatareq = JSON.parse(settingData);
@@ -50,7 +53,8 @@ export class SetMaintenanceCostPage {
         maintenanceItem:  this.maintenanceItem, 
         maintenanceDate:  this.maintenanceDate, 
         maintenanceCost:  this.maintenanceCost,
-        currencyType: this.currencyType 
+        currencyType:     this.currencyType,
+        maintenanceYear:  this.maintenanceDate.slice(0,4)
       };
       this.viewCtrl.dismiss(maintenanceItems);
     } // end else

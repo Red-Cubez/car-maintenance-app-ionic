@@ -62,6 +62,7 @@ export class CarDetailPage {
   gotoreportpage(){
     let sendIndex ={
       indexSending: this.index,
+      carName: this.carItem.carMake,
     }
    this.navCtrl.push(ReportPage, sendIndex);
   }
