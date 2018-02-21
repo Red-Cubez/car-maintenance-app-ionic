@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-//import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
 import { Chart } from 'chart.js';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
-import { FinalDataProvider } from '../../providers/final-data/final-data';  
-import { YearMaintenanceProvider } from '../../providers/year-maintenance/year-maintenance';
+
 
 /**
  * Generated class for the ReportPage page.
@@ -21,101 +19,130 @@ import { YearMaintenanceProvider } from '../../providers/year-maintenance/year-m
 })
 export class ReportPage {
 
-  public mileageDataForReport = [];
-  public maintenanceDataForReport = [];
-  public maintenanceDate: any = [];
-  public maintenanceCost: number[] = [];
-  public maintenanceItem: any = [];
-  public yearDate: any = [];
-  public yearCost: number[] = [];
-  public yearItem: any = [];
+  @ViewChild('barCanvas') barCanvas;
+  @ViewChild('lineCanvas') lineCanvas;
+  @ViewChild('doughnutCanvas') doughnutCanvas;
+
+  barChartMaintenance: any;
+  barChartMileage: any;
+  lineChart: any;
+
+
   public maintenanceIindexOnReportPage : number;
   public mileageIindexOnReportPage : number;
   public mileageDate: any = [];
   public mileageFuel: number[] = [];
   public mileageCost: number[] = [];
-  maintenanceReportOption: any;
+  public mileageDataForReport: any=[];
+  public maintenanceDataForReport: any=[];
+  public finalMaintenanceData: any=[];
+  public monthlyDate: any=[];
+  public monthlyCost: number[]=[];
+  public monthlyItem: any=[];
+  public yearlyDate: any=['0'];
+  public yearlyCost: number[]=[0];
+  public yearlyItem: any=[];
+  dateOfFirst;
+  dateOfYear;
+  monthlyMaintenanceSum: number = 0;
+  monthlyMaintenanceItem: string = "";
+  monthlyMaintenanceDate;
+  YearMaintenanceSum: number = 0;
+  yearMaintenanceItem: string = "";
+  yearMaintenanceDate;
   mileageReportOption: any;
   public carNameOnReport: any;
-  yearlyDataForReport: any = [];
-  yearlyReportOption: any = [];
-
-
-  public barChartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public barChartLegend:boolean = true;
+  tempDate: any =[];
+  tempYear;
+  tempCost;
+  tempItem;
+  
  
-  
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
-  
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
-
-
-  constructor(public finalDataService: FinalDataProvider,public yearFinalService: YearMaintenanceProvider,public mileageProvider: MileageDataProvider,public navCtrl: NavController, public navParams: NavParams, public maintenanceReport: MaintenanceDataProvider){
+  constructor(public mileageProvider: MileageDataProvider,public navCtrl: NavController, public navParams: NavParams, public maintenanceReport: MaintenanceDataProvider){
    // getting data from maintenance provider
-   this.carNameOnReport = this.navParams.get('carName');
-   console.log('car Name on report = ' + this.carNameOnReport);
-   this.finalDataService.getdata().then((finalData) => {
-      this.maintenanceDataForReport = JSON.parse(finalData);
-      console.log('maintenance array = ' + this.maintenanceDataForReport);
-      console.log('maintenance data = ' + finalData)
+    this.carNameOnReport = this.navParams.get('carName');
+    console.log('car Name on report = ' + this.carNameOnReport);
+    this.maintenanceIindexOnReportPage = this.navParams.get('indexSending');
+   
+    this.maintenanceReport.getdata().then((maintenanceData)=>{
+      this.maintenanceDataForReport = JSON.parse(maintenanceData);
+      console.log("maintenance data for report = " + this.maintenanceDataForReport)
       if(this.maintenanceDataForReport != null){
-        this.maintenanceDataForReport = this.maintenanceDataForReport[0].dataMaintenanceOn;
-        console.log('enter to the maintenance Condition ');
-        this.maintenanceIindexOnReportPage = this.navParams.get('indexSending');
-        for(let i = 0; i<this.maintenanceDataForReport.length; i++){
-          console.log('enter to the maintenance loop start')
-          if(this.maintenanceDataForReport[i].currentIndex == this.maintenanceIindexOnReportPage){
-            console.log('enter to the maintenance loop middle')
-            this.maintenanceDate.push(this.maintenanceDataForReport[i].currentDate);
-            this.maintenanceCost.push(parseInt(this.maintenanceDataForReport[i].sum));
-            this.maintenanceItem.push(this.maintenanceDataForReport[i].items);
-            
+        for(let i = 0;i<this.maintenanceDataForReport.length;i++){
+          if(this.maintenanceDataForReport[i].indexonMaintenance == this.maintenanceIindexOnReportPage){
+            this.finalMaintenanceData.push(this.maintenanceDataForReport[i])
           }
-          console.log('enter to the maintenance loop end')
+          // console.log("final data for report = " + this.maintenanceDataForReport[0].maintenanceCost);
+          // console.log("final data for report = " + this.finalMaintenanceData[0].maintenanceCost);
         }
-        this.createMaintenanceGraph();
+      }
+      if(this.finalMaintenanceData != null){
+        this.dateOfFirst = this.finalMaintenanceData[0].maintenanceDate;
+       for(let i=0;i<this.finalMaintenanceData.length-1;i++){
+         for(let j=(i+1);j<this.finalMaintenanceData.length;j++){
+           if(this.finalMaintenanceData[i].maintenanceDate<this.finalMaintenanceData[j].maintenanceDate){
+             this.tempDate[0] = this.finalMaintenanceData[i]
+             this.finalMaintenanceData[i] = this.finalMaintenanceData[j];
+             this.finalMaintenanceData[j] = this.tempDate[0];
+           }
+         }
+       }
+       
+        for(let i=0;i<this.finalMaintenanceData.length;i++){
+          if(this.finalMaintenanceData[i].maintenanceDate == this.dateOfFirst){
+            this.monthlyMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
+            this.monthlyMaintenanceItem += this.finalMaintenanceData[i].maintenanceItem + ' , ';
+            this.monthlyMaintenanceDate = this.finalMaintenanceData[i].maintenanceDate;
+          }
+          else{
+            this.monthlyCost.push(this.monthlyMaintenanceSum);
+            this.monthlyItem.push(this.monthlyMaintenanceItem);
+            this.monthlyDate.push(this.monthlyMaintenanceDate);
+            this.monthlyMaintenanceSum = 0;
+            this.monthlyMaintenanceItem = "";
+            this.dateOfFirst = this.finalMaintenanceData[i].maintenanceDate;
+            this.monthlyMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
+            this.monthlyMaintenanceItem += this.finalMaintenanceData[i].maintenanceItem + ' , ';
+            this.monthlyMaintenanceDate = this.finalMaintenanceData[i].maintenanceDate;
+          }
+        }
+        this.monthlyCost.push(this.monthlyMaintenanceSum);
+        this.monthlyItem.push(this.monthlyMaintenanceItem);
+        this.monthlyDate.push(this.monthlyMaintenanceDate);
+        console.log("abcdedffg = " + this.monthlyCost[0] + this.monthlyDate[0],this.monthlyItem[0]);
+
+        this.dateOfYear = this.finalMaintenanceData[0].maintenanceYear;
+        for(let i=0;i<this.finalMaintenanceData.length;i++){
+          if(this.finalMaintenanceData[i].maintenanceYear == this.dateOfYear){
+            this.YearMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
+            this.yearMaintenanceItem += this.finalMaintenanceData[i].maintenanceItem + ' , ';
+            this.yearMaintenanceDate = this.finalMaintenanceData[i].maintenanceYear;
+          }
+          else{
+            this.yearlyCost.push(this.YearMaintenanceSum);
+            this.yearlyItem.push(this.yearMaintenanceItem);
+            this.yearlyDate.push(this.yearMaintenanceDate);
+            this.YearMaintenanceSum = 0;
+            this.yearMaintenanceItem = null;
+            this.dateOfYear = this.finalMaintenanceData[i].maintenanceYear;
+            this.YearMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
+            this.yearMaintenanceItem += this.finalMaintenanceData[i].maintenanceItem + ' , ';
+            this.yearMaintenanceDate = this.finalMaintenanceData[i].maintenanceYear;
+          }
         
-      }
-      console.log('maintenance Date on report 123456 = ' + this.maintenanceDate);
-      console.log('maintenance Item on report 123456 = ' + this.maintenanceItem);
-      console.log('maintenance Cost on report 0000 - ' + this.maintenanceIindexOnReportPage);  
-    });
-    this.yearFinalService.getdata().then((yearFinalData) => {
-      this.yearlyDataForReport = JSON.parse(yearFinalData);
-      console.log('year array = ' + this.yearlyDataForReport);
-      console.log('year data = ' + yearFinalData)
-      if(this.yearlyDataForReport != null){
-        this.yearlyDataForReport = this.yearlyDataForReport[0].dataYearOn;
-        console.log('enter to the yearly Condition - ');
-        this.maintenanceIindexOnReportPage = this.navParams.get('indexSending');
-        for(let i = 0; i<this.yearlyDataForReport.length; i++){
-          console.log('enter to the year loop start')
-          if(this.yearlyDataForReport[i].indexYearly == this.maintenanceIindexOnReportPage){
-            console.log('enter to the year loop middle')
-            this.yearDate.push(this.yearlyDataForReport[i].dateYearly);
-            this.yearCost.push(parseInt(this.yearlyDataForReport[i].sumOfYear));
-            this.yearItem.push(this.yearlyDataForReport[i].itemsYearly);
-            console.log('year Date on report = ' + this.yearDate);
-            console.log('year Cost on report = ' + this.yearCost);
-            
-          }
-          console.log('enter to the year loop end')
         }
-        this.createYearlyGraph();
+        this.yearlyCost.push(this.YearMaintenanceSum);
+        this.yearlyItem.push(this.yearMaintenanceItem);
+        this.yearlyDate.push(this.yearMaintenanceDate);
+        console.log("abcdedffg = " + this.yearlyCost[0] + this.yearlyDate[0],this.yearlyItem[0])
+        this.createMaintenanceGraph();
+        this.createYearlyGraph();   
       }
-      console.log('this is try ' + this.maintenanceDataForReport);  
-      console.log('maintenance data on report - ' + yearFinalData);
-      console.log('maintenance Cost on report 0000 - ' + this.maintenanceIindexOnReportPage);  
-    });
+      
     
+      
+    });
+  
     this.mileageProvider.getdata().then((mileagedata) => {
       this.mileageDataForReport = JSON.parse(mileagedata);
       if(this.mileageDataForReport != null){
@@ -125,8 +152,6 @@ export class ReportPage {
             this.mileageDate.push(this.mileageDataForReport[i].mileageDate);
             this.mileageFuel.push(parseInt(this.mileageDataForReport[i].mileageFuel));
             this.mileageCost.push(parseInt(this.mileageDataForReport[i].mileageCost));
-            
-            
           }
         }
         this.createMileageGraph();
@@ -145,83 +170,111 @@ export class ReportPage {
   }
 
   createMaintenanceGraph(){
-    console.log('enter to maintenance function' + ' items - ' + this.maintenanceItem + ' Cost - ' + this.maintenanceCost + ' Date - ' + this.maintenanceDate);
-    this.maintenanceReportOption = {
-      chart: {
-        type: 'column'
+    console.log('enter to maintenance function' + ' items - ' + this.monthlyItem[0] + ' Cost - ' + this.monthlyCost[0] + ' Date - ' + this.monthlyDate[0]);
+    this.barChartMaintenance = new Chart(this.barCanvas.nativeElement, {
+
+      type: 'bar',
+      data: {
+          labels: this.monthlyDate,
+          datasets: [{
+              label: "Cost",
+              data: this.monthlyCost,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
       },
-      title: {
-        text: 'Car Maintenance'
-      },
-      xAxis: {
-        categories: [this.maintenanceDate[0],this.maintenanceDate[1]]
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'cost'
-        }
-      },
-      series: [{
-        name: this.maintenanceItem[0],
-        data: [this.maintenanceCost[0]]
-      },{
-        name: this.maintenanceItem[1],
-        data: [this.maintenanceCost[1]]
-      }]
-    }
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+
+    });
   }
 
   createMileageGraph(){
     console.log('enter to mileage function' + ' Date - ' + this.mileageDate[0] + ' Fuel - ' + this.mileageFuel[0],' Cost - ' + this.mileageCost[0]);
-    this.mileageReportOption = {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: 'Car Mileage'
-      },
-      xAxis: {
-        categories: [this.mileageDate[0]]
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'Litre / Gallon'
-        }
-      },
-      series: [{
-        name: 'fuel',
-        data: [this.mileageFuel[0]]
-      }]
-    }
+    this.barChartMileage = new Chart(this.doughnutCanvas.nativeElement, {
+
+      type: 'doughnut',
+      data: {
+          labels: this.mileageDate,
+          datasets: [{
+              label: 'Fuel',
+              data: this.mileageFuel,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              hoverBackgroundColor: [
+                  "#FF6384",
+                  "#36A2EB",
+                  "#FFCE56",
+                  "#FF6384",
+                  "#36A2EB",
+                  "#FFCE56"
+              ]
+          }]
+      }
+
+    });
   }
   createYearlyGraph(){
-    console.log('enter to yearly graph function' + ' Date - ' + this.yearDate[0] + ' cost - ' + this.yearCost[0],' items - ' + this.yearItem[0]);
-    this.yearlyReportOption = {
-      chart: {
-        type: 'line'
-      },
-      title: {
-        text: 'Year report'
-      },
-      xAxis: {
-        categories: [this.yearDate[0],this.yearDate[1]]
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'cost'
-        }
-      },
-      series: [{
-        name: this.yearItem[0],
-        data: [this.yearCost[0]]
-        },{
-        name: this.yearItem[1],
-        data: [this.yearCost[1]]
-      }]
-      
-    }
+    console.log('enter to yearly graph function' + ' Date - ' + this.yearlyDate[0] + ' cost - ' + this.yearlyCost[0],' items - ' + this.yearlyItem[0]);
+    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+
+      type: 'line',
+      data: {
+          labels: this.yearlyDate,
+          datasets: [
+              {
+                  label: "Cost",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(75,192,192,0.4)",
+                  borderColor: "rgba(75,192,192,1)",
+                  borderCapStyle: 'butt',
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  borderJoinStyle: 'miter',
+                  pointBorderColor: "rgba(75,192,192,1)",
+                  pointBackgroundColor: "#fff",
+                  pointBorderWidth: 1,
+                  pointHoverRadius: 5,
+                  pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                  pointHoverBorderColor: "rgba(220,220,220,1)",
+                  pointHoverBorderWidth: 2,
+                  pointRadius: 1,
+                  pointHitRadius: 10,
+                  data: this.yearlyCost,
+                  spanGaps: false,
+              }
+          ]
+      }
+
+    });
   }
 }

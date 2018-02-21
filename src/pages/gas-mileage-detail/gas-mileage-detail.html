@@ -15,22 +15,22 @@
     <ion-item text-center color="secondary" >
         Detail  
     </ion-item>
-    <ion-item >
+    <ion-item text-center >
       <ion-row>
-        <ion-col >
+        <ion-col color="secondary">
           Date
         </ion-col>
-        <ion-col >
-          {{settingDataarr.gasUnit}}
+        <ion-col *ngIf="settingDataMileage.gasUnit != Null">
+          {{settingDataMileage.gasUnit}}
         </ion-col>
-        <ion-col >
-          Cost:{{settingDataarr.currencyPreference}}
+        <ion-col *ngIf="settingDataMileage.currencyType != Null" >
+          {{settingDataMileage.currencyType}}
         </ion-col>
       </ion-row>
     </ion-item> 
 
-    <ion-item >
-      <ion-row *ngFor="let mile of mileageItemsSave" >
+    <ion-item text-center  >
+      <ion-row *ngFor="let mile of mileageItemsSave"  (click)="editMileage(mile)">
         <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
           {{mile.mileageDate}}
         </ion-col>

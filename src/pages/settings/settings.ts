@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 
 /**
@@ -15,46 +15,49 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-
-  gasUnit: any;
-  currencyPreference: any;
-  distanceUnit: any; 
-  settingDataarr= [];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingService: SettingDataProvider, public events: Events){   
-    let datam: any = {
-      currencyPreference: 'Dollar',
-      distanceUnit: 'Km',
-      gasUnit:'Litre'
+  currencyPreference: string;
+  gasUnit: string;
+  distanceUnit: string;
+  settingDataarr: any = [];
+  settingUpData: any =[];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public settingService: SettingDataProvider) {
+    let datam = {
+      currencyType: 'Dollar',
+      gasUnit: 'Litre',
+      distanceUnit: 'KiloMeter'
     }
-    this.setteingService.getdata().then((settingData) =>{
+    this.settingService.getdata().then((settingData) =>{
       this.settingDataarr = JSON.parse(settingData);
-      if (this.settingDataarr == null){
+      if(this.settingDataarr == null){
         this.settingDataarr = datam;
-        console.log("default setting value = " + this.settingDataarr)
       }
+      if(this.settingDataarr.gasUnit == undefined){
+        this.settingDataarr.gasUnit = datam.gasUnit;
+      }
+      if(this.settingDataarr.currencyType == undefined){
+        this.settingDataarr.currencyType = datam.currencyType;
+      }
+      if(this.settingDataarr.distanceUnit == undefined){
+        this.settingDataarr.distanceUnit = datam.distanceUnit;
+      }
+      console.log('setting data on serring page + ' + this.settingDataarr );
     });
-    console.log('setting data on setting page - ' + this.settingDataarr);
   }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
-    if ((this.currencyPreference == null) || (this.currencyPreference == "") || (this.currencyPreference == " ")){
-      // do nothing if maintenanceItem is empty
-    }
   }
-  // setting data to array
   savesetting(){
-    if ((this.currencyPreference == null) || (this.currencyPreference == "") || (this.currencyPreference == " ")) {
-      // do nothing if maintenanceItem is empty
-    } // end if
-    else{
-      let settingData = {
-        gasUnit: this.gasUnit,
-        currencyPreference: this.currencyPreference,
-        distanceUnit: this.distanceUnit
-      }
-      this.viewCtrl.dismiss(settingData);
+    let settingData = {
+      currencyType: this.currencyPreference,
+      gasUnit: this.gasUnit,
+      distanceUnit: this.distanceUnit
     }
+    this.saveSettingData(settingData);
+    this.viewCtrl.dismiss();
   }
+  saveSettingData(settingData){
+    this.settingUpData = settingData;
+    this.settingService.saveSettingData(this.settingUpData);
+  }
+
 }

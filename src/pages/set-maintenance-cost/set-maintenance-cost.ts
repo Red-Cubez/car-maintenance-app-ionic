@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Events, ModalController } from 'ionic-angular';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
+import { parseDate, DateTimeData } from 'ionic-angular/util/datetime-util';
 /**
  * Generated class for the SetMaintenanceCostPage page.
  *
@@ -16,29 +17,33 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 export class SetMaintenanceCostPage {
 
   maintenanceItem: string;
-  maintenanceDate: string;
+  maintenanceDate: String;
   maintenanceCost: string;
+  maintenanceYear: String;
   currencyType: string
   public settingDatareq = [];
-
-  
+  public settingDataMaintenance: any = [];
  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public settingService: SettingDataProvider, public modalCtrl: ModalController) {
-    let datam: any = {
-      currencyPreference: 'Dollar',
-      distanceUnit: 'Km',
-      gasUnit:'Litre'
+  constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public modalCtrl: ModalController) {
+    let datam = {
+      currencyType: 'Dollar',
+      gasUnit: 'Litre',
+      distanceUnit: 'KiloMeter'
     }
     this.settingService.getdata().then((settingData) =>{
-      this.settingDatareq = JSON.parse(settingData);
-      if (this.settingDatareq == null){
-        this.settingDatareq = datam;
-        console.log("default setting value = " + this.settingDatareq)
+      this.settingDataMaintenance = JSON.parse(settingData);
+      if(this.settingDataMaintenance == null){
+        this.settingDataMaintenance = datam;
       }
+      if(this.settingDataMaintenance.currencyType == undefined){
+        this.settingDataMaintenance.currencyType = datam.currencyType;
+      }
+      console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
     });
     console.log('setting data on setting page - ' + this.settingDatareq);
-    console.log('setting data on setting page  indexx - ' + this.navParams.get('inexxnumber'));        
+    console.log('setting data on setting page  indexx - ' + this.navParams.get('inexxnumber')); 
+       
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetMaintenanceCostPage');
@@ -57,6 +62,7 @@ export class SetMaintenanceCostPage {
         maintenanceYear:  this.maintenanceDate.slice(0,4)
       };
       this.viewCtrl.dismiss(maintenanceItems);
+      
     } // end else
   }  
 }

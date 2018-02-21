@@ -6,7 +6,7 @@ import { CarDataProvider } from '../../providers/car-data/car-data';
 import { ReportPage } from '../report/report';
 import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
-import { FinalDataProvider } from '../../providers/final-data/final-data';
+
 /**
  * Generated class for the CarDetailPage page.
  *
@@ -25,7 +25,7 @@ export class CarDetailPage {
   public carItem;
   index;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public cardetailservice: CarDataProvider, public mileageprovider: MileageDataProvider,  public maintenanceprovider: MaintenanceDataProvider, public finalproviders: FinalDataProvider, public modelCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public cardetailservice: CarDataProvider, public mileageprovider: MileageDataProvider,  public maintenanceprovider: MaintenanceDataProvider, public modelCtrl: ModalController) {
     this.carItem = this.navParams.get('CarItem');
     this.index = this.navParams.get('index');
     if(this.carItem == null){

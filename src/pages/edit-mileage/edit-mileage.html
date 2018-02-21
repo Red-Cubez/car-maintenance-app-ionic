@@ -1,0 +1,47 @@
+<!--
+  Generated template for the SetGasMileagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar color="secondary">
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)= "setgasmileagesetting()">
+          <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>Edit Gas Mileage</ion-title>
+  
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+  
+    <ion-card>
+      <ion-item text-center color="secondary">
+        Add
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>Date: {{dateTemp}}</ion-label>
+        <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="2100"  donText ="Select" [(ngModel)]="date"></ion-datetime>
+      </ion-item>
+  
+      <ion-item >
+        <ion-label floating >{{settingDataMileage.gasUnit}} : {{fuelTemp}} </ion-label>
+        <ion-input type="number" [(ngModel)]="fuel"></ion-input>
+      </ion-item>
+       
+      <ion-item >
+        <ion-label floating >{{settingDataMileage.currencyType}} : {{costTemp}}</ion-label>
+        <ion-input type="number" [(ngModel)]="cost"></ion-input>
+      </ion-item>
+        
+    </ion-card>
+  
+  </ion-content>
+  

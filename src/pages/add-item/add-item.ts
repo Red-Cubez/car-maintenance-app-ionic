@@ -33,7 +33,7 @@ export class AddItemPage {
     if((this.carMake == null) || (this.carMake == "") || (this.carMake == " ") ){
         // do nothing if carMake is empty
     }// end if
-    this.navCtrl.pop();
+    this.vewiCtrl.dismiss();
   }
   // saving items data to array and send it to home page
   saveitems(){

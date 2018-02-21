@@ -32,13 +32,13 @@
     </ion-item>
 
     <ion-item >
-      <ion-label floating>{{settingDataarr.gasUnit}} </ion-label>
-      <ion-input type="text" [(ngModel)]="mileageFuel"></ion-input>
+      <ion-label floating >{{settingDataMileage.gasUnit}} </ion-label>
+      <ion-input type="number" [(ngModel)]="mileageFuel"></ion-input>
     </ion-item>
      
     <ion-item >
-      <ion-label floating>Cost:{{settingDataarr.currencyPreference}} </ion-label>
-      <ion-input type="text" [(ngModel)]="mileageCost"></ion-input>
+      <ion-label floating >{{settingDataMileage.currencyType}} </ion-label>
+      <ion-input type="number" [(ngModel)]="mileageCost"></ion-input>
     </ion-item>
       
   </ion-card>

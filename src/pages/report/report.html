@@ -16,18 +16,19 @@
 <ion-content padding>
 
   <ion-slides pager>
-
     <ion-slide >
-      <chart [options]="maintenanceReportOption" type="chart"></chart>
-      
+      Maintenance Report ({{carNameOnReport}})
+      <canvas #barCanvas></canvas>
     </ion-slide>
-      <chart [options]="mileageReportOption" type="chart"></chart>
+    
     <ion-slide >
-      
+      Mileage Report ({{carNameOnReport}})
+      <canvas #doughnutCanvas></canvas>  
     </ion-slide>
-      
+    
     <ion-slide >
-      <chart [options]="yearlyReportOption" type="chart"></chart>
+      Yearly Report ({{carNameOnReport}})
+      <canvas #lineCanvas></canvas>
     </ion-slide>
       
   </ion-slides>

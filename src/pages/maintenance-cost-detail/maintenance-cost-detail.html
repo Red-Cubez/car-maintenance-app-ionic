@@ -28,15 +28,19 @@
         <ion-col>
           Date
         </ion-col>
-        <ion-col  >
-          {{settingDatareq.currencyPreference}}
+        <ion-col *ngIf="settingDataMaintenance.currencyType != Null" >
+          {{settingDataMaintenance.currencyType}}
         </ion-col>
       </ion-row>
+    </ion-item>
 
-      <ion-row  *ngFor = "let final of maintenanceDataItems">
-        <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail">
+    <ion-item   text-center >
+
+      <ion-row *ngFor = "let final of maintenanceDataItems" (click)="editmaintenance(final)" >
+        <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail" >
           {{final.maintenanceItem}}
         </ion-col>
+      
         <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail">
           {{final.maintenanceDate}}
         </ion-col>

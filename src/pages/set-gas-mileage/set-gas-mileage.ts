@@ -20,21 +20,29 @@ export class SetGasMileagePage {
   mileageFuel: string;
   mileageCost: string;
   public settingDataarr = [];
+  public settingDataMileage: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public setteingService: SettingDataProvider){
-    let datam: any = {
-      currencyPreference: 'Dollar',
-      distanceUnit: 'Km',
-      gasUnit:'Litre'
+  constructor(public settingService: SettingDataProvider, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController){
+    let datam = {
+      currencyType: 'Dollar',
+      gasUnit: 'Litre',
+      distanceUnit: 'KiloMeter'
     }
-    this.setteingService.getdata().then((settingData) =>{
-      this.settingDataarr = JSON.parse(settingData);
-      if (this.settingDataarr == null){
-        this.settingDataarr = datam;
-        console.log("default setting value = " + this.settingDataarr)
+    this.settingService.getdata().then((settingData) =>{
+      this.settingDataMileage = JSON.parse(settingData);
+      if(this.settingDataMileage == null){
+        this.settingDataMileage = datam;
       }
+      if(this.settingDataMileage.gasUnit == undefined){
+        this.settingDataMileage.gasUnit = datam.gasUnit;
+      }
+      if(this.settingDataMileage.currencyType == undefined){
+        this.settingDataMileage.currencyType = datam.currencyType;
+      }
+      console.log('setting data on mileage page + ' + this.settingDataMileage.gasUnit);
     });
-    console.log('setting data on setting page - ' + this.settingDataarr);
+   
+  
   
   }
 

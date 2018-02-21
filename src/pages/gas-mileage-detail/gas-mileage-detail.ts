@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { SetGasMileagePage } from '../set-gas-mileage/set-gas-mileage';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
+import { EditMileagePage } from '../edit-mileage/edit-mileage';
 
 /**
  * Generated class for the GasMileageDetailPage page.
@@ -20,31 +21,57 @@ export class GasMileageDetailPage {
 
   mileageItemsSave = [];
   public indexonMileage;
-  public settingDataarr = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageService: MileageDataProvider,public setteingService: SettingDataProvider) {
-    let datam: any = {
-      currencyPrefernce: 'Dollar',
-      distanceUnit: 'Km',
-      gasUnit:'Litre'
+  public settingDataMileage: any = [];
+  constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageService: MileageDataProvider) {
+    let datam = {
+      currencyType: 'Dollar',
+      gasUnit: 'Litre',
+      distanceUnit: 'KiloMeter'
     }
-    this.setteingService.getdata().then((settingData) =>{
-      this.settingDataarr = JSON.parse(settingData);
-        if (this.settingDataarr == null){
-          this.settingDataarr = datam;
-          console.log("default setting value = " + this.settingDataarr)
-        }
-      });
-      console.log('setting data on setting page - ' + this.settingDataarr);
-      this.mileageService.getdata().then((finaldata) => {
-        this.mileageItemsSave = JSON.parse(finaldata);
-        console.log('final data on mileage detail page =  ' + this.mileageItemsSave);
-      });
-      this.indexonMileage = this.navParams.get('indexSended');
-      console.log('index on mileage page - ' + this.indexonMileage);
+    this.settingService.getdata().then((settingData) =>{
+      this.settingDataMileage = JSON.parse(settingData);
+      if(this.settingDataMileage == null){
+        this.settingDataMileage = datam;
+      }
+      if(this.settingDataMileage.gasUnit == undefined){
+        this.settingDataMileage.gasUnit = datam.gasUnit;
+      }
+      if(this.settingDataMileage.currencyType == undefined){
+        this.settingDataMileage.currencyType = datam.currencyType;
+      }
+      console.log('setting data on mileage page + ' + this.settingDataMileage);
+    });
+    this.mileageService.getdata().then((finaldata) => {
+      this.mileageItemsSave = JSON.parse(finaldata);
+      console.log('final data on mileage detail page =  ' + this.mileageItemsSave);
+    });
+    this.indexonMileage = this.navParams.get('indexSended');
+    console.log('index on mileage page - ' + this.indexonMileage);
   }
 
   ionViewDidLoad(){
     console.log('ionViewDidLoad GasMileageDetailPage');
+  }
+
+  editMileage(mile){
+    let index = this.mileageItemsSave.indexOf(mile);
+    let modal = this.modalCtrl.create(EditMileagePage,{
+      index
+    });
+    modal.onDidDismiss(dataOn => {
+      if(this.mileageItemsSave != null){
+        let data = {
+          indexNumbermileage: dataOn.indexNumbermileage,
+          mileageDate: dataOn.mileageDate,
+          mileageFuel: dataOn.mileageFuel,
+          mileageCost: dataOn.mileageCost
+        }
+
+        this.mileageItemsSave[index] = dataOn;
+        this.mileageService.savemileageitems(this.mileageItemsSave);
+      }
+    });
+    modal.present();
   }
 
   // go  to mileage setting page
