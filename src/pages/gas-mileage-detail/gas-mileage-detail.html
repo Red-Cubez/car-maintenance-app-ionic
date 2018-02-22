@@ -31,13 +31,13 @@
 
     <ion-item text-center  >
       <ion-row *ngFor="let mile of mileageItemsSave"  (click)="editMileage(mile)">
-        <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
           {{mile.mileageDate}}
         </ion-col>
-        <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
           {{mile.mileageFuel}}
         </ion-col>
-        <ion-col *ngIf="mile.indexNumbermileage == indexonMileage">
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
           {{mile.mileageCost}}
         </ion-col>
       </ion-row>

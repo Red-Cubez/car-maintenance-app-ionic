@@ -4,6 +4,7 @@ import { SetMaintenanceCostPage } from '../set-maintenance-cost/set-maintenance-
 import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { EditCarmaintenancePage } from '../edit-carmaintenance/edit-carmaintenance';
+import { RelationDataProvider } from '../../providers/relation-data/relation-data';
 
 /**
  * Generated class for the MaintenanceCostDetailPage page.
@@ -24,7 +25,10 @@ export class MaintenanceCostDetailPage {
   indexonMaintenancedetail;
   public settingDataMaintenance: any = [];
   finalMaintenance: any =[];
-  constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events) {
+  relationArray: any = [];
+  relationNumber;
+  constructor(public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events) {
+    this.indexonMaintenancedetail = this.navParams.get('indexSending');
     let datam = {
       currencyType: 'Dollar',
       gasUnit: 'Litre',
@@ -40,12 +44,23 @@ export class MaintenanceCostDetailPage {
       }
       console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
     });
-    this.indexonMaintenancedetail = this.navParams.get('indexSending');
     console.log('index on maintenance = ' + this.indexonMaintenancedetail);
     this.maintenanceService.getdata().then((finalData) => {
       this.maintenanceDataItems = JSON.parse(finalData);
       console.log('final data on maintenance detail page =  ' + this.maintenanceDataItems);
-    });     
+    });
+    this.relationService.getdata().then((relationData) => {
+      this.relationArray = JSON.parse(relationData);
+      console.log('relation data on maintenance detail page =  ' + this.relationArray);
+      if(this.relationArray != null){
+        for(let i=0;i<this.relationArray.length;i++){
+          if(this.relationArray[i].carIndex == this.indexonMaintenancedetail){
+            this.relationNumber = this.relationArray[i].relationNumber;
+          }
+        }
+      }
+
+    });   
   }
 
   ionViewDidLoad() {
@@ -82,7 +97,7 @@ export class MaintenanceCostDetailPage {
     modal.onDidDismiss(maintenanceItems =>{
       if(maintenanceItems != null){
         let data = {
-          indexonMaintenance: this.indexonMaintenancedetail,
+          indexonMaintenance: this.relationNumber,
           maintenanceCost: maintenanceItems.maintenanceCost,
           maintenanceDate: maintenanceItems.maintenanceDate,
           maintenanceItem: maintenanceItems.maintenanceItem,

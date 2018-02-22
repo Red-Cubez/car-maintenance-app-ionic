@@ -4,6 +4,7 @@ import { SetGasMileagePage } from '../set-gas-mileage/set-gas-mileage';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { EditMileagePage } from '../edit-mileage/edit-mileage';
+import { RelationDataProvider } from '../../providers/relation-data/relation-data';
 
 /**
  * Generated class for the GasMileageDetailPage page.
@@ -22,7 +23,10 @@ export class GasMileageDetailPage {
   mileageItemsSave = [];
   public indexonMileage;
   public settingDataMileage: any = [];
-  constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageService: MileageDataProvider) {
+  relationArray:any = [];
+  relationNumber;
+  constructor(public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageService: MileageDataProvider) {
+    this.indexonMileage = this.navParams.get('indexSended');
     let datam = {
       currencyType: 'Dollar',
       gasUnit: 'Litre',
@@ -45,7 +49,19 @@ export class GasMileageDetailPage {
       this.mileageItemsSave = JSON.parse(finaldata);
       console.log('final data on mileage detail page =  ' + this.mileageItemsSave);
     });
-    this.indexonMileage = this.navParams.get('indexSended');
+    this.relationService.getdata().then((relationData)=>{
+      this.relationArray = JSON.parse(relationData);
+      console.log('relationData on mileage detail page =  ' + this.mileageItemsSave);
+      if(this.relationArray != null){
+        for(let i=0;i<this.relationArray.length;i++){
+          if(this.relationArray[i].carIndex == this.indexonMileage){
+            this.relationNumber = this.relationArray[i].relationNumber;
+          }
+        }
+        console.log('relation number on mileage detail page =  ' + this.relationNumber);
+      }
+    });
+    
     console.log('index on mileage page - ' + this.indexonMileage);
   }
 
@@ -80,7 +96,7 @@ export class GasMileageDetailPage {
     modal.onDidDismiss(mileageitems =>{
      if(mileageitems != null){
         let data = {
-          indexNumbermileage: this.indexonMileage,
+          indexNumbermileage: this.relationNumber,
           mileageDate: mileageitems.mileageDate,
           mileageFuel: mileageitems.mileageFuel,
           mileageCost: mileageitems.mileageCost

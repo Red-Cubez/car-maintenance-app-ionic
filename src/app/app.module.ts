@@ -24,6 +24,7 @@ import { ChartModule } from 'angular2-highcharts';
 import { ChartsModule} from'ng2-charts';
 import * as highcharts from 'Highcharts';
 import { SettingDataProvider } from '../providers/setting-data/setting-data';
+import { RelationDataProvider } from '../providers/relation-data/relation-data';
 
 
 
@@ -77,7 +78,8 @@ import { SettingDataProvider } from '../providers/setting-data/setting-data';
     MaintenanceDataProvider,
     MileageDataProvider,
     IonicStorageModule,
-    SettingDataProvider
+    SettingDataProvider,
+    RelationDataProvider
   ]
 })
 export class AppModule {}

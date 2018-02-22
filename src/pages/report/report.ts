@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
 import { Chart } from 'chart.js';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
+import { RelationDataProvider } from '../../providers/relation-data/relation-data';
 
 
 /**
@@ -53,23 +54,32 @@ export class ReportPage {
   mileageReportOption: any;
   public carNameOnReport: any;
   tempDate: any =[];
-  tempYear;
-  tempCost;
-  tempItem;
+ relationArray: any =[];
+ relationNumber;
   
  
-  constructor(public mileageProvider: MileageDataProvider,public navCtrl: NavController, public navParams: NavParams, public maintenanceReport: MaintenanceDataProvider){
+  constructor(public relationService: RelationDataProvider,public mileageProvider: MileageDataProvider,public navCtrl: NavController, public navParams: NavParams, public maintenanceReport: MaintenanceDataProvider){
    // getting data from maintenance provider
     this.carNameOnReport = this.navParams.get('carName');
     console.log('car Name on report = ' + this.carNameOnReport);
     this.maintenanceIindexOnReportPage = this.navParams.get('indexSending');
+    this.relationService.getdata().then((relationdData) =>{
+      this.relationArray = JSON.parse(relationdData);
+      if(this.relationArray != null){
+        for(let i=0;i<this.relationArray.length;i++){
+          if(this.relationArray[i].carIndex == this.maintenanceIindexOnReportPage){
+            this.relationNumber = this.relationArray[i].relationNumber;
+          }
+        }
+      }
+    });
    
     this.maintenanceReport.getdata().then((maintenanceData)=>{
       this.maintenanceDataForReport = JSON.parse(maintenanceData);
       console.log("maintenance data for report = " + this.maintenanceDataForReport)
       if(this.maintenanceDataForReport != null){
         for(let i = 0;i<this.maintenanceDataForReport.length;i++){
-          if(this.maintenanceDataForReport[i].indexonMaintenance == this.maintenanceIindexOnReportPage){
+          if(this.maintenanceDataForReport[i].indexonMaintenance == this.relationNumber){
             this.finalMaintenanceData.push(this.maintenanceDataForReport[i])
           }
           // console.log("final data for report = " + this.maintenanceDataForReport[0].maintenanceCost);
@@ -86,8 +96,7 @@ export class ReportPage {
              this.finalMaintenanceData[j] = this.tempDate[0];
            }
          }
-       }
-       
+        }
         for(let i=0;i<this.finalMaintenanceData.length;i++){
           if(this.finalMaintenanceData[i].maintenanceDate == this.dateOfFirst){
             this.monthlyMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
@@ -138,17 +147,12 @@ export class ReportPage {
         this.createMaintenanceGraph();
         this.createYearlyGraph();   
       }
-      
-    
-      
     });
-  
     this.mileageProvider.getdata().then((mileagedata) => {
       this.mileageDataForReport = JSON.parse(mileagedata);
       if(this.mileageDataForReport != null){
-        this.mileageIindexOnReportPage = this.navParams.get('indexSending');
         for(let i = 0; i< this.mileageDataForReport.length; i++){
-          if(this.mileageDataForReport[i].indexNumbermileage == this.mileageIindexOnReportPage){
+          if(this.mileageDataForReport[i].indexNumbermileage == this.relationNumber){
             this.mileageDate.push(this.mileageDataForReport[i].mileageDate);
             this.mileageFuel.push(parseInt(this.mileageDataForReport[i].mileageFuel));
             this.mileageCost.push(parseInt(this.mileageDataForReport[i].mileageCost));

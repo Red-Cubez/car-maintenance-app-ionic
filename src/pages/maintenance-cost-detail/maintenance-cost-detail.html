@@ -37,14 +37,14 @@
     <ion-item   text-center >
 
       <ion-row *ngFor = "let final of maintenanceDataItems" (click)="editmaintenance(final)" >
-        <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail" >
+        <ion-col *ngIf="final.indexonMaintenance == relationNumber" >
           {{final.maintenanceItem}}
         </ion-col>
       
-        <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail">
+        <ion-col *ngIf="final.indexonMaintenance == relationNumber">
           {{final.maintenanceDate}}
         </ion-col>
-        <ion-col *ngIf="final.indexonMaintenance == indexonMaintenancedetail">
+        <ion-col *ngIf="final.indexonMaintenance == relationNumber">
           {{final.maintenanceCost}}
         </ion-col>
       </ion-row>
