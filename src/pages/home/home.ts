@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController,ModalController, NavParams, Events, AlertController, ViewController } from 'ionic-angular';
+import { Component, ViewChild  } from '@angular/core';
+import { NavController,ModalController, NavParams, Events, AlertController, ViewController,Content } from 'ionic-angular';
 import { AddItemPage} from '../add-item/add-item';
 import { CarDetailPage } from '../car-detail/car-detail';
 import { ItemSliding } from 'ionic-angular/components/item/item-sliding';
@@ -13,6 +13,7 @@ import { RelationDataProvider } from '../../providers/relation-data/relation-dat
   templateUrl: 'home.html'
 })
 export class HomePage {
+  @ViewChild(Content) content: Content;
   public CarItems = [];
   vallue;
   // declaring arrays to store car items 
@@ -81,7 +82,7 @@ export class HomePage {
       if(carItem != null){
         this.save(carItem)
         console.log("when items not null - received : " + carItem.carMake);
-       window.location.reload();
+       //window.location.reload();
         console.log("after callling relation function : " + this.relationdataToDelete);
 
       }// end if
@@ -113,21 +114,35 @@ export class HomePage {
     console.log("data before push -" + this.CarItems.length);
     this.CarItems.push(carItem);
     console.log("new data in car item - " + this.CarItems.length);
-    
     this.dataService.save(this.CarItems);
     let index = this.CarItems.indexOf(carItem)
     if(this.relationdataToDelete != null){
       let lngth = this.relationdataToDelete.length;
-      console.log("length of relation array  = " + length)
-      this.tempValue = this.relationdataToDelete[lngth-1].relationNumber + 2;
-      console.log("temp value of relation array  = " + this.tempValue)
-      let relationOfCars = {
-        carName: carItem.carMake,
-        carIndex: index,
-        relationNumber: this.tempValue
+      if(lngth == 0){
+        let relationOfCars = {
+          carName: carItem.carMake,
+          carIndex: index,
+          relationNumber: 2
+        }
+        this.relationArray.push(relationOfCars);
+        this.relationService.save(this.relationArray);
+        console.log("relation array  = " + this.relationArray);
+        this.navCtrl.setRoot(HomePage);
+
       }
-      this.relationdataToDelete.push(relationOfCars);
-      this.relationService.save(this.relationdataToDelete);
+      else{
+        console.log("length of relation array  = " + length)
+        this.tempValue = this.relationdataToDelete[lngth-1].relationNumber + 2;
+        console.log("temp value of relation array  = " + this.tempValue)
+        let relationOfCars = {
+          carName: carItem.carMake,
+          carIndex: index,
+          relationNumber: this.tempValue
+        }
+        this.relationdataToDelete.push(relationOfCars);
+        this.relationService.save(this.relationdataToDelete);
+        this.navCtrl.setRoot(HomePage);
+      }
     }
     else{
       let relationOfCars = {
@@ -137,17 +152,13 @@ export class HomePage {
       }
       this.relationArray.push(relationOfCars);
       this.relationService.save(this.relationArray);
-      console.log("relation array  = " + this.relationdataToDelete)
+      console.log("relation array  = " + this.relationArray);
+      this.navCtrl.setRoot(HomePage);
     }
-    
-
-    console.log("index in save function = " + this.relationdataToDelete);
+    console.log("index in save function = " + this.relationArray);
    // console.log("index in save function = " + relationOfCars.carIndex + "  " + relationOfCars.relationNumber);
   }
-
-
   // save detting data in setting-data provider
-  
   delete(carItem){
     let alert = this.alertCtrl.create({
       title: 'Delete',
@@ -161,9 +172,11 @@ export class HomePage {
             index = this.CarItems.indexOf(carItem);
             indexLength = this.CarItems.length;
             if(index > -1){
-              for(let carItem of this.CarItems){
-                this.CarItems.splice(index, 1)
-                this.dataService.save(this.CarItems);
+              for(let i=0; i<this.CarItems.length;i++){
+                if(i == index){
+                  this.CarItems.splice(index, 1)
+                  this.dataService.save(this.CarItems);
+                }
               }
             } 
 
@@ -175,14 +188,22 @@ export class HomePage {
                 if(this.relationdataToDelete[i].carIndex == index){
                   let indexOn = this.relationdataToDelete.indexOf(this.relationdataToDelete[i])
                   this.numberOfRelation = this.relationdataToDelete[i].relationNumber;
-                  console.log(" before delete relation = " + this.relationdataToDelete[i].carIndex);
-                  this.relationdataToDelete.splice(i,1);
-                  console.log(" after delete relation = " + this.relationdataToDelete[i].carIndex);
                   if(indexOn < allindexOn){
+                    //console.log(" before delete relation = " + this.relationdataToDelete[i].carIndex);
+                    this.relationdataToDelete.splice(i,1);
+                   // console.log(" after delete relation = " + this.relationdataToDelete[i].carIndex);
                     this.relationdataToDelete[i].carIndex = indexOn;
+                    //console.log(" setting index on value = " + this.relationdataToDelete[i].carIndex);
+                    this.relationService.save(this.relationdataToDelete);
                   }
-                  console.log(" setting index on value = " + this.relationdataToDelete[i].carIndex);
-                  this.relationService.save(this.relationdataToDelete);
+                  else{
+                   // console.log(" before delete relation = " + this.relationdataToDelete[i].carIndex);
+                    this.relationdataToDelete.splice(i,1);
+                    //console.log(" after delete relation = " + this.relationdataToDelete[i].carIndex);
+                    //console.log(" setting index on value = " + this.relationdataToDelete[i].carIndex);
+                    this.relationService.save(this.relationdataToDelete);
+
+                  }
                 }
               }
               if(this.maintenanceRecordDelete != null){
@@ -208,23 +229,22 @@ export class HomePage {
                     this.mileageDataService.savemileageitems(this.mileageDataRecordDelete);
                     console.log("Mileage record deleted ")
                   }
-                  
                 }
-              } 
-                
-            }  
-                 
+              }  
+            } 
           } 
+          this.navCtrl.setRoot(HomePage);
         }
       },
       {
         text: 'Cancel',
         handler: () => {
         alert.dismiss();
+        
       }
     }]
     });
     alert.present();
-  
+   
   }
 }

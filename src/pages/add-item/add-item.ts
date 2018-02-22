@@ -45,7 +45,9 @@ export class AddItemPage {
         carMake: this.carMake,
         carYear:this.carYear,
         carModel: this.carModel,
-        carMileage: this.carMileage
+        carMileage: this.carMileage,
+        
+
       };
       console.log("car make, year, model, mileage: " + this.carMake + this.carYear + this.carModel + this.carMileage  );  
       console.log("Setting up Car Item - " + carItem.carMake);

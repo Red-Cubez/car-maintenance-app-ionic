@@ -40,6 +40,8 @@ export class CarDetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CarDetailPage');
+
+    let tempData = this.navParams.get('data');
    }
 
   // go to mileage detail page
