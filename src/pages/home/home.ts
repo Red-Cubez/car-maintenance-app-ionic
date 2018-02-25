@@ -29,7 +29,7 @@ export class HomePage {
   public finalMaintenance: any = [];
   public finalMileage: any = [];
   public relationArray: any = [];
-  public relationdataToDelete: any = [];
+  public relationdataToDelete = [];
   numberOfRelation;
   tempValue;
   
@@ -124,10 +124,10 @@ export class HomePage {
           carIndex: index,
           relationNumber: 2
         }
-        this.relationArray.push(relationOfCars);
-        this.relationService.save(this.relationArray);
-        console.log("relation array  = " + this.relationArray);
-        this.navCtrl.setRoot(HomePage);
+        this.relationdataToDelete.push(relationOfCars);
+        this.relationService.save(this.relationdataToDelete);
+        console.log("relation array  = " + this.relationdataToDelete);
+        //this.navCtrl.setRoot(HomePage);
 
       }
       else{
@@ -141,7 +141,7 @@ export class HomePage {
         }
         this.relationdataToDelete.push(relationOfCars);
         this.relationService.save(this.relationdataToDelete);
-        this.navCtrl.setRoot(HomePage);
+        //this.navCtrl.setRoot(HomePage);
       }
     }
     else{
@@ -150,10 +150,11 @@ export class HomePage {
         carIndex: index,
         relationNumber: 2
       }
-      this.relationArray.push(relationOfCars);
-      this.relationService.save(this.relationArray);
-      console.log("relation array  = " + this.relationArray);
-      this.navCtrl.setRoot(HomePage);
+      this.relationdataToDelete = [];
+      this.relationdataToDelete.push(relationOfCars);
+      this.relationService.save(this.relationdataToDelete);
+      console.log("relation array  = " + this.relationdataToDelete);
+     // this.navCtrl.setRoot(this.navCtrl.getActive().component)
     }
     console.log("index in save function = " + this.relationArray);
    // console.log("index in save function = " + relationOfCars.carIndex + "  " + relationOfCars.relationNumber);
@@ -239,7 +240,7 @@ export class HomePage {
       {
         text: 'Cancel',
         handler: () => {
-        alert.dismiss();
+        this.navCtrl.setRoot(HomePage);
         
       }
     }]

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ViewController, AlertController,ModalController } from 'ionic-angular';
 import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
-
+import { MaintenanceCostDetailPage } from '../maintenance-cost-detail/maintenance-cost-detail';
+import { HomePage } from '../home/home';
+ 
 /**
  * Generated class for the EditCarmaintenancePage page.
  *
@@ -27,10 +29,12 @@ export class EditCarmaintenancePage {
   cost;
   year;
   indexOn;
+  currentDate: string = new Date().toISOString();
 
-  constructor(public maintenanceService: MaintenanceDataProvider,public navCtrl: NavController, public navParams: NavParams,public settingService: SettingDataProvider,public viewCtrl: ViewController) {
+  constructor(public modalCtrl: ModalController,public alertCtrl: AlertController,public maintenanceService: MaintenanceDataProvider,public navCtrl: NavController, public navParams: NavParams,public settingService: SettingDataProvider,public viewCtrl: ViewController) {
    
     this.index = this.navParams.get('index');
+    console.log("index on edit maintenance page = " + this.index);
     let datam = {
       currencyType: 'Dollar',
       gasUnit: 'Litre',
@@ -69,6 +73,7 @@ export class EditCarmaintenancePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditCarmaintenancePage');
   }
+  
   savemaintenancesetting(){
     if(this.maintenanceDataItems != null){
       let data = {
@@ -82,6 +87,9 @@ export class EditCarmaintenancePage {
       
     }
   }
+  goto(){
+    this.navCtrl.pop();
+  }
   savemaintenance(maintenancedata){
     if( this.maintenanceDataItems == null){
       console.log("creating new array");
@@ -93,5 +101,46 @@ export class EditCarmaintenancePage {
     }
     this.maintenanceDataItems[this.index] = maintenancedata;
     this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+  }
+  delete(final){
+
+    let index = this.index;
+   
+    let alert = this.alertCtrl.create({
+      title: 'Delete',
+      message: 'Do you want to delete the selected Car Data?',
+      buttons: [{
+        text: 'Delete',
+        handler: () =>{
+         
+          if(this.maintenanceDataItems != null){
+            // index = this.maintenanceDataItems.indexOf(final);
+            // indexLength = this.maintenanceDataItems.length;
+            if(index > -1){
+              for(let i=0; i<this.maintenanceDataItems.length;i++){
+                if(i == index){
+                  this.maintenanceDataItems.splice(index, 1)
+                  this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+                }
+              }
+            }
+          } 
+          this.navCtrl.resize();
+          //this.navCtrl.pop();
+          this.viewCtrl.dismiss();
+          // let modal = this.modalCtrl.create(MaintenanceCostDetailPage);
+          // modal.present();
+        }
+      },
+      {
+        text: 'Cancel',
+        handler: () => {
+        //this.navCtrl.pop();
+            
+      }
+    }]
+    });
+    alert.present();
+       
   }
 }

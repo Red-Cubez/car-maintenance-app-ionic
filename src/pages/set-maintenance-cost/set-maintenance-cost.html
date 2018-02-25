@@ -34,7 +34,7 @@
 
     <ion-item>
       <ion-label floating>Date:</ion-label>
-      <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="2100"  donText ="Select" [(ngModel)]="maintenanceDate"></ion-datetime>
+      <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="maintenanceDate"></ion-datetime>
     </ion-item>
     <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.maintenanceDate == null) || (this.maintenanceDate == "") || (this.maintenanceDate == " "))'> Please Enter Name</p>
   

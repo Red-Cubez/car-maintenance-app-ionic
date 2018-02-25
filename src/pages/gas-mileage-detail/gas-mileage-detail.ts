@@ -75,16 +75,35 @@ export class GasMileageDetailPage {
       index
     });
     modal.onDidDismiss(dataOn => {
-      if(this.mileageItemsSave != null){
-        let data = {
-          indexNumbermileage: dataOn.indexNumbermileage,
-          mileageDate: dataOn.mileageDate,
-          mileageFuel: dataOn.mileageFuel,
-          mileageCost: dataOn.mileageCost
-        }
+      if(dataOn == undefined){
+        console.log("data is undefined")
+        
+          let data = {
+            indexNumbermileage: 0,
+            mileageDate: 0,
+            mileageFuel: 0,
+            mileageCost: 0
+          }
 
-        this.mileageItemsSave[index] = dataOn;
-        this.mileageService.savemileageitems(this.mileageItemsSave);
+          this.mileageItemsSave[index] = dataOn;
+          this.mileageItemsSave.splice(index,1)
+          this.mileageService.savemileageitems(this.mileageItemsSave);
+          this.navCtrl.resize();
+          
+        
+      }
+      else{
+        if(this.mileageItemsSave != null){
+          let data = {
+            indexNumbermileage: dataOn.indexNumbermileage,
+            mileageDate: dataOn.mileageDate,
+            mileageFuel: dataOn.mileageFuel,
+            mileageCost: dataOn.mileageCost
+          }
+
+          this.mileageItemsSave[index] = dataOn;
+          this.mileageService.savemileageitems(this.mileageItemsSave);
+        }
       }
     });
     modal.present();

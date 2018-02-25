@@ -28,7 +28,7 @@
   
       <ion-item>
         <ion-label floating>Date: {{dateTemp}}</ion-label>
-        <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="2100"  donText ="Select" [(ngModel)]="date"></ion-datetime>
+        <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="date"></ion-datetime>
       </ion-item>
   
       <ion-item >
@@ -40,8 +40,16 @@
         <ion-label floating >{{settingDataMileage.currencyType}} : {{costTemp}}</ion-label>
         <ion-input type="number" [(ngModel)]="cost"></ion-input>
       </ion-item>
+     
         
     </ion-card>
+    <div>
+        <ion-buttons end>
+          <button ion-button icon-only color="danger" (click)="delete()">
+            <ion-icon name="ios-trash-outline"></ion-icon>
+          </button>
+        </ion-buttons>
+      </div>
   
   </ion-content>
   

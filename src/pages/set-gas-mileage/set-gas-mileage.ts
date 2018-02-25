@@ -21,6 +21,7 @@ export class SetGasMileagePage {
   mileageCost: string;
   public settingDataarr = [];
   public settingDataMileage: any = [];
+  currentDate: string = new Date().toISOString();
 
   constructor(public settingService: SettingDataProvider, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController){
     let datam = {

@@ -28,7 +28,7 @@
 
     <ion-item>
       <ion-label floating>Date:</ion-label>
-      <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="2100"  donText ="Select" [(ngModel)]="mileageDate"></ion-datetime>
+      <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="mileageDate"></ion-datetime>
     </ion-item>
 
     <ion-item >

@@ -54,8 +54,13 @@ export class ReportPage {
   mileageReportOption: any;
   public carNameOnReport: any;
   tempDate: any =[];
- relationArray: any =[];
- relationNumber;
+  relationArray: any =[];
+  relationNumber;
+  sumOfMileageFuel = 0;
+  SumOfMileageCost;
+  sumOfMileageDate;
+  finalMileageData: any =[];
+  firstMileDate;
   
  
   constructor(public relationService: RelationDataProvider,public mileageProvider: MileageDataProvider,public navCtrl: NavController, public navParams: NavParams, public maintenanceReport: MaintenanceDataProvider){
@@ -151,20 +156,57 @@ export class ReportPage {
     this.mileageProvider.getdata().then((mileagedata) => {
       this.mileageDataForReport = JSON.parse(mileagedata);
       if(this.mileageDataForReport != null){
-        for(let i = 0; i< this.mileageDataForReport.length; i++){
+
+        for(let i=0;i<this.mileageDataForReport.length;i++){
           if(this.mileageDataForReport[i].indexNumbermileage == this.relationNumber){
-            this.mileageDate.push(this.mileageDataForReport[i].mileageDate);
-            this.mileageFuel.push(parseInt(this.mileageDataForReport[i].mileageFuel));
-            this.mileageCost.push(parseInt(this.mileageDataForReport[i].mileageCost));
+            this.finalMileageData.push(this.mileageDataForReport[i]);
           }
         }
-        this.createMileageGraph();
-        console.log('mileage Date on report = ' + this.mileageDate);
-        console.log('mileage Fuel on report = ' + this.mileageFuel);
+        if(this.finalMileageData != null){
+          this.firstMileDate =  this.finalMileageData[0].mileageDate;
+          for(let i=0;i<this.finalMileageData.length-1;i++){
+            for(let j=(i+1);j<this.finalMileageData.length;j++){
+              if(this.finalMileageData[i].mileageDate<this.finalMileageData[j].mileageDate){
+                this.tempDate[0] = this.finalMileageData[i]
+                this.finalMileageData[i] = this.finalMileageData[j];
+                this.finalMileageData[j] = this.tempDate[0];
+              }
+            }
+           }
+          for(let i = 0; i< this.finalMileageData.length; i++){
+            if(this.finalMileageData[i].mileageDate == this.firstMileDate){
+              this.sumOfMileageFuel += parseInt(this.finalMileageData[i].mileageFuel);
+              this.SumOfMileageCost += parseInt(this.finalMileageData[i].mileageCost);
+              this.sumOfMileageDate = this.finalMileageData[i].mileageDate;
+              
+            }
+            else{
+              this.mileageDate.push(this.sumOfMileageDate);
+              this.mileageFuel.push(this.sumOfMileageFuel);
+              this.mileageCost.push(this.SumOfMileageCost);
+              this.sumOfMileageFuel = 0;
+              this.SumOfMileageCost = 0;
+              this.firstMileDate = this.finalMileageData[i].mileageDate;
+              this.sumOfMileageFuel += parseInt(this.finalMileageData[i].mileageFuel);
+              this.SumOfMileageCost += parseInt(this.finalMileageData[i].mileageCost);
+              this.sumOfMileageDate = this.finalMileageData[i].mileageDate;
+              
+            }
+          }
+          this.mileageDate.push(this.sumOfMileageDate);
+          this.mileageFuel.push(this.sumOfMileageFuel);
+          this.mileageCost.push(this.SumOfMileageCost);
+          console.log('mileage Date on report = ' + this.mileageDate);
+          console.log('mileage Fuel on report = ' + this.mileageFuel);
+          console.log('this is try ' + this.mileageDataForReport);  
+          console.log('mileage data on report - ' + mileagedata);
+          console.log('mileage Cost on report 0000 - ' + this.mileageIindexOnReportPage);  
+          this.createMileageGraph();
+          
+         
+        }
       }
-      console.log('this is try ' + this.mileageDataForReport);  
-      console.log('mileage data on report - ' + mileagedata);
-      console.log('mileage Cost on report 0000 - ' + this.mileageIindexOnReportPage);  
+   
     });
     
 
@@ -219,11 +261,11 @@ export class ReportPage {
     console.log('enter to mileage function' + ' Date - ' + this.mileageDate[0] + ' Fuel - ' + this.mileageFuel[0],' Cost - ' + this.mileageCost[0]);
     this.barChartMileage = new Chart(this.doughnutCanvas.nativeElement, {
 
-      type: 'doughnut',
+      type: 'bar',
       data: {
           labels: this.mileageDate,
           datasets: [{
-              label: 'Fuel',
+              label: "Fuel",
               data: this.mileageFuel,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -233,17 +275,26 @@ export class ReportPage {
                   'rgba(153, 102, 255, 0.2)',
                   'rgba(255, 159, 64, 0.2)'
               ],
-              hoverBackgroundColor: [
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56",
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56"
-              ]
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
           }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
       }
-
     });
   }
   createYearlyGraph(){

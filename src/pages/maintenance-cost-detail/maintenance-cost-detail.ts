@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { Component,ViewChild  } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Events, AlertController,Content} from 'ionic-angular';
 import { SetMaintenanceCostPage } from '../set-maintenance-cost/set-maintenance-cost';
 import { MaintenanceDataProvider } from '../../providers/maintenance-data/maintenance-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { EditCarmaintenancePage } from '../edit-carmaintenance/edit-carmaintenance';
 import { RelationDataProvider } from '../../providers/relation-data/relation-data';
+import { HomePage } from '../home/home';
+import { CarDetailPage } from '../car-detail/car-detail';
 
 /**
  * Generated class for the MaintenanceCostDetailPage page.
@@ -19,6 +21,7 @@ import { RelationDataProvider } from '../../providers/relation-data/relation-dat
   templateUrl: 'maintenance-cost-detail.html',
 })
 export class MaintenanceCostDetailPage {
+  @ViewChild(Content) content: Content;
 
   public maintenanceDataItems = [];
   settingDatareq: any= [];
@@ -27,7 +30,7 @@ export class MaintenanceCostDetailPage {
   finalMaintenance: any =[];
   relationArray: any = [];
   relationNumber;
-  constructor(public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events) {
+  constructor(public alertCtrl: AlertController,public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events) {
     this.indexonMaintenancedetail = this.navParams.get('indexSending');
     let datam = {
       currencyType: 'Dollar',
@@ -67,6 +70,9 @@ export class MaintenanceCostDetailPage {
     console.log('ionViewDidLoad MaintenanceCostDetailPage');
     console.log('index on maintenance = ' + this.navParams.get('indexSending'));
   }
+  goto(){
+   this.navCtrl.pop();
+  }
 
   editmaintenance(final){
     let index = this.maintenanceDataItems.indexOf(final);
@@ -76,19 +82,36 @@ export class MaintenanceCostDetailPage {
     });
 
     modal.onDidDismiss(data =>{
-      if(data != 0){
+      if(data == undefined){
+        console.log("data is undefined")
         let dataOn = {
-          indexonMaintenance: data.indexonMaintenance,
-          maintenanceCost: data.maintenanceCost,
-          maintenanceDate: data.maintenanceDate,
-          maintenanceItem: data.maintenanceItem,
-          maintenanceYear: data.maintenanceYear
+          indexonMaintenance: 0,
+          maintenanceCost: 0,
+          maintenanceDate: 0,
+          maintenanceItem: 0,
+          maintenanceYear: 0
         }
         this.maintenanceDataItems[index] = dataOn;
+        this.maintenanceDataItems.splice(index,1);
         console.log("maintenence on = " + this.maintenanceDataItems[index]);
         this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+       
       }
-    })
+      else{
+        if(data != 0){
+          let dataOn = {
+            indexonMaintenance: data.indexonMaintenance,
+            maintenanceCost: data.maintenanceCost,
+            maintenanceDate: data.maintenanceDate,
+            maintenanceItem: data.maintenanceItem,
+            maintenanceYear: data.maintenanceYear
+          }
+          this.maintenanceDataItems[index] = dataOn;
+          console.log("maintenence on = " + this.maintenanceDataItems[index]);
+          this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+        }
+      }
+    });
     modal.present();
   }
   // jump to maintenance setting page 
@@ -126,4 +149,5 @@ export class MaintenanceCostDetailPage {
     this.maintenanceDataItems.push(maintenancedata);
     this.maintenanceService.savemaintenace(this.maintenanceDataItems);
   }
+  
 }

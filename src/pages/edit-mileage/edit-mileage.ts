@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController,AlertController } from 'ionic-angular';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 
@@ -28,8 +28,9 @@ export class EditMileagePage {
   cost;
   fuel;
   index;
+  currentDate: string = new Date().toISOString();
 
-  constructor(public settingService: SettingDataProvider,public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,public mileageService: MileageDataProvider) {
+  constructor(public alertCtrl: AlertController,public settingService: SettingDataProvider,public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,public mileageService: MileageDataProvider) {
     this.index = this.navParams.get('index');
     let datam = {
       currencyType: 'Dollar',
@@ -55,7 +56,7 @@ export class EditMileagePage {
      
       this.dateTemp = this.mileageItemsSave[this.index].mileageDate;
       this.costTemp = this.mileageItemsSave[this.index].mileageCost;
-      this.fuelTemp = this.mileageItemsSave[this.index].mileageFuel
+      this.fuelTemp = this.mileageItemsSave[this.index].mileageFuel;
       this.indexOn = this.mileageItemsSave[this.index].indexNumbermileage;
       if(this.cost == null){
         this.cost = this.costTemp
@@ -90,6 +91,45 @@ export class EditMileagePage {
     }
    this.mileageItemsSave[this.index] = mileageItems;
    this.mileageService.savemileageitems(this.mileageItemsSave);
+  }
+  delete(final){
+
+    let index = this.index;
+   
+    let alert = this.alertCtrl.create({
+      title: 'Delete',
+      message: 'Do you want to delete the selected Car Data?',
+      buttons: [{
+        text: 'Delete',
+        handler: () =>{
+         
+          if(this.mileageItemsSave != null){
+            // index = this.maintenanceDataItems.indexOf(final);
+            // indexLength = this.maintenanceDataItems.length;
+            if(index > -1){
+              for(let i=0; i<this.mileageItemsSave.length;i++){
+                if(i == index){
+                  this.mileageItemsSave.splice(index, 1)
+                  this.mileageService.savemileageitems(this.mileageItemsSave);
+                }
+              }
+            }
+          } 
+          this.navCtrl.resize();
+          //this.navCtrl.pop();
+          this.viewCtrl.dismiss();
+        }
+      },
+      {
+        text: 'Cancel',
+        handler: () => {
+        //this.navCtrl.pop();
+            
+      }
+    }]
+    });
+    alert.present();
+       
   }
 
 }

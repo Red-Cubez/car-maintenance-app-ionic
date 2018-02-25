@@ -23,7 +23,8 @@ export class SetMaintenanceCostPage {
   currencyType: string
   public settingDatareq = [];
   public settingDataMaintenance: any = [];
- 
+
+  currentDate: string = new Date().toISOString();
 
   constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public modalCtrl: ModalController) {
     let datam = {
@@ -31,6 +32,8 @@ export class SetMaintenanceCostPage {
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
+
+    console.log(this.currentDate);
     this.settingService.getdata().then((settingData) =>{
       this.settingDataMaintenance = JSON.parse(settingData);
       if(this.settingDataMaintenance == null){

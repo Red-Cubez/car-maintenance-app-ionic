@@ -5,6 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  
   <ion-navbar color="secondary">
     <ion-title>maintenance Cost $ Schedule </ion-title>
   </ion-navbar>
@@ -36,7 +37,7 @@
 
     <ion-item   text-center >
 
-      <ion-row *ngFor = "let final of maintenanceDataItems" (click)="editmaintenance(final)" >
+      <ion-row *ngFor = "let final of maintenanceDataItems" (click)="editmaintenance(final)">
         <ion-col *ngIf="final.indexonMaintenance == relationNumber" >
           {{final.maintenanceItem}}
         </ion-col>
@@ -48,6 +49,7 @@
           {{final.maintenanceCost}}
         </ion-col>
       </ion-row>
+     
     </ion-item>
 
   </ion-card>
