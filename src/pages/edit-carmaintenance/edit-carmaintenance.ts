@@ -4,6 +4,7 @@ import { MaintenanceDataProvider } from '../../providers/maintenance-data/mainte
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { MaintenanceCostDetailPage } from '../maintenance-cost-detail/maintenance-cost-detail';
 import { HomePage } from '../home/home';
+import { SettingsPage } from '../settings/settings';
  
 /**
  * Generated class for the EditCarmaintenancePage page.
@@ -30,13 +31,14 @@ export class EditCarmaintenancePage {
   year;
   indexOn;
   currentDate: string = new Date().toISOString();
+  currency;
 
   constructor(public modalCtrl: ModalController,public alertCtrl: AlertController,public maintenanceService: MaintenanceDataProvider,public navCtrl: NavController, public navParams: NavParams,public settingService: SettingDataProvider,public viewCtrl: ViewController) {
    
     this.index = this.navParams.get('index');
     console.log("index on edit maintenance page = " + this.index);
     let datam = {
-      currencyType: 'Dollar',
+      currencyType: 'USA-Dollar',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -47,6 +49,18 @@ export class EditCarmaintenancePage {
       }
       if(this.settingDataMaintenance.currencyType == undefined){
         this.settingDataMaintenance.currencyType = datam.currencyType;
+      }
+      if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+        this.currency = '$';
+      }
+      if(this.settingDataMaintenance.currencyType == "British-Pound"){
+        this.currency = '₤';
+      }
+      if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
+        this.currency = 'Can-$'
+      }
+      if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
+        this.currency = 'Rs'
       }
       console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
     });
@@ -90,17 +104,57 @@ export class EditCarmaintenancePage {
   goto(){
     this.navCtrl.pop();
   }
-  savemaintenance(maintenancedata){
-    if( this.maintenanceDataItems == null){
-      console.log("creating new array");
-      this.maintenanceDataItems = [];
-      console.log("maintenance items - " + this.maintenanceDataItems);
-    }
-    else{
-      console.log("existing maintenance data items- " + this.maintenanceDataItems);
-    }
-    this.maintenanceDataItems[this.index] = maintenancedata;
-    this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+  gotoSettingPage(){
+    let modal = this.modalCtrl.create(SettingsPage);
+    modal.onDidDismiss(settingData =>{
+      if(settingData.currencyType == undefined){
+        let data = {
+          currencyType: this.settingDataMaintenance.currencyType,
+          gasUnit: settingData.gasUnit,
+          distanceUnit: settingData.distanceUnit
+        }
+        if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+          this.currency = '$';
+        }
+        if(this.settingDataMaintenance.currencyType == "British-Pound"){
+          this.currency = '₤';
+        }
+        if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
+          this.currency = 'Can-$'
+        }
+        if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
+          this.currency = 'Rs'
+        }
+
+        this.saveSetting(data);
+      }
+      else{
+        let data = {
+          currencyType: settingData.currencyType,
+          gasUnit: settingData.gasUnit,
+          distanceUnit: settingData.distanceUnit
+        }
+        if(settingData.currencyType == "USA-Dollar"){
+          this.currency = '$';
+        }
+        if(settingData.currencyType == "British-Pound"){
+          this.currency = '₤';
+        }
+        if(settingData.currencyType == "Canadian-Dollar"){
+          this.currency = 'Can-$'
+        }
+        if(settingData.currencyType == "Pakistani-Ruppee"){
+          this.currency = 'Rs'
+        }
+
+        this.saveSetting(data);
+      }
+    });
+    modal.present();
+  }
+  saveSetting(data){
+    this.settingDataMaintenance = data;
+    this.settingService.saveSettingData(this.settingDataMaintenance);
   }
   delete(final){
 
@@ -127,7 +181,10 @@ export class EditCarmaintenancePage {
           } 
           this.navCtrl.resize();
           //this.navCtrl.pop();
-          this.viewCtrl.dismiss();
+          let data = {
+            temprary: 'toDelete'
+          }
+          this.viewCtrl.dismiss(data);
           // let modal = this.modalCtrl.create(MaintenanceCostDetailPage);
           // modal.present();
         }

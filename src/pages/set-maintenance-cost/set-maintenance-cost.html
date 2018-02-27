@@ -7,13 +7,7 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    
-    <ion-buttons end>
-      <button ion-button icon-only (click)= "savemaintenancesetting()">
-        <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>SetMaintenance</ion-title>
+    <ion-title text-center>Add Maintenance Cost</ion-title>
   
   </ion-navbar>
 
@@ -21,11 +15,9 @@
 
 <ion-content padding>
 
-  <ion-card>
+  
 
-    <ion-item text-center color="secondary">
-      Add
-    </ion-item>
+
 
     <ion-item>
       <ion-label floating>Item:</ion-label>
@@ -39,10 +31,12 @@
     <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.maintenanceDate == null) || (this.maintenanceDate == "") || (this.maintenanceDate == " "))'> Please Enter Name</p>
   
     <ion-item>
-      <ion-label floating>{{settingDataMaintenance.currencyType}}</ion-label>
+      <ion-label floating>{{currency}}</ion-label>
       <ion-input type="number" [(ngModel)]="maintenanceCost"></ion-input>
     </ion-item>
- 
-  </ion-card>
+
+    <ion-item text-center color="secondary" (click)= "savemaintenancesetting()">
+        Add
+      </ion-item>
 
 </ion-content>

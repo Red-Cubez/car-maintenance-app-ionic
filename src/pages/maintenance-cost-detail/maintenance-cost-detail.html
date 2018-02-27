@@ -7,14 +7,19 @@
 <ion-header>
   
   <ion-navbar color="secondary">
-    <ion-title>maintenance Cost $ Schedule </ion-title>
+      <ion-buttons end>
+          <button ion-button icon-only (click) = "gotoSettingPage()" >
+          <ion-icon name="settings"></ion-icon>
+          </button>
+          </ion-buttons>
+    <ion-title text-center>Maintenance Costs </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
   
-  <ion-card>
+ 
     
     <ion-item text-center color="secondary">
       Detail
@@ -30,7 +35,7 @@
           Date
         </ion-col>
         <ion-col *ngIf="settingDataMaintenance.currencyType != Null" >
-          {{settingDataMaintenance.currencyType}}
+          {{currency}}
         </ion-col>
       </ion-row>
     </ion-item>
@@ -51,9 +56,6 @@
       </ion-row>
      
     </ion-item>
-
-  </ion-card>
-
   <ion-buttons end>
     <button ion-button icon-only style="padding-left: 8px" (click)="gotosetmaintenancecost()">Add<ion-icon name="add-circle">
     </ion-icon></button>

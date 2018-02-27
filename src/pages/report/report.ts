@@ -40,8 +40,8 @@ export class ReportPage {
   public monthlyDate: any=[];
   public monthlyCost: number[]=[];
   public monthlyItem: any=[];
-  public yearlyDate: any=['0'];
-  public yearlyCost: number[]=[0];
+  public yearlyDate: any=[];
+  public yearlyCost: number[]=[];
   public yearlyItem: any=[];
   dateOfFirst;
   dateOfYear;
@@ -61,6 +61,11 @@ export class ReportPage {
   sumOfMileageDate;
   finalMileageData: any =[];
   firstMileDate;
+  yearMileageDate: any = [];
+  yearMileageCost: number[] = [];
+  yearMileageFuel: number[] = [];
+  tempOne;
+  tempTwo;
   
  
   constructor(public relationService: RelationDataProvider,public mileageProvider: MileageDataProvider,public navCtrl: NavController, public navParams: NavParams, public maintenanceReport: MaintenanceDataProvider){
@@ -92,16 +97,16 @@ export class ReportPage {
         }
       }
       if(this.finalMaintenanceData != null){
-        this.dateOfFirst = this.finalMaintenanceData[0].maintenanceDate;
        for(let i=0;i<this.finalMaintenanceData.length-1;i++){
          for(let j=(i+1);j<this.finalMaintenanceData.length;j++){
-           if(this.finalMaintenanceData[i].maintenanceDate<this.finalMaintenanceData[j].maintenanceDate){
+           if(this.finalMaintenanceData[i].maintenanceDate>this.finalMaintenanceData[j].maintenanceDate){
              this.tempDate[0] = this.finalMaintenanceData[i]
              this.finalMaintenanceData[i] = this.finalMaintenanceData[j];
              this.finalMaintenanceData[j] = this.tempDate[0];
            }
          }
         }
+        this.dateOfFirst = this.finalMaintenanceData[0].maintenanceDate;
         for(let i=0;i<this.finalMaintenanceData.length;i++){
           if(this.finalMaintenanceData[i].maintenanceDate == this.dateOfFirst){
             this.monthlyMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
@@ -150,7 +155,7 @@ export class ReportPage {
         this.yearlyDate.push(this.yearMaintenanceDate);
         console.log("abcdedffg = " + this.yearlyCost[0] + this.yearlyDate[0],this.yearlyItem[0])
         this.createMaintenanceGraph();
-        this.createYearlyGraph();   
+        //this.createYearlyGraph();   
       }
     });
     this.mileageProvider.getdata().then((mileagedata) => {
@@ -163,16 +168,16 @@ export class ReportPage {
           }
         }
         if(this.finalMileageData != null){
-          this.firstMileDate =  this.finalMileageData[0].mileageDate;
           for(let i=0;i<this.finalMileageData.length-1;i++){
             for(let j=(i+1);j<this.finalMileageData.length;j++){
-              if(this.finalMileageData[i].mileageDate<this.finalMileageData[j].mileageDate){
+              if(this.finalMileageData[i].mileageDate>this.finalMileageData[j].mileageDate){
                 this.tempDate[0] = this.finalMileageData[i]
                 this.finalMileageData[i] = this.finalMileageData[j];
                 this.finalMileageData[j] = this.tempDate[0];
               }
             }
            }
+           this.firstMileDate =  this.finalMileageData[0].mileageDate;
           for(let i = 0; i< this.finalMileageData.length; i++){
             if(this.finalMileageData[i].mileageDate == this.firstMileDate){
               this.sumOfMileageFuel += parseInt(this.finalMileageData[i].mileageFuel);
@@ -202,8 +207,80 @@ export class ReportPage {
           console.log('mileage data on report - ' + mileagedata);
           console.log('mileage Cost on report 0000 - ' + this.mileageIindexOnReportPage);  
           this.createMileageGraph();
-          
-         
+          this.sumOfMileageDate = "";
+          this.sumOfMileageFuel = 0;
+          this.SumOfMileageCost = 0;
+
+          this.dateOfYear = this.finalMileageData[0].mileageYear;
+          for(let i = 0;i<this.finalMileageData.length;i++){
+            if(this.finalMileageData[i].mileageYear == this.dateOfYear){
+              this.sumOfMileageFuel += parseInt(this.finalMileageData[i].mileageFuel);
+              this.SumOfMileageCost += parseInt(this.finalMileageData[i].mileageCost);
+              this.sumOfMileageDate = this.finalMileageData[i].mileageYear;
+            }
+            else{
+              this.yearMileageCost.push(this.SumOfMileageCost);
+              this.yearMileageFuel.push(this.sumOfMileageFuel);
+              this.yearMileageDate.push(this.sumOfMileageDate);
+              this.sumOfMileageFuel =0;
+              this.SumOfMileageCost =0;
+              this.sumOfMileageDate ="";
+              this.dateOfYear = this.finalMileageData[i].mileageYear;
+              this.sumOfMileageFuel += parseInt(this.finalMileageData[i].mileageFuel);
+              this.SumOfMileageCost += parseInt(this.finalMileageData[i].mileageCost);
+              this.sumOfMileageDate = this.finalMileageData[i].mileageYear;
+            
+
+            }
+
+          }
+          this.yearMileageCost.push(this.SumOfMileageCost);
+          this.yearMileageFuel.push(this.sumOfMileageFuel);
+          this.yearMileageDate.push(this.sumOfMileageDate);
+          this.SumOfMileageCost = 0;
+          this.sumOfMileageFuel = 0;
+          this.sumOfMileageDate = "";
+          this.yearlyItem = "";
+
+          for(let i=0; i<this.yearMileageFuel.length;i++){
+            this.yearlyCost.push(this.yearMileageCost[i]);
+            this.yearlyDate.push(this.yearMileageDate[i]);
+          }
+
+          this.yearMileageCost = [0];
+          this.yearMileageDate = ['0'];
+          for(let i=0;i<this.yearlyCost.length-1;i++){
+            for(let j=(i+1);j<this.yearlyCost.length;j++){
+              if(this.yearlyCost[i]<this.yearlyCost[j]){
+                this.tempOne= this.yearlyCost[i]
+                this.yearlyCost[i] = this.yearlyCost[j];
+                this.yearlyCost[j] = this.tempOne;
+
+                this.tempTwo= this.yearlyDate[i]
+                this.yearlyDate[i] = this.yearlyDate[j];
+                this.yearlyDate[j] = this.tempTwo;
+              }
+            }
+          }
+          this.dateOfYear = this.yearlyDate[0];
+          for(let i = 0;i<this.yearlyDate.length;i++){
+            if(this.yearlyDate[i] == this.dateOfYear){
+              this.sumOfMileageFuel += this.yearlyCost[i];
+              this.sumOfMileageDate = this.yearlyDate[i];
+            }
+            else{
+              this.yearMileageCost.push(this.sumOfMileageFuel);
+              this.yearMileageDate.push(this.sumOfMileageDate);
+              this.sumOfMileageFuel = 0;
+              this.sumOfMileageDate = 0;
+              this.dateOfYear = this.yearlyDate[i];
+              this.sumOfMileageFuel += this.yearlyCost[i];
+              this.sumOfMileageDate = this.yearlyDate[i];
+            }
+          }
+          this.yearMileageCost.push(this.sumOfMileageFuel);
+          this.yearMileageDate.push(this.sumOfMileageDate);
+          this.createYearlyGraph();
         }
       }
    
@@ -247,9 +324,7 @@ export class ReportPage {
       options: {
           scales: {
               yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
+            
               }]
           }
       }
@@ -289,9 +364,7 @@ export class ReportPage {
       options: {
           scales: {
               yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
+                 title: 'Fuel'
               }]
           }
       }
@@ -303,7 +376,7 @@ export class ReportPage {
 
       type: 'line',
       data: {
-          labels: this.yearlyDate,
+          labels: this.yearMileageDate,
           datasets: [
               {
                   label: "Cost",
@@ -324,7 +397,7 @@ export class ReportPage {
                   pointHoverBorderWidth: 2,
                   pointRadius: 1,
                   pointHitRadius: 10,
-                  data: this.yearlyCost,
+                  data: this.yearMileageCost,
                   spanGaps: false,
               }
           ]

@@ -7,40 +7,41 @@
 <ion-header>
 
     <ion-navbar color="secondary">
-      <ion-buttons end>
-        <button ion-button icon-only (click)= "saveitems()">
-        <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-title>Edit Items</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click) = "gotoSettingPage()" >
+            <ion-icon name="settings"></ion-icon>
+            </button>
+            </ion-buttons>
+      <ion-title text-center>Edit Item</ion-title>
     </ion-navbar>
   </ion-header>
   
 
 
 <ion-content padding>
-    <ion-item text-center color="secondary">
-        Item Name
-      </ion-item>
+   
    
       <ion-item>
-        <ion-label floating>Make:</ion-label>
+        <ion-label floating>Make:{{carItem.carMake}}</ion-label>
         <ion-input type="text" required [(ngModel)]="carMake"></ion-input>
       </ion-item>
   
       <ion-item>
-        <ion-label floating>Model:</ion-label>
+        <ion-label floating>Model:{{carItem.carModel}}</ion-label>
         <ion-input type="text" required  [(ngModel)]="carModel"></ion-input>
       </ion-item>  
   
       <ion-item>
-        <ion-label floating>Year:</ion-label>
-        <ion-datetime displayFormat="YYYY" min="1970" max="2020"  donText ="Select" [(ngModel)]="carYear"></ion-datetime>
+        <ion-label floating>Year:{{carItem.carYear}}</ion-label>
+        <ion-datetime displayFormat="YYYY" min="1970" max="2020"  donText ="Select" [(ngModel)]="carYear">{{carItem.carYear}}</ion-datetime>
       </ion-item> 
   
       <ion-item>
-        <ion-label floating>Mileage:</ion-label>
+        <ion-label floating>Mileage:{{carItem.carMileage}}</ion-label>
         <ion-input type="number"  [(ngModel)]="carMileage" ></ion-input>
       </ion-item>
+      <ion-item text-center color="secondary" (click)= "saveitems()">
+          Edit
+        </ion-item>
 
 </ion-content>

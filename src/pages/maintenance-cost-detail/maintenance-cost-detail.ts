@@ -7,6 +7,7 @@ import { EditCarmaintenancePage } from '../edit-carmaintenance/edit-carmaintenan
 import { RelationDataProvider } from '../../providers/relation-data/relation-data';
 import { HomePage } from '../home/home';
 import { CarDetailPage } from '../car-detail/car-detail';
+import { SettingsPage } from '../settings/settings';
 
 /**
  * Generated class for the MaintenanceCostDetailPage page.
@@ -30,10 +31,11 @@ export class MaintenanceCostDetailPage {
   finalMaintenance: any =[];
   relationArray: any = [];
   relationNumber;
+  currency;
   constructor(public alertCtrl: AlertController,public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events) {
     this.indexonMaintenancedetail = this.navParams.get('indexSending');
     let datam = {
-      currencyType: 'Dollar',
+      currencyType: 'USA-Dollar',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -44,6 +46,18 @@ export class MaintenanceCostDetailPage {
       }
       if(this.settingDataMaintenance.currencyType == undefined){
         this.settingDataMaintenance.currencyType = datam.currencyType;
+      }
+      if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+        this.currency = '$';
+      }
+      if(this.settingDataMaintenance.currencyType == "British-Pound"){
+        this.currency = '₤';
+      }
+      if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
+        this.currency = 'Can-$'
+      }
+      if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
+        this.currency = 'Rs'
       }
       console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
     });
@@ -83,32 +97,36 @@ export class MaintenanceCostDetailPage {
 
     modal.onDidDismiss(data =>{
       if(data == undefined){
-        console.log("data is undefined")
-        let dataOn = {
-          indexonMaintenance: 0,
-          maintenanceCost: 0,
-          maintenanceDate: 0,
-          maintenanceItem: 0,
-          maintenanceYear: 0
-        }
-        this.maintenanceDataItems[index] = dataOn;
-        this.maintenanceDataItems.splice(index,1);
-        console.log("maintenence on = " + this.maintenanceDataItems[index]);
-        this.maintenanceService.savemaintenace(this.maintenanceDataItems);
-       
       }
       else{
-        if(data != 0){
-          let dataOn = {
-            indexonMaintenance: data.indexonMaintenance,
-            maintenanceCost: data.maintenanceCost,
-            maintenanceDate: data.maintenanceDate,
-            maintenanceItem: data.maintenanceItem,
-            maintenanceYear: data.maintenanceYear
+        if(data != undefined){
+          if(data.temprary == 'toDelete'){
+            console.log("data is defined and temprary is here")
+            let dataOn = {
+              indexonMaintenance: 0,
+              maintenanceCost: 0,
+              maintenanceDate: 0,
+              maintenanceItem: 0,
+              maintenanceYear: 0
+            }
+            this.maintenanceDataItems[index] = dataOn;
+            this.maintenanceDataItems.splice(index,1);
+            console.log("maintenence on = " + this.maintenanceDataItems[index]);
+            this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+
           }
-          this.maintenanceDataItems[index] = dataOn;
-          console.log("maintenence on = " + this.maintenanceDataItems[index]);
-          this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+          else{
+            let dataOn = {
+              indexonMaintenance: data.indexonMaintenance,
+              maintenanceCost: data.maintenanceCost,
+              maintenanceDate: data.maintenanceDate,
+              maintenanceItem: data.maintenanceItem,
+              maintenanceYear: data.maintenanceYear
+            }
+            this.maintenanceDataItems[index] = dataOn;
+            console.log("maintenence on = " + this.maintenanceDataItems[index]);
+            this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+          }
         }
       }
     });
@@ -148,6 +166,58 @@ export class MaintenanceCostDetailPage {
     }
     this.maintenanceDataItems.push(maintenancedata);
     this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+  }
+  gotoSettingPage(){
+    let modal = this.modalCtrl.create(SettingsPage);
+    modal.onDidDismiss(settingData =>{
+      if(settingData.currencyType == undefined){
+        let data = {
+          currencyType: this.settingDataMaintenance.currencyType,
+          gasUnit: settingData.gasUnit,
+          distanceUnit: settingData.distanceUnit
+        }
+        if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+          this.currency = '$';
+        }
+        if(this.settingDataMaintenance.currencyType == "British-Pound"){
+          this.currency = '₤';
+        }
+        if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
+          this.currency = 'Can-$'
+        }
+        if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
+          this.currency = 'Rs'
+        }
+
+        this.saveSetting(data);
+      }
+      else{
+        let data = {
+          currencyType: settingData.currencyType,
+          gasUnit: settingData.gasUnit,
+          distanceUnit: settingData.distanceUnit
+        }
+        if(settingData.currencyType == "USA-Dollar"){
+          this.currency = '$';
+        }
+        if(settingData.currencyType == "British-Pound"){
+          this.currency = '₤';
+        }
+        if(settingData.currencyType == "Canadian-Dollar"){
+          this.currency = 'Can-$'
+        }
+        if(settingData.currencyType == "Pakistani-Ruppee"){
+          this.currency = 'Rs'
+        }
+
+        this.saveSetting(data);
+      }
+    });
+    modal.present();
+  }
+  saveSetting(data){
+    this.settingDataMaintenance = data;
+    this.settingService.saveSettingData(this.settingDataMaintenance);
   }
   
 }

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { EditCaritemPage } from './edit-caritem';
+//import { EditCaritemPage } from './edit-caritem';
 
 @NgModule({
   declarations: [
-    EditCaritemPage,
+    //EditCaritemPage,
   ],
   imports: [
-    IonicPageModule.forChild(EditCaritemPage),
+    //IonicPageModule.forChild(EditCaritemPage),
   ],
 })
 export class EditCaritemPageModule {}

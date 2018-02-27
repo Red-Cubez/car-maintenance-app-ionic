@@ -60,6 +60,14 @@ export class HomePage {
   }
   ionViewWillEnter() {
     console.log( 'calling now - ionViewWillEnter ' );
+    this.dataService.getdata().then((carData) =>{
+      this.CarItems = JSON.parse(carData);
+      console.log("Car Items in list - " + this.CarItems);
+      console.log('this is it ' + carData)
+      
+    });
+
+
   }
  
 

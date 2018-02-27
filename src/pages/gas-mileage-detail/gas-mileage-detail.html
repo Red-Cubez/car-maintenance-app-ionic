@@ -6,12 +6,17 @@
 -->
 <ion-header>
   <ion-navbar color="secondary">
-     <ion-title>Gas Mileage Detail </ion-title>
+      <ion-buttons end>
+          <button ion-button icon-only (click) = "gotoSettingPage()" >
+          <ion-icon name="settings"></ion-icon>
+          </button>
+          </ion-buttons>
+     <ion-title text-center>Gas Mileage Detail </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  
     <ion-item text-center color="secondary" >
         Detail  
     </ion-item>
@@ -24,7 +29,7 @@
           {{settingDataMileage.gasUnit}}
         </ion-col>
         <ion-col *ngIf="settingDataMileage.currencyType != Null" >
-          {{settingDataMileage.currencyType}}
+          {{currency}}
         </ion-col>
       </ion-row>
     </ion-item> 
@@ -42,8 +47,6 @@
         </ion-col>
       </ion-row>
     </ion-item>
-  </ion-card>
-  
   <ion-buttons end>
     <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
     </ion-icon></button>

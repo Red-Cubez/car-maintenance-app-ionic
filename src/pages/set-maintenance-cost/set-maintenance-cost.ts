@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Events, ModalController } from 'ionic-angular';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { parseDate, DateTimeData } from 'ionic-angular/util/datetime-util';
+import { SettingsPage } from '../settings/settings';
 /**
  * Generated class for the SetMaintenanceCostPage page.
  *
@@ -25,10 +26,10 @@ export class SetMaintenanceCostPage {
   public settingDataMaintenance: any = [];
 
   currentDate: string = new Date().toISOString();
-
+  currency;
   constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public modalCtrl: ModalController) {
     let datam = {
-      currencyType: 'Dollar',
+      currencyType: 'USA-Dollar',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -41,6 +42,18 @@ export class SetMaintenanceCostPage {
       }
       if(this.settingDataMaintenance.currencyType == undefined){
         this.settingDataMaintenance.currencyType = datam.currencyType;
+      }
+      if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+        this.currency = '$';
+      }
+      if(this.settingDataMaintenance.currencyType == "British-Pound"){
+        this.currency = '₤';
+      }
+      if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
+        this.currency = 'Can-$'
+      }
+      if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
+        this.currency = 'Rs'
       }
       console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
     });
@@ -68,4 +81,6 @@ export class SetMaintenanceCostPage {
       
     } // end else
   }  
+  
+ 
 }

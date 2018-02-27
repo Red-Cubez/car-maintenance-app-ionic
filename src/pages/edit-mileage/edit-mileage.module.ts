@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { EditMileagePage } from './edit-mileage';
+//import { EditMileagePage } from './edit-mileage';
 
 @NgModule({
   declarations: [
-    EditMileagePage,
+    //EditMileagePage,
   ],
   imports: [
-    IonicPageModule.forChild(EditMileagePage),
+    //IonicPageModule.forChild(EditMileagePage),
   ],
 })
 export class EditMileagePageModule {}

@@ -20,9 +20,10 @@ export class SettingsPage {
   distanceUnit: string;
   settingDataarr: any = [];
   settingUpData: any =[];
+  currency;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public settingService: SettingDataProvider) {
     let datam = {
-      currencyType: 'Dollar',
+      currencyType: 'USA-Dollar',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -40,7 +41,20 @@ export class SettingsPage {
       if(this.settingDataarr.distanceUnit == undefined){
         this.settingDataarr.distanceUnit = datam.distanceUnit;
       }
-      console.log('setting data on serring page + ' + this.settingDataarr );
+
+      if(this.settingDataarr.currencyType == "USA-Dollar"){
+        this.currency = '$';
+      }
+      if(this.settingDataarr.currencyType == "British-Pound"){
+        this.currency = '₤';
+      }
+      if(this.settingDataarr.currencyType == "Canadian-Dollar"){
+        this.currency = 'Can-$'
+      }
+      if(this.settingDataarr.currencyType == "Pakistani-Ruppee"){
+        this.currency = 'Rs'
+      }
+      console.log('setting data on setting page + ' + this.settingDataarr.currencyType );
     });
   }
   ionViewDidLoad() {
@@ -52,8 +66,9 @@ export class SettingsPage {
       gasUnit: this.gasUnit,
       distanceUnit: this.distanceUnit
     }
+   
     this.saveSettingData(settingData);
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(settingData);
   }
   saveSettingData(settingData){
     this.settingUpData = settingData;

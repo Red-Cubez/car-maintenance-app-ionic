@@ -8,12 +8,12 @@
 
     <ion-navbar color="secondary">
   
-      <ion-buttons end>
-        <button ion-button icon-only (click)= "setgasmileagesetting()">
-          <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-title>Edit Gas Mileage</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click) = "gotoSettingPage()" >
+            <ion-icon name="settings"></ion-icon>
+            </button>
+            </ion-buttons>
+      <ion-title text-center>Edit Gas Mileage Record</ion-title>
   
     </ion-navbar>
   
@@ -21,10 +21,8 @@
   
   <ion-content padding>
   
-    <ion-card>
-      <ion-item text-center color="secondary">
-        Add
-      </ion-item>
+    
+     
   
       <ion-item>
         <ion-label floating>Date: {{dateTemp}}</ion-label>
@@ -37,13 +35,14 @@
       </ion-item>
        
       <ion-item >
-        <ion-label floating >{{settingDataMileage.currencyType}} : {{costTemp}}</ion-label>
+        <ion-label floating >{{currency}} : {{costTemp}}</ion-label>
         <ion-input type="number" [(ngModel)]="cost"></ion-input>
       </ion-item>
-     
-        
-    </ion-card>
-    <div>
+
+      <ion-item text-center color="secondary" (click)= "setgasmileagesetting()">
+          Save
+        </ion-item>
+      <div>
         <ion-buttons end>
           <button ion-button icon-only color="danger" (click)="delete()">
             <ion-icon name="ios-trash-outline"></ion-icon>

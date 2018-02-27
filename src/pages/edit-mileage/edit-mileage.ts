@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController,AlertController,ModalController } from 'ionic-angular';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
+import { SettingsPage } from '../settings/settings';
 
 
 /**
@@ -29,11 +30,12 @@ export class EditMileagePage {
   fuel;
   index;
   currentDate: string = new Date().toISOString();
+  currency;
 
-  constructor(public alertCtrl: AlertController,public settingService: SettingDataProvider,public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,public mileageService: MileageDataProvider) {
+  constructor(public modalCtrl: ModalController,public alertCtrl: AlertController,public settingService: SettingDataProvider,public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,public mileageService: MileageDataProvider) {
     this.index = this.navParams.get('index');
     let datam = {
-      currencyType: 'Dollar',
+      currencyType: 'USA-Dollar',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -47,6 +49,18 @@ export class EditMileagePage {
       }
       if(this.settingDataMileage.currencyType == undefined){
         this.settingDataMileage.currencyType = datam.currencyType;
+      }
+      if(this.settingDataMileage.currencyType == "USA-Dollar"){
+        this.currency = '$';
+      }
+      if(this.settingDataMileage.currencyType == "British-Pound"){
+        this.currency = '₤';
+      }
+      if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
+        this.currency = 'Can-$'
+      }
+      if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
+        this.currency = 'Rs'
       }
       console.log('setting data on mileage page + ' + this.settingDataMileage);
     });
@@ -79,11 +93,123 @@ export class EditMileagePage {
         indexNumbermileage: this.indexOn,
         mileageDate: this.date,
         mileageFuel: this.fuel,
-        mileageCost: this.cost
+        mileageCost: this.cost,
+        mileageYear: this.date.slice(0,4)
       }
      
       this.viewCtrl.dismiss(data);
     }
+  }
+  gotoSettingPage(){
+    let modal  = this.modalCtrl.create(SettingsPage);
+    modal.onDidDismiss(settingData => {
+      if(settingData != undefined){
+        if((settingData.currencyType == undefined) && (settingData.gasUnit == undefined)){
+          settingData.currencyType = this.settingDataMileage.currencyType;
+          settingData.gasUnit = this.settingDataMileage.gasUnit;
+          let data = {
+            currencyType: settingData.currencyType,
+            gasUnit: settingData.gasUnit,
+            distanceUnit: settingData.distanceUnit
+          }
+          if(settingData.currencyType == "USA-Dollar"){
+            this.currency = '$';
+          }
+          if(settingData.currencyType == "British-Pound"){
+            this.currency = '₤';
+          }
+          if(settingData.currencyType == "Canadian-Dollar"){
+            this.currency = 'Can-$'
+          }
+          if(settingData.currencyType == "Pakistani-Ruppee"){
+            this.currency = 'Rs'
+          }
+
+          this.saveSetting(data);
+        }
+        else if(settingData.currencyType == undefined){
+          let data = {
+            currencyType: this.settingDataMileage.currencyType,
+            gasUnit: settingData.gasUnit,
+            distanceUnit: settingData.distanceUnit
+          }
+          if(this.settingDataMileage.currencyType == "USA-Dollar"){
+            this.currency = '$';
+          }
+          if(this.settingDataMileage.currencyType == "British-Pound"){
+            this.currency = '₤';
+          }
+          if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
+            this.currency = 'Can-$'
+          }
+          if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
+            this.currency = 'Rs'
+          }
+
+          this.saveSetting(data);
+        }
+        else if(settingData.gasUnit == undefined){
+          let data = {
+            currencyType: settingData.currencyType,
+            gasUnit: this.settingDataMileage.gasUnit,
+            distanceUnit: settingData.distanceUnit
+          }
+          if(settingData.currencyType == "USA-Dollar"){
+            this.currency = '$';
+          }
+          if(settingData.currencyType == "British-Pound"){
+            this.currency = '₤';
+          }
+          if(settingData.currencyType == "Canadian-Dollar"){
+            this.currency = 'Can-$'
+          }
+          if(settingData.currencyType == "Pakistani-Ruppee"){
+            this.currency = 'Rs'
+          }
+
+           
+          this.saveSetting(data);
+        }
+      
+        else{
+          let data = {
+            currencyType: settingData.currencyType,
+            gasUnit: settingData.gasUnit,
+            distanceUnit: settingData.distanceUnit
+          }
+          if(settingData.currencyType == "USA-Dollar"){
+            this.currency = '$';
+          }
+          if(settingData.currencyType == "British-Pound"){
+            this.currency = '₤';
+          }
+          if(settingData.currencyType == "Canadian-Dollar"){
+            this.currency = 'Can-$'
+          }
+          if(settingData.currencyType == "Pakistani-Ruppee"){
+            this.currency = 'Rs'
+          }
+
+
+          this.saveSetting(data);
+        }
+      }
+      else{
+        let data = {
+          currencyType: this.settingDataMileage.currencyType,
+          gasUnit: this.settingDataMileage.gasUnit,
+          distanceUnit: this.settingDataMileage.distanceUnit
+        }
+
+        this.saveSetting(data);
+
+      }
+    });
+    modal.present();
+  }
+  saveSetting(data){
+    this.settingDataMileage = data;
+    this.settingService.saveSettingData(this.settingDataMileage);
   }
   savemileageitems(mileageItems){
     if(this.mileageItemsSave == null){
@@ -117,7 +243,10 @@ export class EditMileagePage {
           } 
           this.navCtrl.resize();
           //this.navCtrl.pop();
-          this.viewCtrl.dismiss();
+          let data = {
+            temprary: 'toDelete'
+          }
+          this.viewCtrl.dismiss(data);
         }
       },
       {

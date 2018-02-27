@@ -17,9 +17,10 @@ import { CarDataProvider } from '../../providers/car-data/car-data';
 export class EditCaritemPage {
   carMake;
   carModel;
-  CarYear;
+  carYear;
   carMileage;
   carItems;
+  public carItem;
 
   Make;
   Model;
@@ -28,29 +29,24 @@ export class EditCaritemPage {
   index;
 
   constructor(public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams, public cardetailservice: CarDataProvider) {
-    this.index - this.navParams.get('indexOn');
-    this.cardetailservice.getdata().then((carData) =>{
-      this.carItems = JSON.parse(carData);
-      // this.carMake = this.carItems[this.index].carMake;
-      // this.carModel = this.carItems[this.index].carModel;
-      // this.CarYear = this.carItems[this.index].CarYear;
-      // this.carMileage = this.carItems[this.index].carMileage;
+    this.index = this.navParams.get('index');
+    console.log("index on edit car item page = " + this.index)
+    this.carItem = this.navParams.get('carItem')
+    console.log("car detail  on edit car item page = " + this.carItem)
 
-    //  console.log(this.carItems[this.index].carMake);
-
-      if(this.Make == null){
-        this.Make = this.carMake;
+      if(this.carMake == null){
+        this.carMake = this.carItem.carMake;
       }
-      if(this.Year == null){
-        this.Year = this.CarYear;
+      if(this.carYear == null){
+        this.carYear = this.carItem.carYear;
       }
-      if(this.Mileage == null){
-        this.Mileage = this.carMileage;
+      if(this.carMileage == null){
+        this.carMileage = this.carItem.carMileage;
       }
-      if(this.Model == null){
-        this.Model = this.carModel;
+      if(this.carModel == null){
+        this.carModel = this.carItem.carModel;
       }
-    });
+    
   }
 
   ionViewDidLoad() {
@@ -59,8 +55,8 @@ export class EditCaritemPage {
   saveitems(){
     let dataOn = {
 
-      carMake: this.Make,
-      CarYear: this.Year,
+      carMake: this.carMake,
+      carYear: this.carYear,
       carModel: this.carModel,
       carMileage: this.carMileage
     }

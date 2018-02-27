@@ -7,23 +7,13 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-buttons end>
-      <button ion-button icon-only (click)= "saveitems()">
-      <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Add Items</ion-title>
+    
+    <ion-title text-center>Add Item</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
-  <ion-card>
-    
-    <ion-item text-center color="secondary">
-      Item Name
-    </ion-item>
  
     <ion-item>
       <ion-label floating>Make:</ion-label>
@@ -48,6 +38,9 @@
     </ion-item>
     <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carMileage == null) || (this.carMileage == "") || (this.carMileage == " "))'> Please Enter Name</p>
 
-  </ion-card>
+    <ion-item text-center color="secondary" (click)= "saveitems()">
+        Add
+      </ion-item>
+ 
       
 </ion-content>

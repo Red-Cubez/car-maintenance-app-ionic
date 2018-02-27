@@ -20,11 +20,10 @@ import { MaintenanceDataProvider } from '../providers/maintenance-data/maintenan
 import { MileageDataProvider } from '../providers/mileage-data/mileage-data';
 import { IonicStorageModule } from '@ionic/storage';
 import { ReportPage } from '../pages/report/report';
-import { ChartModule } from 'angular2-highcharts';
 import { ChartsModule} from'ng2-charts';
-import * as highcharts from 'Highcharts';
 import { SettingDataProvider } from '../providers/setting-data/setting-data';
 import { RelationDataProvider } from '../providers/relation-data/relation-data';
+import { AdMobPro } from '@ionic-native/admob-pro';
 
 
 
@@ -50,7 +49,7 @@ import { RelationDataProvider } from '../providers/relation-data/relation-data';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    ChartModule.forRoot(highcharts),
+  
     ChartsModule
    
   ],
@@ -79,7 +78,8 @@ import { RelationDataProvider } from '../providers/relation-data/relation-data';
     MileageDataProvider,
     IonicStorageModule,
     SettingDataProvider,
-    RelationDataProvider
+    RelationDataProvider,
+    AdMobPro
   ]
 })
 export class AppModule {}
