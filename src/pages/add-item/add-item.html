@@ -7,61 +7,40 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-     
-    <ion-buttons end>
-    <button ion-button icon-only (click)= "saveitems()">
-    <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-    </button>
-    </ion-buttons>
-
-
-    <!-- <ion-buttons left>
-    <button ion-button icon-only (click)="goback()">
-    <ion-icon name="arrow-back"></ion-icon>
-    </button>
-    </ion-buttons> -->
-
-
-    <ion-title>Add Items</ion-title>
-
+    
+    <ion-title text-center>Add Item</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-  
-  <ion-card>
-
-    <ion-item text-center color="secondary">
-    Item Name
-    </ion-item>
  
-
     <ion-item>
-    <ion-label floating>Make:</ion-label>
-    <ion-input type="text" required [(ngModel)]="carMake"></ion-input>
+      <ion-label floating>Make:</ion-label>
+      <ion-input type="text" required [(ngModel)]="carMake"></ion-input>
     </ion-item>
-
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carMake == null) || (this.carMake == "") || (this.carMake == " "))'> Please Enter Name</p>
 
     <ion-item>
-    <ion-label floating>Model:</ion-label>
-    <ion-input type="text" required  [(ngModel)]="carModel"></ion-input>
+      <ion-label floating>Model:</ion-label>
+      <ion-input type="text" required  [(ngModel)]="carModel"></ion-input>
     </ion-item>  
-
-
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carModel == null) || (this.carModel == "") || (this.carModel == " "))'> Please Enter Name</p>
     <ion-item>
-    <ion-label floating>Year:</ion-label>
-    <ion-datetime displayFormat="YYYY" min="1970" max="2020"  donText ="Select" [(ngModel)]="carYear"></ion-datetime>
+      <ion-label floating>Year:</ion-label>
+      <ion-datetime displayFormat="YYYY" min="1970" max="2020"  donText ="Select" [(ngModel)]="carYear"></ion-datetime>
     </ion-item> 
-
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carYear == null) || (this.carYear == "") || (this.carYear == " "))'> Please Enter Name</p>
 
     <ion-item>
-    <ion-label floating>Mileage:</ion-label>
-    <ion-input type="text"  [(ngModel)]="carMileage" ></ion-input>
+      <ion-label floating>Mileage:</ion-label>
+      <ion-input type="number"  [(ngModel)]="carMileage" ></ion-input>
     </ion-item>
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carMileage == null) || (this.carMileage == "") || (this.carMileage == " "))'> Please Enter Name</p>
 
-
-  </ion-card>
+    <ion-item text-center color="secondary" (click)= "saveitems()">
+        Add
+      </ion-item>
+ 
       
 </ion-content>

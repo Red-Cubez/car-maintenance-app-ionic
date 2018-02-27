@@ -7,44 +7,36 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-
-      <ion-buttons end>
-      <button ion-button icon-only (click)= "setgasmileagesetting()">
-      <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-      </button>
-      </ion-buttons>
-
-      <ion-title>Add Gas Mileage</ion-title>
+    <ion-title text-center>Add Gas Mileage</ion-title>
 
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
 
-  <ion-card>
+  
+   
 
+    <ion-item>
+      <ion-label floating>Date:</ion-label>
+      <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="mileageDate"></ion-datetime>
+    </ion-item>
 
-     <ion-item text-center color="secondary">
-      Add
-     </ion-item>
+    <ion-item >
+      <ion-label floating >{{settingDataMileage.gasUnit}} </ion-label>
+      <ion-input type="number" [(ngModel)]="mileageFuel"></ion-input>
+    </ion-item>
+     
+    <ion-item >
+      <ion-label floating >{{currency}} </ion-label>
+      <ion-input type="number" [(ngModel)]="mileageCost"></ion-input>
+    </ion-item>
 
-
-
-     <ion-item>
-     <ion-label floating>Date:</ion-label>
-     <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="2100"  donText ="Select" [(ngModel)]="mileageDate"></ion-datetime>
-     </ion-item>
-
-
-
-     <ion-item>
-     <ion-label floating>Litres / Gallons:</ion-label>
-     <ion-input type="text" [(ngModel)]="mileageFuel"></ion-input>
-     </ion-item>
+    <ion-item text-center color="secondary" (click)= "setgasmileagesetting()">
+        Add
+      </ion-item>
       
-    
-  </ion-card>
+  
 
 </ion-content>

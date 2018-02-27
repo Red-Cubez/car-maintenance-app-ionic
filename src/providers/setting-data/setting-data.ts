@@ -9,24 +9,20 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class SettingDataProvider {
+  newSettingData;
 
-  settingstoringdata
-  constructor(public storage: Storage)
-  {
+  constructor(public storage: Storage) {
     console.log('Hello SettingDataProvider Provider');
   }
 
-
-  getdata()
-  {
-   return this.storage.get('settingdata');
+  getdata(){
+    return this.storage.get('settingData');
   }
 
-
-  savetoStorage(settingdata)
-  {
-   this.settingstoringdata = JSON.stringify(settingdata);
-   this.storage.set('settingdata', this.settingstoringdata);
-   console.log('this is setting data' + settingdata );
+  saveSettingData(settingItem) {
+    this.newSettingData = JSON.stringify(settingItem);
+    this.storage.set('settingData', this.newSettingData);
+    console.log('this is data here' , this.newSettingData);
   }
+
 }

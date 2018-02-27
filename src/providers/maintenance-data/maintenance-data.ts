@@ -10,23 +10,19 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class MaintenanceDataProvider {
-newmaintenancedata;
-  constructor( public storage: Storage) 
-  {
-   console.log('Hello MaintenanceDataProvider Provider');
+  newMaintenanceData;
+  
+  constructor( public storage: Storage) {
+    console.log('Hello MaintenanceDataProvider Provider');
   }
 
-
-  getdata()
-  {
-   return this.storage.get('maintenancedata');
+  getdata(){
+    return this.storage.get('maintenanceData');
   }
 
-
-  savemaintenace(maintenancedataitems)
-  {
-   this.newmaintenancedata = JSON.stringify(maintenancedataitems);
-   this.storage.set('maintenancedata', this.newmaintenancedata);
-   console.log('this is data here' , maintenancedataitems);
+  savemaintenace(maintenanceDataItems){
+    this.newMaintenanceData = JSON.stringify(maintenanceDataItems);
+    this.storage.set('maintenanceData', this.newMaintenanceData);
+    console.log('this is data here' , maintenanceDataItems);
   }
 }

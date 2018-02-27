@@ -5,50 +5,51 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="secondary">
-  <ion-title>Gas Mileage Detail</ion-title>
+      <ion-buttons end>
+          <button ion-button icon-only (click) = "gotoSettingPage()" >
+          <ion-icon name="settings"></ion-icon>
+          </button>
+          </ion-buttons>
+     <ion-title text-center>Gas Mileage Detail </ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-
-
-    <ion-item text-center color="secondary">
-    Detail
+  
+    <ion-item text-center color="secondary" >
+        Detail  
     </ion-item>
- 
+    <ion-item text-center >
+      <ion-row>
+        <ion-col color="secondary">
+          Date
+        </ion-col>
+        <ion-col *ngIf="settingDataMileage.gasUnit != Null">
+          {{settingDataMileage.gasUnit}}
+        </ion-col>
+        <ion-col *ngIf="settingDataMileage.currencyType != Null" >
+          {{currency}}
+        </ion-col>
+      </ion-row>
+    </ion-item> 
 
-    <ion-item >
-    <ion-row>
-    <ion-col >
-     Date
-    </ion-col>
-    <ion-col >
-     Litre / Gallons
-    </ion-col>
-    </ion-row>
-
-    <ion-row>
-    <ion-col >
-    {{mileageitemssave.mileageDate}}
-    </ion-col>
-    <ion-col>
-    {{mileageitemssave.mileageFuel}}
-    </ion-col>
-    </ion-row>
+    <ion-item text-center  >
+      <ion-row *ngFor="let mile of mileageItemsSave"  (click)="editMileage(mile)">
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
+          {{mile.mileageDate}}
+        </ion-col>
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
+          {{mile.mileageFuel}}
+        </ion-col>
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
+          {{mile.mileageCost}}
+        </ion-col>
+      </ion-row>
     </ion-item>
-
-
-  </ion-card>
-
-
-
   <ion-buttons end>
-   <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
-   </ion-icon></button>
+    <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
+    </ion-icon></button>
   </ion-buttons>
 
 </ion-content>

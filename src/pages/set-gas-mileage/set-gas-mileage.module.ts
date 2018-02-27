@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { SetGasMileagePage } from './set-gas-mileage';
+//import { SetGasMileagePage } from './set-gas-mileage';
 
 @NgModule({
   declarations: [
-    SetGasMileagePage,
+    //SetGasMileagePage,
   ],
   imports: [
-    IonicPageModule.forChild(SetGasMileagePage),
+    //IonicPageModule.forChild(SetGasMileagePage),
   ],
 })
 export class SetGasMileagePageModule {}

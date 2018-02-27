@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 
 /**
@@ -15,31 +15,64 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-
+  currencyPreference: string;
   gasUnit: string;
-  currencyPrefernce: string;
-  distanceUnit: String; 
- 
+  distanceUnit: string;
+  settingDataarr: any = [];
+  settingUpData: any =[];
+  currency;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public settingService: SettingDataProvider) {
+    let datam = {
+      currencyType: 'USA-Dollar',
+      gasUnit: 'Litre',
+      distanceUnit: 'KiloMeter'
+    }
+    this.settingService.getdata().then((settingData) =>{
+      this.settingDataarr = JSON.parse(settingData);
+      if(this.settingDataarr == null){
+        this.settingDataarr = datam;
+      }
+      if(this.settingDataarr.gasUnit == undefined){
+        this.settingDataarr.gasUnit = datam.gasUnit;
+      }
+      if(this.settingDataarr.currencyType == undefined){
+        this.settingDataarr.currencyType = datam.currencyType;
+      }
+      if(this.settingDataarr.distanceUnit == undefined){
+        this.settingDataarr.distanceUnit = datam.distanceUnit;
+      }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public setteingservice: SettingDataProvider, public events: Events)
-  {
+      if(this.settingDataarr.currencyType == "USA-Dollar"){
+        this.currency = '$';
+      }
+      if(this.settingDataarr.currencyType == "British-Pound"){
+        this.currency = '₤';
+      }
+      if(this.settingDataarr.currencyType == "Canadian-Dollar"){
+        this.currency = 'Can-$'
+      }
+      if(this.settingDataarr.currencyType == "Pakistani-Ruppee"){
+        this.currency = 'Rs'
+      }
+      console.log('setting data on setting page + ' + this.settingDataarr.currencyType );
+    });
   }
-
-  ionViewDidLoad() 
-  {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
   }
-
-
-  // setting data to array
-  savesetting()
-  {
-   let settingdata = 
-   {
-    gasUnit: this.gasUnit,
-    currencyPrefernce: this.currencyPrefernce,
-    distanceUnit: this.distanceUnit
-   }
-   this.viewCtrl.dismiss(settingdata);
+  savesetting(){
+    let settingData = {
+      currencyType: this.currencyPreference,
+      gasUnit: this.gasUnit,
+      distanceUnit: this.distanceUnit
+    }
+   
+    this.saveSettingData(settingData);
+    this.viewCtrl.dismiss(settingData);
   }
+  saveSettingData(settingData){
+    this.settingUpData = settingData;
+    this.settingService.saveSettingData(this.settingUpData);
+  }
+
 }

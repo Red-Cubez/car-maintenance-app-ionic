@@ -6,34 +6,31 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-  <ion-title>Report</ion-title>
-  </ion-navbar>
+    <ion-navbar color="secondary">
+       <ion-title text-center>Reports</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-slides pager>
-
-        <ion-slide >
-         <!-- <chart [options]="maintenanceReportoption" type="chart"></chart> -->
-
-         <ion-item>
-           {{maintenancedataforreport.maintenanceCost}}
-         </ion-item>
-        </ion-slide>
+  <ion-slides pager>
+    <ion-slide >
+      Maintenance Report ({{carNameOnReport}})
+      <canvas #barCanvas></canvas>
+    </ion-slide>
+    
+    <ion-slide >
+      Mileage Report ({{carNameOnReport}})
+      <canvas #doughnutCanvas></canvas>  
+    </ion-slide>
+    
+    <ion-slide >
+      Yearly Report ({{carNameOnReport}})
+      <canvas #lineCanvas></canvas>
+    </ion-slide>
       
-        <ion-slide >
-            <h2>Slide 2</h2>
-
-        </ion-slide>
-      
-        <ion-slide >
-          <h2>Slide 3</h2>
-        </ion-slide>
-      
-    </ion-slides>
+  </ion-slides>
 
 </ion-content>

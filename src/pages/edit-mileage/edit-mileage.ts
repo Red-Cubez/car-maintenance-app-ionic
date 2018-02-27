@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { SetGasMileagePage } from '../set-gas-mileage/set-gas-mileage';
+import { IonicPage, NavController, NavParams, ViewController,AlertController,ModalController } from 'ionic-angular';
 import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
 import { SettingDataProvider } from '../../providers/setting-data/setting-data';
-import { EditMileagePage } from '../edit-mileage/edit-mileage';
-import { RelationDataProvider } from '../../providers/relation-data/relation-data';
 import { SettingsPage } from '../settings/settings';
 
+
 /**
- * Generated class for the GasMileageDetailPage page.
+ * Generated class for the EditMileagePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -16,19 +14,26 @@ import { SettingsPage } from '../settings/settings';
 
 @IonicPage()
 @Component({
-  selector: 'page-gas-mileage-detail',
-  templateUrl: 'gas-mileage-detail.html',
+  selector: 'page-edit-mileage',
+  templateUrl: 'edit-mileage.html',
 })
-export class GasMileageDetailPage {
+export class EditMileagePage {
+  settingDataMileage:any =[];
+  mileageItemsSave:any =[];
 
-  mileageItemsSave = [];
-  public indexonMileage;
-  public settingDataMileage: any = [];
-  relationArray:any = [];
-  relationNumber;
+  dateTemp;
+  costTemp;
+  fuelTemp;
+  indexOn;
+  date;
+  cost;
+  fuel;
+  index;
+  currentDate: string = new Date().toISOString();
   currency;
-  constructor(public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageService: MileageDataProvider) {
-    this.indexonMileage = this.navParams.get('indexSended');
+
+  constructor(public modalCtrl: ModalController,public alertCtrl: AlertController,public settingService: SettingDataProvider,public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,public mileageService: MileageDataProvider) {
+    this.index = this.navParams.get('index');
     let datam = {
       currencyType: 'USA-Dollar',
       gasUnit: 'Litre',
@@ -62,95 +67,38 @@ export class GasMileageDetailPage {
     this.mileageService.getdata().then((finaldata) => {
       this.mileageItemsSave = JSON.parse(finaldata);
       console.log('final data on mileage detail page =  ' + this.mileageItemsSave);
-    });
-    this.relationService.getdata().then((relationData)=>{
-      this.relationArray = JSON.parse(relationData);
-      console.log('relationData on mileage detail page =  ' + this.mileageItemsSave);
-      if(this.relationArray != null){
-        for(let i=0;i<this.relationArray.length;i++){
-          if(this.relationArray[i].carIndex == this.indexonMileage){
-            this.relationNumber = this.relationArray[i].relationNumber;
-          }
-        }
-        console.log('relation number on mileage detail page =  ' + this.relationNumber);
+     
+      this.dateTemp = this.mileageItemsSave[this.index].mileageDate;
+      this.costTemp = this.mileageItemsSave[this.index].mileageCost;
+      this.fuelTemp = this.mileageItemsSave[this.index].mileageFuel;
+      this.indexOn = this.mileageItemsSave[this.index].indexNumbermileage;
+      if(this.cost == null){
+        this.cost = this.costTemp
+      }
+      if(this.date == null){
+        this.date = this.dateTemp
+      }
+      if(this.fuel == null){
+        this.fuel = this.fuelTemp
       }
     });
-    
-    console.log('index on mileage page - ' + this.indexonMileage);
   }
 
-  ionViewDidLoad(){
-    console.log('ionViewDidLoad GasMileageDetailPage');
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad EditMileagePage');
   }
-
-  editMileage(mile){
-    let index = this.mileageItemsSave.indexOf(mile);
-    let modal = this.modalCtrl.create(EditMileagePage,{
-      index
-    });
-    modal.onDidDismiss(dataOn => {
-      if(dataOn == undefined){
+  setgasmileagesetting(){
+    if(this.mileageItemsSave != null){
+      let data = {
+        indexNumbermileage: this.indexOn,
+        mileageDate: this.date,
+        mileageFuel: this.fuel,
+        mileageCost: this.cost,
+        mileageYear: this.date.slice(0,4)
       }
-      else{
-        if(dataOn != undefined){
-          if(dataOn.temprary == 'toDelete'){
-            console.log("data is undefined")
-        
-            let data = {
-              indexNumbermileage: 0,
-              mileageDate: 0,
-              mileageFuel: 0,
-              mileageCost: 0
-            }
-  
-            this.mileageItemsSave[index] = dataOn;
-            this.mileageItemsSave.splice(index,1)
-            this.mileageService.savemileageitems(this.mileageItemsSave);
-            this.navCtrl.resize();
-          }
-          else{
-            let data = {
-              indexNumbermileage: dataOn.indexNumbermileage,
-              mileageDate: dataOn.mileageDate,
-              mileageFuel: dataOn.mileageFuel,
-              mileageCost: dataOn.mileageCost,
-              mileageYear: dataOn.mileageYear
-            }
-            this.mileageItemsSave[index] = dataOn;
-            this.mileageService.savemileageitems(this.mileageItemsSave);
-          }
-        }
-      }
-    });
-    modal.present();
-  }
-
-  // go  to mileage setting page
-  gotosetgasmileage(){
-    let modal = this.modalCtrl.create(SetGasMileagePage);
-    modal.onDidDismiss(mileageitems =>{
-     if(mileageitems != null){
-        let data = {
-          indexNumbermileage: this.relationNumber,
-          mileageDate: mileageitems.mileageDate,
-          mileageFuel: mileageitems.mileageFuel,
-          mileageCost: mileageitems.mileageCost,
-          mileageYear: mileageitems.mileageYear
-        }
-        this.savemileageitems(data);
-      } // end if
-    });
-    modal.present();
-  }
-
-
-  // setting maileage data to milage provider
-  savemileageitems(mileageItems){
-    if(this.mileageItemsSave == null){
-      this.mileageItemsSave = [];
+     
+      this.viewCtrl.dismiss(data);
     }
-   this.mileageItemsSave.push(mileageItems);
-   this.mileageService.savemileageitems(this.mileageItemsSave);
   }
   gotoSettingPage(){
     let modal  = this.modalCtrl.create(SettingsPage);
@@ -263,4 +211,54 @@ export class GasMileageDetailPage {
     this.settingDataMileage = data;
     this.settingService.saveSettingData(this.settingDataMileage);
   }
+  savemileageitems(mileageItems){
+    if(this.mileageItemsSave == null){
+      this.mileageItemsSave = [];
+    }
+   this.mileageItemsSave[this.index] = mileageItems;
+   this.mileageService.savemileageitems(this.mileageItemsSave);
+  }
+  delete(final){
+
+    let index = this.index;
+   
+    let alert = this.alertCtrl.create({
+      title: 'Delete',
+      message: 'Do you want to delete the selected Car Data?',
+      buttons: [{
+        text: 'Delete',
+        handler: () =>{
+         
+          if(this.mileageItemsSave != null){
+            // index = this.maintenanceDataItems.indexOf(final);
+            // indexLength = this.maintenanceDataItems.length;
+            if(index > -1){
+              for(let i=0; i<this.mileageItemsSave.length;i++){
+                if(i == index){
+                  this.mileageItemsSave.splice(index, 1)
+                  this.mileageService.savemileageitems(this.mileageItemsSave);
+                }
+              }
+            }
+          } 
+          this.navCtrl.resize();
+          //this.navCtrl.pop();
+          let data = {
+            temprary: 'toDelete'
+          }
+          this.viewCtrl.dismiss(data);
+        }
+      },
+      {
+        text: 'Cancel',
+        handler: () => {
+        //this.navCtrl.pop();
+            
+      }
+    }]
+    });
+    alert.present();
+       
+  }
+
 }

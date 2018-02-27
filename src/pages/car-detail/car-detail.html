@@ -5,64 +5,61 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="secondary">
-  <ion-title>Car Detail</ion-title>
+  
+      <ion-buttons end>
+          <button ion-button icon-only (click) = "gotoSettingPage()" >
+          <ion-icon name="settings"></ion-icon>
+          </button>
+          </ion-buttons>
+    <ion-title text-center>{{carItem.carMake}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
-
-  <ion-card>
-
-    <ion-item text-center color="secondary">
-     {{carItem.carMake}}
+  
+    <ion-item (click)="editCarItem()">
+      <ion-row>
+        <ion-col>
+          Make : {{carItem.carMake}}
+        </ion-col>
+      </ion-row>
     </ion-item>
-
-
-    <ion-item>
-    <ion-row>
-    <ion-col>
-     Make : {{carItem.carMake}}
-    </ion-col>
-    </ion-row>
-
-    <ion-row>
-    <ion-col>
-     Year : {{carItem.carYear}}
-    </ion-col>
-    </ion-row>
-
-    <ion-row>
-    <ion-col>
-     Model : {{carItem.carModel}}
-    </ion-col>
-    </ion-row>
-
-    <ion-row>
-    <ion-col>
-     Mileage : {{carItem.carMileage}}
-    </ion-col>
-    </ion-row>
+    <ion-item (click)="editCarItem()">
+      <ion-row>
+        <ion-col>
+          Year : {{carItem.carYear}}
+        </ion-col>
+      </ion-row>
     </ion-item>
-
-  </ion-card>
-
-  <ion-buttons full>
-      <button ion-button icon-only style="padding-left: 8px" (click)="gotomaintenancecostdetailpage()">Maintenance Cost $ Schedule<ion-icon name="add-circle">
-      </ion-icon></button>
-  </ion-buttons>
-
-
-  <ion-buttons left>
-      <button ion-button icon-only style="padding-left: 8px" left (click)="gotogasmileagedetail()">Gas Mileage<ion-icon name="add-circle">
-      </ion-icon></button>
-
-      <button ion-button icon-only style="padding-left: 20px" (click)="gotoreportpage()">Report<ion-icon name="add-circle">
-      </ion-icon></button>
-  </ion-buttons>
+    <ion-item (click)="editCarItem()">
+      <ion-row>
+        <ion-col>
+          Model : {{carItem.carModel}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item (click)="editCarItem()">
+      <ion-row>
+        <ion-col>
+          Mileage : {{carItem.carMileage}}
+        </ion-col>
+      </ion-row>
+    
+    </ion-item>
+  <ion-row>
+    <ion-col class="twoTopPadding">
+      <button ion-button full  style="height: 5.3rem;font-size: 1.4rem;font-weight: 500;text-transform: uppercase;border-radius: 15px; border-right-width: 1px; border-left-width: 1px; padding-left: 8px"  (click)="gotomaintenancecostdetailpage()"> Maintenance Cost</button>
+    </ion-col>
+    <ion-col class="twoTopPadding">
+      <button ion-button full  style="padding-left: 8px; height: 5.3rem;font-size: 1.4rem;font-weight: 500;text-transform: uppercase;border-radius: 15px; border-right-width: 1px; border-left-width: 1px" (click)="gotogasmileagedetail()">Gas Mileage</button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="twoTopPadding">
+      <button ion-button full  style="height: 5.3rem;font-size: 1.4rem;font-weight: 500;text-transform: uppercase;border-radius: 15px; border-right-width: 1px; border-left-width: 1px" (click)="gotoreportpage()">Report</button>
+    </ion-col>
+  </ion-row>
 
 </ion-content>
