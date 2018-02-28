@@ -22,21 +22,25 @@
       <ion-label floating>Date:</ion-label>
       <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="mileageDate"></ion-datetime>
     </ion-item>
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.mileageDate == null) || (this.mileageDate == "") || (this.mileageDate == " "))'> Please Enter Mileage Cost</p>
 
     <ion-item >
       <ion-label floating >{{settingDataMileage.gasUnit}} </ion-label>
       <ion-input type="number" [(ngModel)]="mileageFuel"></ion-input>
     </ion-item>
-     
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.mileageFuel == null) || (this.mileageFuel == "") || (this.mileageFuel == " "))'> Please Enter Mileage Fuel</p>
+
     <ion-item >
       <ion-label floating >{{currency}} </ion-label>
       <ion-input type="number" [(ngModel)]="mileageCost"></ion-input>
     </ion-item>
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.mileageCost == null) || (this.mileageCost == "") || (this.mileageCost == " "))'> Please Enter Mileage Cost</p>
 
-    <ion-item text-center color="secondary" (click)= "setgasmileagesetting()">
-        Add
-      </ion-item>
-      
+      <ion-row>
+        <ion-col class="twoTopPadding">
+          <button ion-button full color="secondary" style="height: 3.5rem;font-size: 1.4rem;font-weight: 100;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px; margin-left: 0.5%" (click)= "setgasmileagesetting()">Add </button>
+        </ion-col>
+      </ion-row>
   
 
 </ion-content>

@@ -13,7 +13,7 @@ import { RelationDataProvider } from '../../providers/relation-data/relation-dat
   templateUrl: 'home.html'
 })
 export class HomePage {
-  @ViewChild(Content) content: Content;
+  
   public CarItems = [];
   vallue;
   // declaring arrays to store car items 
@@ -42,20 +42,7 @@ export class HomePage {
       console.log('this is it ' + carData)
       
     });
-    this.maintenanceDataService.getdata().then((maintenanceData) =>{
-      this.maintenanceRecordDelete = JSON.parse(maintenanceData);
-      
-      console.log("Maintenance Data on Home Page - " + this.maintenanceRecordDelete);
-    });
-    this.mileageDataService.getdata().then((mileageData) =>{
-      this.mileageDataRecordDelete = JSON.parse(mileageData);
-      console.log("Mileage Data on Home Page - " + this.maintenanceRecordDelete);
-    });
-    this.relationService.getdata().then((relationData) =>{
-      this.relationdataToDelete = JSON.parse(relationData);
-      console.log("relation Data on Home Page - " + this.relationdataToDelete);
-
-    });
+   
    
   }
   ionViewWillEnter() {
@@ -63,11 +50,9 @@ export class HomePage {
     this.dataService.getdata().then((carData) =>{
       this.CarItems = JSON.parse(carData);
       console.log("Car Items in list - " + this.CarItems);
-      console.log('this is it ' + carData)
-      
+      console.log('this is it ' + carData);
     });
-
-
+   
   }
  
 
@@ -168,92 +153,4 @@ export class HomePage {
    // console.log("index in save function = " + relationOfCars.carIndex + "  " + relationOfCars.relationNumber);
   }
   // save detting data in setting-data provider
-  delete(carItem){
-    let alert = this.alertCtrl.create({
-      title: 'Delete',
-      message: 'Do you want to delete the selected Car Data?',
-      buttons: [{
-        text: 'Delete',
-        handler: () =>{
-          let index;
-          let indexLength;
-          if(this.CarItems != null){
-            index = this.CarItems.indexOf(carItem);
-            indexLength = this.CarItems.length;
-            if(index > -1){
-              for(let i=0; i<this.CarItems.length;i++){
-                if(i == index){
-                  this.CarItems.splice(index, 1)
-                  this.dataService.save(this.CarItems);
-                }
-              }
-            } 
-
-            if(this.relationdataToDelete != null){
-              let allIndex = this.relationdataToDelete.length;
-              let allindexOn = allIndex-1;
-              console.log('all index =  ' + allindexOn);
-              for(let i=0; i<this.relationdataToDelete.length;i++){
-                if(this.relationdataToDelete[i].carIndex == index){
-                  let indexOn = this.relationdataToDelete.indexOf(this.relationdataToDelete[i])
-                  this.numberOfRelation = this.relationdataToDelete[i].relationNumber;
-                  if(indexOn < allindexOn){
-                    //console.log(" before delete relation = " + this.relationdataToDelete[i].carIndex);
-                    this.relationdataToDelete.splice(i,1);
-                   // console.log(" after delete relation = " + this.relationdataToDelete[i].carIndex);
-                    this.relationdataToDelete[i].carIndex = indexOn;
-                    //console.log(" setting index on value = " + this.relationdataToDelete[i].carIndex);
-                    this.relationService.save(this.relationdataToDelete);
-                  }
-                  else{
-                   // console.log(" before delete relation = " + this.relationdataToDelete[i].carIndex);
-                    this.relationdataToDelete.splice(i,1);
-                    //console.log(" after delete relation = " + this.relationdataToDelete[i].carIndex);
-                    //console.log(" setting index on value = " + this.relationdataToDelete[i].carIndex);
-                    this.relationService.save(this.relationdataToDelete);
-
-                  }
-                }
-              }
-              if(this.maintenanceRecordDelete != null){
-                for(let final of this.maintenanceRecordDelete){
-                  if(final.indexonMaintenance == this.numberOfRelation){
-                    let indexOfMaintenance = this.maintenanceRecordDelete.indexOf(final)
-                    console.log("Maintenance Record before"+ this.maintenanceRecordDelete);
-                    console.log("Maintenance Index" + indexOfMaintenance);
-                    this.maintenanceRecordDelete.splice(indexOfMaintenance,1);
-                    console.log("Maintenance Record after"+ this.maintenanceRecordDelete);
-                    this.maintenanceDataService.savemaintenace(this.maintenanceRecordDelete); 
-                  }  
-                }
-              }
-              if(this.mileageDataRecordDelete != null){
-                for(let final of this.mileageDataRecordDelete){
-                  if(final.indexNumbermileage == this.numberOfRelation){
-                    let indexMileage = this.mileageDataRecordDelete.indexOf(final);
-                    console.log("Mileage Record before"+ this.maintenanceRecordDelete);
-                    console.log("Mileage Index" + indexMileage);
-                    this.mileageDataRecordDelete.splice(indexMileage,1);
-                    console.log("Mileage Record after"+ this.mileageDataRecordDelete);
-                    this.mileageDataService.savemileageitems(this.mileageDataRecordDelete);
-                    console.log("Mileage record deleted ")
-                  }
-                }
-              }  
-            } 
-          } 
-          this.navCtrl.setRoot(HomePage);
-        }
-      },
-      {
-        text: 'Cancel',
-        handler: () => {
-        this.navCtrl.setRoot(HomePage);
-        
-      }
-    }]
-    });
-    alert.present();
-   
-  }
 }

@@ -5,32 +5,28 @@
     <ion-icon name="settings"></ion-icon>
     </button>
     </ion-buttons>
-    <ion-title text-center>Car Maintenance</ion-title>
+    <ion-title text-center>Car Log</ion-title>
   </ion-navbar>
 </ion-header>
-
-<ion-content padding>
-  <ion-list>
-    <div class="item row" style="width: 100%">
-      <div class="col">
-        <ion-label style="font-size:16px">Name</ion-label>
-      </div>
-    </div>
-      <button ion-item *ngFor="let carItem of CarItems" (click)="gotocardetailpage(carItem)">
-        <div class="item row cell bg-primary-darker">
-          <div class="col">
-            {{carItem.carMake}}
-          </div>
-          <ion-buttons end>
-            <button ion-button icon-only color="danger" (click)="delete(carItem)">
-              <ion-icon name="ios-trash-outline"></ion-icon>
-            </button>
-          </ion-buttons>
-        </div>
-      </button>
-  </ion-list>
-  <ion-buttons end>
-    <button ion-button (click)="gotoadditempage()"><ion-icon name="add-circle">
-    </ion-icon></button>
-  </ion-buttons>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-label style="font-size:16px; margin-left:3%">Vehicles</ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let carItem of CarItems" (click)="gotocardetailpage(carItem)">
+    <ion-col>
+      <ion-card >
+        <ion-card-header>
+            {{carItem.carMake}} {{carItem.carModel}} ({{carItem.carYear}})
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+    
+  <ion-row>
+    <ion-col class="twoTopPadding">
+      <button ion-button full  style="height: 3.5rem;font-size: 1.4rem;font-weight: 500;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px; width: 92%; margin-left: 4%" (click)="gotoadditempage()">Add </button>
+    </ion-col>
+  </ion-row>
 </ion-content>

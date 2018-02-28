@@ -20,34 +20,27 @@
   </ion-header>
   
   <ion-content padding>
-  
-    
-  
       <ion-item>
         <ion-label floating>Item : {{itemTemp}}</ion-label>
         <ion-input type="text" [(ngModel)]="item"></ion-input>
       </ion-item>
-  
       <ion-item>
         <ion-label floating>Date : {{dateTemp}}</ion-label>
         <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="date">{{dateTemp}}</ion-datetime>
       </ion-item>
-    
       <ion-item>
         <ion-label floating>{{currency}} : {{costTemp}}</ion-label>
         <ion-input type="number" [(ngModel)]="cost"></ion-input>
       </ion-item>
-      <ion-item text-center color="secondary" (click)= "savemaintenancesetting()">
-          Save
-        </ion-item>
-   
-    <div>
-      <ion-buttons end>
-        <button ion-button icon-only color="danger" (click)="delete()">
-          <ion-icon name="ios-trash-outline"></ion-icon>
-        </button>
-      </ion-buttons>
-    </div>
-  
+    <ion-row>
+      <ion-col class="twoTopPadding">
+        <button ion-button full color="secondary" style="height: 3.5rem;font-size: 1.4rem;font-weight: 100;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px; margin-left: 0.5%"(click)= "savemaintenancesetting()">Save </button>
+      </ion-col>
+    </ion-row>
+  <ion-row>
+    <ion-col class="twoTopPadding">
+      <button ion-button full color="danger" style="height: 3.5rem;font-size: 1.4rem;font-weight: 100;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px; margin-left: 0.5%" (click)="delete()">Delete </button>
+    </ion-col>
+  </ion-row>
   </ion-content>
   

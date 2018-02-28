@@ -35,7 +35,7 @@ export class MaintenanceCostDetailPage {
   constructor(public alertCtrl: AlertController,public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events) {
     this.indexonMaintenancedetail = this.navParams.get('indexSending');
     let datam = {
-      currencyType: 'USA-Dollar',
+      currencyType: 'USD ($)',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -47,17 +47,17 @@ export class MaintenanceCostDetailPage {
       if(this.settingDataMaintenance.currencyType == undefined){
         this.settingDataMaintenance.currencyType = datam.currencyType;
       }
-      if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+      if(this.settingDataMaintenance.currencyType == "USD ($)"){
         this.currency = '$';
       }
-      if(this.settingDataMaintenance.currencyType == "British-Pound"){
+      if(this.settingDataMaintenance.currencyType == "GBP (₤)"){
         this.currency = '₤';
       }
-      if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
+      if(this.settingDataMaintenance.currencyType == "CAD ($)"){
+        this.currency = '$'
       }
-      if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
+      if(this.settingDataMaintenance.currencyType == "PKR (Rs.)"){
+        this.currency = 'Rs.'
       }
       console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
     });
@@ -76,7 +76,7 @@ export class MaintenanceCostDetailPage {
           }
         }
       }
-
+      console.log('relation number on maintenance detail page =  ' + this.relationNumber);
     });   
   }
 
@@ -137,6 +137,7 @@ export class MaintenanceCostDetailPage {
     let modal = this.modalCtrl.create(SetMaintenanceCostPage);
     modal.onDidDismiss(maintenanceItems =>{
       if(maintenanceItems != null){
+        console.log("relation number in function"  + this.relationNumber)
         let data = {
           indexonMaintenance: this.relationNumber,
           maintenanceCost: maintenanceItems.maintenanceCost,
@@ -145,7 +146,7 @@ export class MaintenanceCostDetailPage {
           maintenanceYear: maintenanceItems.maintenanceYear
         }
         this.savemaintenance(data);
-        console.log(' null value on maintenance detail page' + maintenanceItems.maintenanceYear)
+        console.log(' not null value on maintenance detail page' + maintenanceItems.maintenanceYear)
       } // end if 
       else{
         console.log(' null value on maintenance detail page')
@@ -176,17 +177,17 @@ export class MaintenanceCostDetailPage {
           gasUnit: settingData.gasUnit,
           distanceUnit: settingData.distanceUnit
         }
-        if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+        if(this.settingDataMaintenance.currencyType == "USD ($)"){
           this.currency = '$';
         }
-        if(this.settingDataMaintenance.currencyType == "British-Pound"){
+        if(this.settingDataMaintenance.currencyType == "GBP (₤)"){
           this.currency = '₤';
         }
-        if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
-          this.currency = 'Can-$'
+        if(this.settingDataMaintenance.currencyType == "CAD ($)"){
+          this.currency = '$'
         }
-        if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
-          this.currency = 'Rs'
+        if(this.settingDataMaintenance.currencyType == "PKR (Rs.)"){
+          this.currency = 'Rs.'
         }
 
         this.saveSetting(data);
@@ -197,17 +198,17 @@ export class MaintenanceCostDetailPage {
           gasUnit: settingData.gasUnit,
           distanceUnit: settingData.distanceUnit
         }
-        if(settingData.currencyType == "USA-Dollar"){
+        if(settingData.currencyType == "USD ($)"){
           this.currency = '$';
         }
-        if(settingData.currencyType == "British-Pound"){
+        if(settingData.currencyType == "GBP (₤)"){
           this.currency = '₤';
         }
-        if(settingData.currencyType == "Canadian-Dollar"){
-          this.currency = 'Can-$'
+        if(settingData.currencyType == "CAD ($)"){
+          this.currency = '$'
         }
-        if(settingData.currencyType == "Pakistani-Ruppee"){
-          this.currency = 'Rs'
+        if(settingData.currencyType == "PKR (Rs.)"){
+          this.currency = 'Rs.'
         }
 
         this.saveSetting(data);

@@ -35,7 +35,7 @@ export class EditMileagePage {
   constructor(public modalCtrl: ModalController,public alertCtrl: AlertController,public settingService: SettingDataProvider,public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams,public mileageService: MileageDataProvider) {
     this.index = this.navParams.get('index');
     let datam = {
-      currencyType: 'USA-Dollar',
+      currencyType: 'USD ($)',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -50,17 +50,17 @@ export class EditMileagePage {
       if(this.settingDataMileage.currencyType == undefined){
         this.settingDataMileage.currencyType = datam.currencyType;
       }
-      if(this.settingDataMileage.currencyType == "USA-Dollar"){
+      if(this.settingDataMileage.currencyType == "USD ($)"){
         this.currency = '$';
       }
-      if(this.settingDataMileage.currencyType == "British-Pound"){
+      if(this.settingDataMileage.currencyType == "GBP (₤)"){
         this.currency = '₤';
       }
-      if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
+      if(this.settingDataMileage.currencyType == "CAD ($)"){
+        this.currency = '$'
       }
-      if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
+      if(this.settingDataMileage.currencyType == "PKR (Rs.)"){
+        this.currency = 'Rs.'
       }
       console.log('setting data on mileage page + ' + this.settingDataMileage);
     });
@@ -112,17 +112,17 @@ export class EditMileagePage {
             gasUnit: settingData.gasUnit,
             distanceUnit: settingData.distanceUnit
           }
-          if(settingData.currencyType == "USA-Dollar"){
+          if(settingData.currencyType =="USD ($)"){
             this.currency = '$';
           }
-          if(settingData.currencyType == "British-Pound"){
+          if(settingData.currencyType == "GBP (₤)"){
             this.currency = '₤';
           }
-          if(settingData.currencyType == "Canadian-Dollar"){
-            this.currency = 'Can-$'
+          if(settingData.currencyType == "CAD ($)"){
+            this.currency = '$'
           }
-          if(settingData.currencyType == "Pakistani-Ruppee"){
-            this.currency = 'Rs'
+          if(settingData.currencyType == "PKR (Rs.)"){
+            this.currency = 'Rs.'
           }
 
           this.saveSetting(data);
@@ -133,17 +133,17 @@ export class EditMileagePage {
             gasUnit: settingData.gasUnit,
             distanceUnit: settingData.distanceUnit
           }
-          if(this.settingDataMileage.currencyType == "USA-Dollar"){
+          if(this.settingDataMileage.currencyType == "USD ($)"){
             this.currency = '$';
           }
-          if(this.settingDataMileage.currencyType == "British-Pound"){
+          if(this.settingDataMileage.currencyType == "GBP (₤)"){
             this.currency = '₤';
           }
-          if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
-            this.currency = 'Can-$'
+          if(this.settingDataMileage.currencyType == "CAD ($)"){
+            this.currency = '$'
           }
-          if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
-            this.currency = 'Rs'
+          if(this.settingDataMileage.currencyType == "PKR (Rs.)"){
+            this.currency = 'Rs.'
           }
 
           this.saveSetting(data);
@@ -154,17 +154,17 @@ export class EditMileagePage {
             gasUnit: this.settingDataMileage.gasUnit,
             distanceUnit: settingData.distanceUnit
           }
-          if(settingData.currencyType == "USA-Dollar"){
+          if(settingData.currencyType =="USD ($)"){
             this.currency = '$';
           }
-          if(settingData.currencyType == "British-Pound"){
+          if(settingData.currencyType == "GBP (₤)"){
             this.currency = '₤';
           }
-          if(settingData.currencyType == "Canadian-Dollar"){
-            this.currency = 'Can-$'
+          if(settingData.currencyType == "CAD ($)"){
+            this.currency = '$'
           }
-          if(settingData.currencyType == "Pakistani-Ruppee"){
-            this.currency = 'Rs'
+          if(settingData.currencyType == "PKR (Rs.)"){
+            this.currency = 'Rs.'
           }
 
            

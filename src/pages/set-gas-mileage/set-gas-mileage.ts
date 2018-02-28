@@ -15,8 +15,7 @@ import { SettingsPage } from '../settings/settings';
   templateUrl: 'set-gas-mileage.html',
 })
 export class SetGasMileagePage {
-
-
+  buttonClicked: boolean = false;
   mileageDate:any;
   mileageFuel: string;
   mileageCost: string;
@@ -27,7 +26,7 @@ export class SetGasMileagePage {
 
   constructor(public modalCtrl: ModalController,public settingService: SettingDataProvider, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController){
     let datam = {
-      currencyType: 'USA-Dollar',
+      currencyType: 'USD ($)',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -42,17 +41,17 @@ export class SetGasMileagePage {
       if(this.settingDataMileage.currencyType == undefined){
         this.settingDataMileage.currencyType = datam.currencyType;
       }
-      if(this.settingDataMileage.currencyType == "USA-Dollar"){
+      if(this.settingDataMileage.currencyType == "USD ($)"){
         this.currency = '$';
       }
-      if(this.settingDataMileage.currencyType == "British-Pound"){
+      if(this.settingDataMileage.currencyType == "GBP (₤)"){
         this.currency = '₤';
       }
-      if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
+      if(this.settingDataMileage.currencyType == "CAD ($)"){
+        this.currency = '$'
       }
-      if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
+      if(this.settingDataMileage.currencyType == "PKR (Rs.)"){
+        this.currency = 'Rs.'
       }
       console.log('setting data on mileage page + ' + this.settingDataMileage.gasUnit);
     });
@@ -68,6 +67,7 @@ export class SetGasMileagePage {
 
   // setting gas mileage data to array
   setgasmileagesetting(){
+    this.buttonClicked = true;
     if((this.mileageDate == null) || (this.mileageDate == "") || (this.mileageDate == " " ) ){
       // di nothing if gasmileage date is empty
     } // end if

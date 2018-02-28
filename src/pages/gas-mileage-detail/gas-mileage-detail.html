@@ -15,41 +15,33 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  
-    <ion-item text-center color="secondary" >
-        Detail  
-    </ion-item>
-    <ion-item text-center >
-      <ion-row>
-        <ion-col color="secondary">
+<ion-content>
+      <ion-row class="backg" style="width:100%;font-size: 1.8rem; margin-top:5%;">
+        <ion-col text-center>
           Date
         </ion-col>
-        <ion-col *ngIf="settingDataMileage.gasUnit != Null">
+        <ion-col *ngIf="settingDataMileage.gasUnit != Null" text-center>
           {{settingDataMileage.gasUnit}}
         </ion-col>
-        <ion-col *ngIf="settingDataMileage.currencyType != Null" >
+        <ion-col *ngIf="settingDataMileage.currencyType != Null" text-center >
           {{currency}}
         </ion-col>
       </ion-row>
-    </ion-item> 
-
-    <ion-item text-center  >
-      <ion-row *ngFor="let mile of mileageItemsSave"  (click)="editMileage(mile)">
-        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
+      <ion-row *ngFor="let mile of mileageItemsSave"  (click)="editMileage(mile)" style="width:100%; margin-top:3%;">
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber" text-center>
           {{mile.mileageDate}}
         </ion-col>
-        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber" text-center>
           {{mile.mileageFuel}}
         </ion-col>
-        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
+        <ion-col *ngIf="mile.indexNumbermileage == relationNumber" text-center>
           {{mile.mileageCost}}
         </ion-col>
       </ion-row>
-    </ion-item>
-  <ion-buttons end>
-    <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
-    </ion-icon></button>
-  </ion-buttons>
+  <ion-row>
+    <ion-col class="twoTopPadding">
+      <button ion-button full  style="height: 3.5rem;font-size: 1.4rem;font-weight: 100;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px" (click)="gotosetgasmileage()">Add </button>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

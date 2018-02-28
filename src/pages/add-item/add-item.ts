@@ -16,7 +16,7 @@ import { MaintenanceCostDetailPage } from '../maintenance-cost-detail/maintenanc
   templateUrl: 'add-item.html',
 })
 export class AddItemPage {
-
+  buttonClicked: boolean = false;
   carMake: string;
   carYear: number;
   carModel: string;
@@ -37,6 +37,7 @@ export class AddItemPage {
   }
   // saving items data to array and send it to home page
   saveitems(){
+    this.buttonClicked = true;
     if((this.carMake == null) || (this.carMake == "") || (this.carMake == " ") ){
       // do nothing if carMake is empty
     }// end if

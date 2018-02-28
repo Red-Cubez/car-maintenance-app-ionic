@@ -25,22 +25,23 @@
       <ion-label floating>Model:</ion-label>
       <ion-input type="text" required  [(ngModel)]="carModel"></ion-input>
     </ion-item>  
-    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carModel == null) || (this.carModel == "") || (this.carModel == " "))'> Please Enter Name</p>
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carModel == null) || (this.carModel == "") || (this.carModel == " "))'> Please Enter Model</p>
     <ion-item>
       <ion-label floating>Year:</ion-label>
       <ion-datetime displayFormat="YYYY" min="1970" max="2020"  donText ="Select" [(ngModel)]="carYear"></ion-datetime>
     </ion-item> 
-    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carYear == null) || (this.carYear == "") || (this.carYear == " "))'> Please Enter Name</p>
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carYear == null) || (this.carYear == "") || (this.carYear == " "))'> Please Enter Year</p>
 
     <ion-item>
       <ion-label floating>Mileage:</ion-label>
       <ion-input type="number"  [(ngModel)]="carMileage" ></ion-input>
     </ion-item>
-    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carMileage == null) || (this.carMileage == "") || (this.carMileage == " "))'> Please Enter Name</p>
-
-    <ion-item text-center color="secondary" (click)= "saveitems()">
-        Add
-      </ion-item>
+    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.carMileage == null) || (this.carMileage == "") || (this.carMileage == " "))'> Please Enter Mileage</p>
+    <ion-row>
+      <ion-col class="twoTopPadding">
+        <button ion-button full color="secondary" style="height: 3.5rem;font-size: 1.4rem;font-weight: 100;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px; margin-left: 0.5%" (click)= "saveitems()">Add </button>
+      </ion-col>
+    </ion-row>
  
       
 </ion-content>

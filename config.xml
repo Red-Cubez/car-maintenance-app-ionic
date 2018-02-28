@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.redcubez.carMaintenanceRecordKeeper" version="0.0.1" xmlns="http://www.redcubez.com" xmlns:cdv="http://www.redcubez.com">
-    <name>Car Maintenance</name>
-    <description>An application which keeps you update about your your car maintenance and gasoline cost</description>
+<widget id="com.redcubez.carLog" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Car Log</name>
+    <description>An app to help keep track of expenditure on maintenance and gas of vehicles</description>
     <author email="hello@redcubez.com" href="http://www.redcubez.com">Red Cubez Inc.</author>
     <content src="index.html" />
     <access origin="*" />

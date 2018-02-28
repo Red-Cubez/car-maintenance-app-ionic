@@ -23,9 +23,9 @@ export class SettingsPage {
   currency;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public settingService: SettingDataProvider) {
     let datam = {
-      currencyType: 'USA-Dollar',
-      gasUnit: 'Litre',
-      distanceUnit: 'KiloMeter'
+      currencyType: 'USD ($)',
+      gasUnit: 'Litres',
+      distanceUnit: 'Kilometers'
     }
     this.settingService.getdata().then((settingData) =>{
       this.settingDataarr = JSON.parse(settingData);
@@ -42,17 +42,17 @@ export class SettingsPage {
         this.settingDataarr.distanceUnit = datam.distanceUnit;
       }
 
-      if(this.settingDataarr.currencyType == "USA-Dollar"){
+      if(this.settingDataarr.currencyType == "USD ($)"){
         this.currency = '$';
       }
-      if(this.settingDataarr.currencyType == "British-Pound"){
+      if(this.settingDataarr.currencyType == "GBP (₤)"){
         this.currency = '₤';
       }
-      if(this.settingDataarr.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
+      if(this.settingDataarr.currencyType == "CAD ($)"){
+        this.currency = '$'
       }
-      if(this.settingDataarr.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
+      if(this.settingDataarr.currencyType == "PKR (Rs.)"){
+        this.currency = 'Rs.'
       }
       console.log('setting data on setting page + ' + this.settingDataarr.currencyType );
     });

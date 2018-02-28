@@ -12,53 +12,35 @@
           <ion-icon name="settings"></ion-icon>
           </button>
           </ion-buttons>
-    <ion-title text-center>Maintenance Costs </ion-title>
+    <ion-title text-center>Maintenance Costs</ion-title>
   </ion-navbar>
 </ion-header>
-
-
-<ion-content padding>
-  
- 
-    
-    <ion-item text-center color="secondary">
-      Detail
-    </ion-item>
-
-
-    <ion-item text-center>
-      <ion-row>
-        <ion-col>
+<ion-content>
+      <ion-row color="secondary" class="backg" style="width:100%; font-size: 1.8rem; margin-top:5%;">
+        <ion-col text-center class="colColor">
           Item
         </ion-col>
-        <ion-col>
+        <ion-col text-center class="colColor">
           Date
         </ion-col>
-        <ion-col *ngIf="settingDataMaintenance.currencyType != Null" >
+        <ion-col *ngIf="settingDataMaintenance.currencyType != Null" text-center class="colColor">
           {{currency}}
         </ion-col>
       </ion-row>
-    </ion-item>
-
-    <ion-item   text-center >
-
-      <ion-row *ngFor = "let final of maintenanceDataItems" (click)="editmaintenance(final)">
-        <ion-col *ngIf="final.indexonMaintenance == relationNumber" >
+      <ion-row *ngFor = "let final of maintenanceDataItems" (click)="editmaintenance(final)" style="width:100%; margin-top:3%;">
+        <ion-col *ngIf="final.indexonMaintenance == relationNumber" text-center>
           {{final.maintenanceItem}}
         </ion-col>
-      
-        <ion-col *ngIf="final.indexonMaintenance == relationNumber">
+        <ion-col *ngIf="final.indexonMaintenance == relationNumber" text-center>
           {{final.maintenanceDate}}
         </ion-col>
-        <ion-col *ngIf="final.indexonMaintenance == relationNumber">
+        <ion-col *ngIf="final.indexonMaintenance == relationNumber" text-center>
           {{final.maintenanceCost}}
         </ion-col>
       </ion-row>
-     
-    </ion-item>
-  <ion-buttons end>
-    <button ion-button icon-only style="padding-left: 8px" (click)="gotosetmaintenancecost()">Add<ion-icon name="add-circle">
-    </ion-icon></button>
-  </ion-buttons>
-    
+  <ion-row>
+    <ion-col class="twoTopPadding">
+      <button ion-button full  style="height: 3.5rem;font-size: 1.4rem;font-weight: 100;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px" (click)="gotosetmaintenancecost()">Add</button>
+    </ion-col>
+  </ion-row>
 </ion-content>

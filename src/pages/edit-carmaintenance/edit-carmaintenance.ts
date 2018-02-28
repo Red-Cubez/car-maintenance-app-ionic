@@ -38,7 +38,7 @@ export class EditCarmaintenancePage {
     this.index = this.navParams.get('index');
     console.log("index on edit maintenance page = " + this.index);
     let datam = {
-      currencyType: 'USA-Dollar',
+      currencyType: 'USD ($)',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -50,17 +50,17 @@ export class EditCarmaintenancePage {
       if(this.settingDataMaintenance.currencyType == undefined){
         this.settingDataMaintenance.currencyType = datam.currencyType;
       }
-      if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+      if(this.settingDataMaintenance.currencyType == "USD ($)"){
         this.currency = '$';
       }
-      if(this.settingDataMaintenance.currencyType == "British-Pound"){
+      if(this.settingDataMaintenance.currencyType == "GBP (₤)"){
         this.currency = '₤';
       }
-      if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
+      if(this.settingDataMaintenance.currencyType == "CAD ($)"){
+        this.currency = '$'
       }
-      if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
+      if(this.settingDataMaintenance.currencyType == "PKR (Rs.)"){
+        this.currency = 'Rs.'
       }
       console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
     });
@@ -113,17 +113,17 @@ export class EditCarmaintenancePage {
           gasUnit: settingData.gasUnit,
           distanceUnit: settingData.distanceUnit
         }
-        if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+        if(this.settingDataMaintenance.currencyType == "USD ($)"){
           this.currency = '$';
         }
-        if(this.settingDataMaintenance.currencyType == "British-Pound"){
+        if(this.settingDataMaintenance.currencyType == "GBP (₤)"){
           this.currency = '₤';
         }
-        if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
-          this.currency = 'Can-$'
+        if(this.settingDataMaintenance.currencyType == "CAD ($)"){
+          this.currency = '$'
         }
-        if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
-          this.currency = 'Rs'
+        if(this.settingDataMaintenance.currencyType == "PKR (Rs.)"){
+          this.currency = 'Rs.'
         }
 
         this.saveSetting(data);
@@ -134,17 +134,17 @@ export class EditCarmaintenancePage {
           gasUnit: settingData.gasUnit,
           distanceUnit: settingData.distanceUnit
         }
-        if(settingData.currencyType == "USA-Dollar"){
+        if(settingData.currencyType == "USD ($)"){
           this.currency = '$';
         }
-        if(settingData.currencyType == "British-Pound"){
+        if(settingData.currencyType == "GBP (₤)"){
           this.currency = '₤';
         }
-        if(settingData.currencyType == "Canadian-Dollar"){
-          this.currency = 'Can-$'
+        if(settingData.currencyType == "CAD ($)"){
+          this.currency = '$'
         }
-        if(settingData.currencyType == "Pakistani-Ruppee"){
-          this.currency = 'Rs'
+        if(settingData.currencyType == "PKR (Rs.)"){
+          this.currency = 'Rs.'
         }
 
         this.saveSetting(data);

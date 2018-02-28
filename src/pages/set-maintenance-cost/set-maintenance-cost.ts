@@ -16,7 +16,7 @@ import { SettingsPage } from '../settings/settings';
   templateUrl: 'set-maintenance-cost.html',
 })
 export class SetMaintenanceCostPage {
-
+  buttonClicked: boolean = false;
   maintenanceItem: string;
   maintenanceDate: String;
   maintenanceCost: string;
@@ -29,7 +29,7 @@ export class SetMaintenanceCostPage {
   currency;
   constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public modalCtrl: ModalController) {
     let datam = {
-      currencyType: 'USA-Dollar',
+      currencyType: 'USD ($)',
       gasUnit: 'Litre',
       distanceUnit: 'KiloMeter'
     }
@@ -43,16 +43,16 @@ export class SetMaintenanceCostPage {
       if(this.settingDataMaintenance.currencyType == undefined){
         this.settingDataMaintenance.currencyType = datam.currencyType;
       }
-      if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
+      if(this.settingDataMaintenance.currencyType == "USD ($)"){
         this.currency = '$';
       }
-      if(this.settingDataMaintenance.currencyType == "British-Pound"){
+      if(this.settingDataMaintenance.currencyType == "GBP (₤)"){
         this.currency = '₤';
       }
-      if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
+      if(this.settingDataMaintenance.currencyType == "CAD ($)"){
+        this.currency = '$'
       }
-      if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
+      if(this.settingDataMaintenance.currencyType == "PKR (Rs.)"){
         this.currency = 'Rs'
       }
       console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
@@ -66,6 +66,7 @@ export class SetMaintenanceCostPage {
   }
   // saving maintenance data to array
   savemaintenancesetting(){
+    this.buttonClicked = true;
     if ((this.maintenanceItem == null) || (this.maintenanceItem == "") || (this.maintenanceItem == " ")){
       // do nothing if maintenanceItem is empty
     } // end if

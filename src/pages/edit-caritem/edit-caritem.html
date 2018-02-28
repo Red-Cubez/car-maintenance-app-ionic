@@ -40,8 +40,10 @@
         <ion-label floating>Mileage:{{carItem.carMileage}}</ion-label>
         <ion-input type="number"  [(ngModel)]="carMileage" ></ion-input>
       </ion-item>
-      <ion-item text-center color="secondary" (click)= "saveitems()">
-          Edit
-        </ion-item>
+      <ion-row>
+        <ion-col class="twoTopPadding">
+          <button ion-button full color="secondary" style="height: 3.5rem;font-size: 1.4rem;font-weight: 100;text-transform: uppercase;border-radius: 25px; border-right-width: 1px; border-left-width: 1px; margin-left: 0.5%" (click)= "saveitems()">Save </button>
+        </ion-col>
+      </ion-row>
 
 </ion-content>

@@ -57,7 +57,7 @@ export class ReportPage {
   relationArray: any =[];
   relationNumber;
   sumOfMileageFuel = 0;
-  SumOfMileageCost;
+  SumOfMileageCost = 0;
   sumOfMileageDate;
   finalMileageData: any =[];
   firstMileDate;
@@ -249,19 +249,6 @@ export class ReportPage {
 
           this.yearMileageCost = [0];
           this.yearMileageDate = ['0'];
-          for(let i=0;i<this.yearlyCost.length-1;i++){
-            for(let j=(i+1);j<this.yearlyCost.length;j++){
-              if(this.yearlyCost[i]<this.yearlyCost[j]){
-                this.tempOne= this.yearlyCost[i]
-                this.yearlyCost[i] = this.yearlyCost[j];
-                this.yearlyCost[j] = this.tempOne;
-
-                this.tempTwo= this.yearlyDate[i]
-                this.yearlyDate[i] = this.yearlyDate[j];
-                this.yearlyDate[j] = this.tempTwo;
-              }
-            }
-          }
           this.dateOfYear = this.yearlyDate[0];
           for(let i = 0;i<this.yearlyDate.length;i++){
             if(this.yearlyDate[i] == this.dateOfYear){
@@ -280,6 +267,8 @@ export class ReportPage {
           }
           this.yearMileageCost.push(this.sumOfMileageFuel);
           this.yearMileageDate.push(this.sumOfMileageDate);
+          console.log("mileage cost" + this.yearMileageCost);
+          console.log("mileage Date" + this.yearMileageDate)
           this.createYearlyGraph();
         }
       }
@@ -324,7 +313,9 @@ export class ReportPage {
       options: {
           scales: {
               yAxes: [{
-            
+                ticks: {
+                  beginAtZero:true
+                }
               }]
           }
       }
@@ -340,8 +331,8 @@ export class ReportPage {
       data: {
           labels: this.mileageDate,
           datasets: [{
-              label: "Fuel",
-              data: this.mileageFuel,
+              label: "Cost",
+              data: this.mileageCost,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -364,7 +355,9 @@ export class ReportPage {
       options: {
           scales: {
               yAxes: [{
-                 title: 'Fuel'
+                ticks: {
+                  beginAtZero:true
+                }
               }]
           }
       }
