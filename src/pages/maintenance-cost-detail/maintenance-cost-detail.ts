@@ -32,6 +32,8 @@ export class MaintenanceCostDetailPage {
   relationArray: any = [];
   relationNumber;
   currency;
+  temp;
+  sumOfmaintenanceCost: number = 0;
   constructor(public alertCtrl: AlertController,public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public maintenanceService: MaintenanceDataProvider, public events: Events) {
     this.indexonMaintenancedetail = this.navParams.get('indexSending');
     let datam = {
@@ -65,6 +67,21 @@ export class MaintenanceCostDetailPage {
     this.maintenanceService.getdata().then((finalData) => {
       this.maintenanceDataItems = JSON.parse(finalData);
       console.log('final data on maintenance detail page =  ' + this.maintenanceDataItems);
+      if(this.maintenanceDataItems != null){
+        for(let i=0;i<this.maintenanceDataItems.length-1;i++){
+          for(let j=(i+1);j<this.maintenanceDataItems.length;j++){
+            if(this.maintenanceDataItems[i].maintenanceDate>this.maintenanceDataItems[j].maintenanceDate){
+              this.temp = this.maintenanceDataItems[i]
+              this.maintenanceDataItems[i] = this.maintenanceDataItems[j];
+              this.maintenanceDataItems[j] = this.temp
+            }
+          }
+        }
+        for(let i = 0; i< this.maintenanceDataItems.length;i++){
+          this.sumOfmaintenanceCost += parseInt(this.maintenanceDataItems[i].maintenanceCost);
+        }
+        console.log('Sum of maintenance Cost =  ' + this.sumOfmaintenanceCost);
+      }
     });
     this.relationService.getdata().then((relationData) => {
       this.relationArray = JSON.parse(relationData);
@@ -107,12 +124,15 @@ export class MaintenanceCostDetailPage {
               maintenanceCost: 0,
               maintenanceDate: 0,
               maintenanceItem: 0,
-              maintenanceYear: 0
+              maintenanceYear: 0,
+              maintenanceMonth: 0
             }
             this.maintenanceDataItems[index] = dataOn;
             this.maintenanceDataItems.splice(index,1);
             console.log("maintenence on = " + this.maintenanceDataItems[index]);
             this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+           
+             
 
           }
           else{
@@ -121,11 +141,25 @@ export class MaintenanceCostDetailPage {
               maintenanceCost: data.maintenanceCost,
               maintenanceDate: data.maintenanceDate,
               maintenanceItem: data.maintenanceItem,
-              maintenanceYear: data.maintenanceYear
+              maintenanceYear: data.maintenanceYear,
+              maintenanceMonth: data.maintenanceMonth
             }
             this.maintenanceDataItems[index] = dataOn;
             console.log("maintenence on = " + this.maintenanceDataItems[index]);
             this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+            for(let i=0;i<this.maintenanceDataItems.length-1;i++){
+              for(let j=(i+1);j<this.maintenanceDataItems.length;j++){
+                if(this.maintenanceDataItems[i].maintenanceDate>this.maintenanceDataItems[j].maintenanceDate){
+                  this.temp = this.maintenanceDataItems[i]
+                  this.maintenanceDataItems[i] = this.maintenanceDataItems[j];
+                  this.maintenanceDataItems[j] = this.temp
+                }
+              }
+            }
+            this.sumOfmaintenanceCost = 0;
+            for(let i = 0; i< this.maintenanceDataItems.length;i++){
+              this.sumOfmaintenanceCost += parseInt(this.maintenanceDataItems[i].maintenanceCost);
+            }
           }
         }
       }
@@ -143,7 +177,8 @@ export class MaintenanceCostDetailPage {
           maintenanceCost: maintenanceItems.maintenanceCost,
           maintenanceDate: maintenanceItems.maintenanceDate,
           maintenanceItem: maintenanceItems.maintenanceItem,
-          maintenanceYear: maintenanceItems.maintenanceYear
+          maintenanceYear: maintenanceItems.maintenanceYear,
+          maintenanceMonth: maintenanceItems.maintenanceMonth
         }
         this.savemaintenance(data);
         console.log(' not null value on maintenance detail page' + maintenanceItems.maintenanceYear)
@@ -167,6 +202,19 @@ export class MaintenanceCostDetailPage {
     }
     this.maintenanceDataItems.push(maintenancedata);
     this.maintenanceService.savemaintenace(this.maintenanceDataItems);
+    for(let i=0;i<this.maintenanceDataItems.length-1;i++){
+      for(let j=(i+1);j<this.maintenanceDataItems.length;j++){
+        if(this.maintenanceDataItems[i].maintenanceDate>this.maintenanceDataItems[j].maintenanceDate){
+          this.temp = this.maintenanceDataItems[i]
+          this.maintenanceDataItems[i] = this.maintenanceDataItems[j];
+          this.maintenanceDataItems[j] = this.temp
+        }
+      }
+     }
+     this.sumOfmaintenanceCost = 0;
+     for(let i = 0; i< this.maintenanceDataItems.length;i++){
+      this.sumOfmaintenanceCost += parseInt(this.maintenanceDataItems[i].maintenanceCost);
+    }
   }
   gotoSettingPage(){
     let modal = this.modalCtrl.create(SettingsPage);

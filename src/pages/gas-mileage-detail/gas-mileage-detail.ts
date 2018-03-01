@@ -27,6 +27,8 @@ export class GasMileageDetailPage {
   relationArray:any = [];
   relationNumber;
   currency;
+  temp;
+  sumOfMileageCost: number = 0;
   constructor(public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageService: MileageDataProvider) {
     this.indexonMileage = this.navParams.get('indexSended');
     let datam = {
@@ -62,6 +64,21 @@ export class GasMileageDetailPage {
     this.mileageService.getdata().then((finaldata) => {
       this.mileageItemsSave = JSON.parse(finaldata);
       console.log('final data on mileage detail page =  ' + this.mileageItemsSave);
+      if(this.mileageItemsSave != null){
+        for(let i=0;i<this.mileageItemsSave.length-1;i++){
+          for(let j=(i+1);j<this.mileageItemsSave.length;j++){
+            if(this.mileageItemsSave[i].mileageDate>this.mileageItemsSave[j].mileageDate){
+              this.temp = this.mileageItemsSave[i]
+              this.mileageItemsSave[i] = this.mileageItemsSave[j];
+              this.mileageItemsSave[j] = this.temp
+            }
+          }
+        }
+        for(let i = 0;i<this.mileageItemsSave.length;i++){
+          this.sumOfMileageCost += parseInt(this.mileageItemsSave[i].mileageCost);
+        }
+        console.log('sum of mileage Cost =  ' + this.sumOfMileageCost);
+      }
     });
     this.relationService.getdata().then((relationData)=>{
       this.relationArray = JSON.parse(relationData);
@@ -114,10 +131,24 @@ export class GasMileageDetailPage {
               mileageDate: dataOn.mileageDate,
               mileageFuel: dataOn.mileageFuel,
               mileageCost: dataOn.mileageCost,
-              mileageYear: dataOn.mileageYear
+              mileageYear: dataOn.mileageYear,
+              mileageMonth: dataOn.mileageMonth
             }
             this.mileageItemsSave[index] = dataOn;
             this.mileageService.savemileageitems(this.mileageItemsSave);
+            for(let i=0;i<this.mileageItemsSave.length-1;i++){
+              for(let j=(i+1);j<this.mileageItemsSave.length;j++){
+                if(this.mileageItemsSave[i].mileageDate>this.mileageItemsSave[j].mileageDate){
+                  this.temp = this.mileageItemsSave[i]
+                  this.mileageItemsSave[i] = this.mileageItemsSave[j];
+                  this.mileageItemsSave[j] = this.temp
+                }
+              }
+            }
+            this.sumOfMileageCost = 0;
+            for(let i = 0;i<this.mileageItemsSave.length;i++){
+              this.sumOfMileageCost += parseInt(this.mileageItemsSave[i].mileageCost);
+            }
           }
         }
       }
@@ -135,7 +166,8 @@ export class GasMileageDetailPage {
           mileageDate: mileageitems.mileageDate,
           mileageFuel: mileageitems.mileageFuel,
           mileageCost: mileageitems.mileageCost,
-          mileageYear: mileageitems.mileageYear
+          mileageYear: mileageitems.mileageYear,
+          mileageMonth: mileageitems.mileageMonth
         }
         this.savemileageitems(data);
       } // end if
@@ -151,6 +183,19 @@ export class GasMileageDetailPage {
     }
    this.mileageItemsSave.push(mileageItems);
    this.mileageService.savemileageitems(this.mileageItemsSave);
+   for(let i=0;i<this.mileageItemsSave.length-1;i++){
+    for(let j=(i+1);j<this.mileageItemsSave.length;j++){
+      if(this.mileageItemsSave[i].mileageDate>this.mileageItemsSave[j].mileageDate){
+        this.temp = this.mileageItemsSave[i]
+        this.mileageItemsSave[i] = this.mileageItemsSave[j];
+        this.mileageItemsSave[j] = this.temp
+      }
+    }
+   }
+   this.sumOfMileageCost = 0;
+   for(let i = 0;i<this.mileageItemsSave.length;i++){
+     this.sumOfMileageCost += parseInt(this.mileageItemsSave[i].mileageCost);
+   }
   }
   gotoSettingPage(){
     let modal  = this.modalCtrl.create(SettingsPage);

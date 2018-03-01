@@ -76,7 +76,8 @@ export class SetMaintenanceCostPage {
         maintenanceDate:  this.maintenanceDate, 
         maintenanceCost:  this.maintenanceCost,
         currencyType:     this.currencyType,
-        maintenanceYear:  this.maintenanceDate.slice(0,4)
+        maintenanceYear:  this.maintenanceDate.slice(0,4),
+        maintenanceMonth: this.maintenanceDate.slice(0,7)
       };
       this.viewCtrl.dismiss(maintenanceItems);
       

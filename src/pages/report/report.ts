@@ -66,6 +66,8 @@ export class ReportPage {
   yearMileageFuel: number[] = [];
   tempOne;
   tempTwo;
+  finalYearCost = [];
+  finalYeaDate = [];
   
  
   constructor(public relationService: RelationDataProvider,public mileageProvider: MileageDataProvider,public navCtrl: NavController, public navParams: NavParams, public maintenanceReport: MaintenanceDataProvider){
@@ -99,19 +101,19 @@ export class ReportPage {
       if(this.finalMaintenanceData != null){
        for(let i=0;i<this.finalMaintenanceData.length-1;i++){
          for(let j=(i+1);j<this.finalMaintenanceData.length;j++){
-           if(this.finalMaintenanceData[i].maintenanceDate>this.finalMaintenanceData[j].maintenanceDate){
+           if(this.finalMaintenanceData[i].maintenanceMonth>this.finalMaintenanceData[j].maintenanceMonth){
              this.tempDate[0] = this.finalMaintenanceData[i]
              this.finalMaintenanceData[i] = this.finalMaintenanceData[j];
              this.finalMaintenanceData[j] = this.tempDate[0];
            }
          }
         }
-        this.dateOfFirst = this.finalMaintenanceData[0].maintenanceDate;
+        this.dateOfFirst = this.finalMaintenanceData[0].maintenanceMonth;
         for(let i=0;i<this.finalMaintenanceData.length;i++){
-          if(this.finalMaintenanceData[i].maintenanceDate == this.dateOfFirst){
+          if(this.finalMaintenanceData[i].maintenanceMonth == this.dateOfFirst){
             this.monthlyMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
             this.monthlyMaintenanceItem += this.finalMaintenanceData[i].maintenanceItem + ' , ';
-            this.monthlyMaintenanceDate = this.finalMaintenanceData[i].maintenanceDate;
+            this.monthlyMaintenanceDate = this.finalMaintenanceData[i].maintenanceMonth;
           }
           else{
             this.monthlyCost.push(this.monthlyMaintenanceSum);
@@ -119,10 +121,10 @@ export class ReportPage {
             this.monthlyDate.push(this.monthlyMaintenanceDate);
             this.monthlyMaintenanceSum = 0;
             this.monthlyMaintenanceItem = "";
-            this.dateOfFirst = this.finalMaintenanceData[i].maintenanceDate;
+            this.dateOfFirst = this.finalMaintenanceData[i].maintenanceMonth;
             this.monthlyMaintenanceSum += parseInt(this.finalMaintenanceData[i].maintenanceCost);
             this.monthlyMaintenanceItem += this.finalMaintenanceData[i].maintenanceItem + ' , ';
-            this.monthlyMaintenanceDate = this.finalMaintenanceData[i].maintenanceDate;
+            this.monthlyMaintenanceDate = this.finalMaintenanceData[i].maintenanceMonth;
           }
         }
         this.monthlyCost.push(this.monthlyMaintenanceSum);
@@ -170,19 +172,19 @@ export class ReportPage {
         if(this.finalMileageData != null){
           for(let i=0;i<this.finalMileageData.length-1;i++){
             for(let j=(i+1);j<this.finalMileageData.length;j++){
-              if(this.finalMileageData[i].mileageDate>this.finalMileageData[j].mileageDate){
+              if(this.finalMileageData[i].mileageMonth>this.finalMileageData[j].mileageMonth){
                 this.tempDate[0] = this.finalMileageData[i]
                 this.finalMileageData[i] = this.finalMileageData[j];
                 this.finalMileageData[j] = this.tempDate[0];
               }
             }
            }
-           this.firstMileDate =  this.finalMileageData[0].mileageDate;
+           this.firstMileDate =  this.finalMileageData[0].mileageMonth;
           for(let i = 0; i< this.finalMileageData.length; i++){
-            if(this.finalMileageData[i].mileageDate == this.firstMileDate){
+            if(this.finalMileageData[i].mileageMonth == this.firstMileDate){
               this.sumOfMileageFuel += parseInt(this.finalMileageData[i].mileageFuel);
               this.SumOfMileageCost += parseInt(this.finalMileageData[i].mileageCost);
-              this.sumOfMileageDate = this.finalMileageData[i].mileageDate;
+              this.sumOfMileageDate = this.finalMileageData[i].mileageMonth;
               
             }
             else{
@@ -191,10 +193,10 @@ export class ReportPage {
               this.mileageCost.push(this.SumOfMileageCost);
               this.sumOfMileageFuel = 0;
               this.SumOfMileageCost = 0;
-              this.firstMileDate = this.finalMileageData[i].mileageDate;
+              this.firstMileDate = this.finalMileageData[i].mileageMonth;
               this.sumOfMileageFuel += parseInt(this.finalMileageData[i].mileageFuel);
               this.SumOfMileageCost += parseInt(this.finalMileageData[i].mileageCost);
-              this.sumOfMileageDate = this.finalMileageData[i].mileageDate;
+              this.sumOfMileageDate = this.finalMileageData[i].mileageMonth;
               
             }
           }
@@ -269,6 +271,48 @@ export class ReportPage {
           this.yearMileageDate.push(this.sumOfMileageDate);
           console.log("mileage cost" + this.yearMileageCost);
           console.log("mileage Date" + this.yearMileageDate)
+
+          for(let i=0;i<this.yearMileageDate.length-1;i++){
+            for(let j=(i+1);j<this.yearMileageDate.length;j++){
+              if(this.yearMileageDate[i]>this.yearMileageDate[j]){
+                this.tempDate[0] = this.yearMileageDate[i]
+                this.yearMileageDate[i] = this.yearMileageDate[j];
+                this.yearMileageDate[j] = this.tempDate[0];
+
+                this.tempDate[1] = this.yearMileageCost[i]
+                this.yearMileageCost[i] = this.yearMileageCost[j];
+                this.yearMileageCost[j] = this.tempDate[1];
+              }
+            }
+           }
+
+           console.log("mileage cost" + this.yearMileageCost);
+           console.log("mileage Date" + this.yearMileageDate);
+
+           this.sumOfMileageFuel = 0;
+           this.sumOfMileageDate = '';
+
+           this.dateOfYear = this.yearMileageDate[0];
+           for(let i = 0;i<this.yearMileageDate.length;i++){
+             if(this.yearMileageDate[i] == this.dateOfYear){
+               this.sumOfMileageFuel += this.yearMileageCost[i];
+               this.sumOfMileageDate = this.yearMileageDate[i];
+             }
+             else{
+               this.finalYearCost.push(this.sumOfMileageFuel);
+               this.finalYeaDate.push(this.sumOfMileageDate);
+               this.sumOfMileageFuel = 0;
+               this.sumOfMileageDate = '';
+               this.dateOfYear = this.yearMileageDate[i];
+               this.sumOfMileageFuel += this.yearMileageCost[i];
+               this.sumOfMileageDate = this.yearMileageDate[i];
+             }
+           }
+           this.finalYearCost.push(this.sumOfMileageFuel);
+           this.finalYeaDate.push(this.sumOfMileageDate);
+           console.log("final cost" + this.finalYearCost);
+           console.log("final Date" + this.finalYeaDate);
+
           this.createYearlyGraph();
         }
       }
@@ -289,7 +333,7 @@ export class ReportPage {
       data: {
           labels: this.monthlyDate,
           datasets: [{
-              label: "Cost",
+              label:'',
               data: this.monthlyCost,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -297,7 +341,15 @@ export class ReportPage {
                   'rgba(255, 206, 86, 0.2)',
                   'rgba(75, 192, 192, 0.2)',
                   'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(20, 23, 56, 0.2)',
+                  'rgba(67, 122, 175, 0.2)',
+                  'rgba(210, 106, 44, 0.2)',
+                  'rgba(33, 45, 132, 0.2)',
+                  'rgba(122, 88, 155, 0.2)',
+                  'rgba(155, 59, 40, 0.2)'
+
+
               ],
               borderColor: [
                   'rgba(255,99,132,1)',
@@ -305,12 +357,21 @@ export class ReportPage {
                   'rgba(255, 206, 86, 1)',
                   'rgba(75, 192, 192, 1)',
                   'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(20, 23, 56, 1)',
+                  'rgba(67, 122, 175, 1)',
+                  'rgba(210, 106, 44, 1)',
+                  'rgba(33, 45, 132, 1)',
+                  'rgba(122, 88, 155, 1)',
+                  'rgba(155, 59, 40, 1)'
               ],
               borderWidth: 1
           }]
       },
       options: {
+        legend:{
+          display:false
+        },
           scales: {
               yAxes: [{
                 ticks: {
@@ -331,35 +392,51 @@ export class ReportPage {
       data: {
           labels: this.mileageDate,
           datasets: [{
-              label: "Cost",
+             
               data: this.mileageCost,
               backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(20, 23, 56, 0.2)',
+                'rgba(67, 122, 175, 0.2)',
+                'rgba(210, 106, 44, 0.2)',
+                'rgba(33, 45, 132, 0.2)',
+                'rgba(122, 88, 155, 0.2)',
+                'rgba(155, 59, 40, 0.2)'
               ],
               borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(20, 23, 56, 1)',
+                'rgba(67, 122, 175, 1)',
+                'rgba(210, 106, 44, 1)',
+                'rgba(33, 45, 132, 1)',
+                'rgba(122, 88, 155, 1)',
+                'rgba(155, 59, 40, 1)'
               ],
               borderWidth: 1
           }]
       },
       options: {
-          scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero:true
-                }
-              }]
-          }
+        legend:{
+          display:false
+        },
+        scales: {
+            
+          yAxes: [{
+            ticks: {
+              beginAtZero:true   
+            }
+          }]
+        }
       }
     });
   }
@@ -369,7 +446,7 @@ export class ReportPage {
 
       type: 'line',
       data: {
-          labels: this.yearMileageDate,
+          labels: this.finalYeaDate,
           datasets: [
               {
                   label: "Cost",
@@ -390,7 +467,7 @@ export class ReportPage {
                   pointHoverBorderWidth: 2,
                   pointRadius: 1,
                   pointHitRadius: 10,
-                  data: this.yearMileageCost,
+                  data: this.finalYearCost,
                   spanGaps: false,
               }
           ]

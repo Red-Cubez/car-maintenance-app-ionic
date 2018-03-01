@@ -94,7 +94,8 @@ export class EditMileagePage {
         mileageDate: this.date,
         mileageFuel: this.fuel,
         mileageCost: this.cost,
-        mileageYear: this.date.slice(0,4)
+        mileageYear: this.date.slice(0,4),
+        mileageMonth: this.date.slice(0,7)
       }
      
       this.viewCtrl.dismiss(data);

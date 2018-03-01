@@ -95,7 +95,8 @@ export class EditCarmaintenancePage {
         maintenanceCost: this.cost,
         maintenanceDate: this.date,
         maintenanceItem: this.item,
-        maintenanceYear: this.date.slice(0,4)
+        maintenanceYear: this.date.slice(0,4),
+        maintenanceMonth: this.date.slice(0,7)
       }
       this.viewCtrl.dismiss(data);
       

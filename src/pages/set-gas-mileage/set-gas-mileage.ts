@@ -76,7 +76,8 @@ export class SetGasMileagePage {
         mileageDate: this.mileageDate,
         mileageFuel: this.mileageFuel,
         mileageCost: this.mileageCost,
-        mileageYear: this.mileageDate.slice(0,4)
+        mileageYear: this.mileageDate.slice(0,4),
+        mileageMonth: this.mileageDate.slice(0,7)
       };
       this.viewCtrl.dismiss(mileageItems);
     } // end else
