@@ -6,41 +6,37 @@
 -->
 <ion-header>
   <ion-navbar color="secondary">
-    <ion-title>Settings</ion-title>
+    <ion-title>
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Settings
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
-  <ion-item >
-    <ion-label *ngIf="settingDataarr.currencyType != Null">Currency Preference . {{currency}}  </ion-label>
-    <ion-select [(ngModel)]="currencyPreference" >
-      
-      <ion-option >British-Pound</ion-option>
-      <ion-option >Canadian-Dollar</ion-option>
-      <ion-option >Pakistani-Ruppee</ion-option>
-      <ion-option >USA-Dollar</ion-option>
+  <ion-item>
+    <ion-label>Currency Preference </ion-label>
+    <ion-select [(ngModel)]="currencyPreference" interface="popover" (ionChange)="changingCurrencyType()">
+      <ion-option value="£">British-Pound (£)</ion-option>
+      <ion-option value="C$">Canadian-Dollar (C$)</ion-option>
+      <ion-option value="PKR">Pakistani-Ruppee (PKR)</ion-option>
+      <ion-option value="$">USA-Dollar ($) </ion-option>
     </ion-select>
   </ion-item>
 
-  <ion-item >
-    <ion-label *ngIf="settingDataarr.gasUnit != null">Gasoline Unit . {{settingDataarr.gasUnit}} </ion-label>
-    <ion-select  [(ngModel)]="gasUnit">
-      <ion-option >Gallons</ion-option>
-      <ion-option >Litres</ion-option>
+  <ion-item>
+    <ion-label>Gasoline Unit </ion-label>
+    <ion-select [(ngModel)]="gasUnit" interface="popover" (ionChange)="changingGasUnit()">
+      <ion-option value='Gallon(s)'>Gallons</ion-option>
+      <ion-option value='Litre(s)'>Litres</ion-option>
     </ion-select>
   </ion-item>
 
-  <ion-item  >
-    <ion-label *ngIf="settingDataarr.distanceUnit != null">Distance Unit . {{settingDataarr.distanceUnit}}</ion-label>
-    <ion-select [(ngModel)]="distanceUnit" >
-      <ion-option >Killometers</ion-option>
-      <ion-option >Miles</ion-option>
+  <ion-item>
+    <ion-label>Distance Unit</ion-label>
+    <ion-select [(ngModel)]="distanceUnit" interface="popover" (ionChange)="changingDistanceUnit()">
+      <ion-option value="Km">Killometers</ion-option>
+      <ion-option value="Miles">Miles</ion-option>
     </ion-select>
-
-   
   </ion-item>
-  <ion-item text-center color="secondary" (click)="savesetting()">
-      Save
-    </ion-item>
 </ion-content>

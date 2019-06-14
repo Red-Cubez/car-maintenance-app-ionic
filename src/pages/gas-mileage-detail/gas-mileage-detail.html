@@ -6,50 +6,40 @@
 -->
 <ion-header>
   <ion-navbar color="secondary">
-      <ion-buttons end>
-          <button ion-button icon-only (click) = "gotoSettingPage()" >
-          <ion-icon name="settings"></ion-icon>
-          </button>
-          </ion-buttons>
-     <ion-title text-center>Gas Mileage Detail </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="gotoSettingPage()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Consumption
+      Detail
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  
-    <ion-item text-center color="secondary" >
-        Detail  
-    </ion-item>
-    <ion-item text-center >
-      <ion-row>
-        <ion-col color="secondary">
-          Date
-        </ion-col>
-        <ion-col *ngIf="settingDataMileage.gasUnit != Null">
-          {{settingDataMileage.gasUnit}}
-        </ion-col>
-        <ion-col *ngIf="settingDataMileage.currencyType != Null" >
-          {{currency}}
-        </ion-col>
+<ion-content>
+  <ion-card>
+    <ion-card-header style="text-align: center;background:#32db64">
+      Consumption History
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row style="color:#32db64">
+        <ion-col>{{gasUnit}}</ion-col>
+        <ion-col>Date</ion-col>
+        <ion-col>{{currencyPreference}}</ion-col>
       </ion-row>
-    </ion-item> 
-
-    <ion-item text-center  >
-      <ion-row *ngFor="let mile of mileageItemsSave"  (click)="editMileage(mile)">
-        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
-          {{mile.mileageDate}}
-        </ion-col>
-        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
-          {{mile.mileageFuel}}
-        </ion-col>
-        <ion-col *ngIf="mile.indexNumbermileage == relationNumber">
-          {{mile.mileageCost}}
-        </ion-col>
+      <ion-row *ngFor="let record of mileageRecords" (click)=" editMileageRecord(record)">
+        <ion-col>{{record.mileageLitre}}</ion-col>
+        <ion-col>{{record.mileageDateString}}</ion-col>
+        <ion-col>{{record.mileageCost}}</ion-col>
       </ion-row>
-    </ion-item>
-  <ion-buttons end>
-    <button ion-button icon-only style="padding-left: 8px" (click)="gotosetgasmileage()">Add<ion-icon name="add-circle">
-    </ion-icon></button>
+    </ion-card-content>
+  </ion-card>
+  <ion-buttons end style="margin-right:3%;margin-top:7%">
+    <button ion-button icon-only style="padding-left: 8px;margin-left: 5%" (click)="gotoAddMileagePage()">Add
+      Consumption<ion-icon name="add-circle">
+      </ion-icon>
+    </button>
   </ion-buttons>
-
 </ion-content>

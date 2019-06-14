@@ -5,50 +5,49 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <ion-navbar color="secondary">
+    <ion-buttons end>
+      <button ion-button icon-only (click)="gotoSettingPage()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Edit
+      Consumption
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
-    <ion-navbar color="secondary">
-  
-        <ion-buttons end>
-            <button ion-button icon-only (click) = "gotoSettingPage()" >
-            <ion-icon name="settings"></ion-icon>
-            </button>
-            </ion-buttons>
-      <ion-title text-center>Edit Gas Mileage Record</ion-title>
-  
-    </ion-navbar>
-  
-  </ion-header>
-  
-  <ion-content padding>
-  
-    
-     
-  
-      <ion-item>
-        <ion-label floating>Date: {{dateTemp}}</ion-label>
-        <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="date"></ion-datetime>
-      </ion-item>
-  
-      <ion-item >
-        <ion-label floating >{{settingDataMileage.gasUnit}} : {{fuelTemp}} </ion-label>
-        <ion-input type="number" [(ngModel)]="fuel"></ion-input>
-      </ion-item>
-       
-      <ion-item >
-        <ion-label floating >{{currency}} : {{costTemp}}</ion-label>
-        <ion-input type="number" [(ngModel)]="cost"></ion-input>
-      </ion-item>
-
-      <ion-item text-center color="secondary" (click)= "setgasmileagesetting()">
-          Save
+<ion-content >
+    <ion-card>
+        <ion-item>
+          <ion-label position="fixed">{{gasUnit}}:</ion-label>
+          <ion-input type="number" [(ngModel)]="mileageLitre"></ion-input>
         </ion-item>
-      <div>
-        <ion-buttons end>
-          <button ion-button icon-only color="danger" (click)="delete()">
-            <ion-icon name="ios-trash-outline"></ion-icon>
-          </button>
-        </ion-buttons>
-      </div>
-  
-  </ion-content>
-  
+      </ion-card>
+      <p style='color:red'
+        *ngIf="(this.mileageLitre == undefined || this.mileageLitre == '') && this.buttonClicked == true">Please Enter
+        Litre</p>
+      <ion-card>
+        <ion-item>
+          <ion-label>Date: </ion-label>
+          <ion-datetime displayFormat=" D MMM, YYYY " max="2030" donText="Select" [(ngModel)]="mileageDate"></ion-datetime>
+        </ion-item>
+      </ion-card>
+      <ion-card>
+        <ion-item>
+          <ion-label position="fixed">{{currencyPreference}}:</ion-label>
+          <ion-input type="number" [(ngModel)]="mileageCost"></ion-input>
+        </ion-item>
+      </ion-card>
+      <p style='color:red'
+        *ngIf="(this.mileageCost == undefined || this.mileageCost == '') && this.buttonClicked == true">Please Enter
+        Cost</p>
+    
+      <ion-buttons end style="margin-right:3%;margin-top:7%">
+        <button ion-button icon-only style="padding-left: 8px;margin-left: 5%" (click)="saveRecord()">Edit
+          Record<ion-icon name="add-circle">
+          </ion-icon>
+        </button>
+      </ion-buttons>
+</ion-content>

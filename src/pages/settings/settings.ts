@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
-import { SettingDataProvider } from '../../providers/setting-data/setting-data';
-
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { CarDataProvider } from '../../providers/car-data/car-data';
 /**
  * Generated class for the SettingsPage page.
  *
@@ -15,64 +14,59 @@ import { SettingDataProvider } from '../../providers/setting-data/setting-data';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-  currencyPreference: string;
-  gasUnit: string;
-  distanceUnit: string;
-  settingDataarr: any = [];
-  settingUpData: any =[];
-  currency;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public settingService: SettingDataProvider) {
-    let datam = {
-      currencyType: 'USA-Dollar',
-      gasUnit: 'Litre',
-      distanceUnit: 'KiloMeter'
-    }
-    this.settingService.getdata().then((settingData) =>{
-      this.settingDataarr = JSON.parse(settingData);
-      if(this.settingDataarr == null){
-        this.settingDataarr = datam;
-      }
-      if(this.settingDataarr.gasUnit == undefined){
-        this.settingDataarr.gasUnit = datam.gasUnit;
-      }
-      if(this.settingDataarr.currencyType == undefined){
-        this.settingDataarr.currencyType = datam.currencyType;
-      }
-      if(this.settingDataarr.distanceUnit == undefined){
-        this.settingDataarr.distanceUnit = datam.distanceUnit;
-      }
+  currencyPreference;
+  gasUnit = 'Litre(s)';
+  distanceUnit = 'Km';
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public carDataProvider: CarDataProvider) {
 
-      if(this.settingDataarr.currencyType == "USA-Dollar"){
-        this.currency = '$';
-      }
-      if(this.settingDataarr.currencyType == "British-Pound"){
-        this.currency = '₤';
-      }
-      if(this.settingDataarr.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
-      }
-      if(this.settingDataarr.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
-      }
-      console.log('setting data on setting page + ' + this.settingDataarr.currencyType );
-    });
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
+    this.carDataProvider.getcurrencytype().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.currencyPreference = 'PKR'
+      }
+      else {
+        this.currencyPreference = res;
+      }
+    });
+    this.carDataProvider.getGasUnit().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.gasUnit = 'Litre(s)'
+      }
+      else {
+        this.gasUnit = res;
+      }
+    })
+    this.carDataProvider.getDistanceUnit().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.distanceUnit = 'Km'
+      }
+      else {
+        this.distanceUnit = res;
+      }
+    })
   }
-  savesetting(){
-    let settingData = {
-      currencyType: this.currencyPreference,
-      gasUnit: this.gasUnit,
-      distanceUnit: this.distanceUnit
-    }
-   
-    this.saveSettingData(settingData);
-    this.viewCtrl.dismiss(settingData);
+
+  changingCurrencyType() {
+    console.log('ccc = ' + this.currencyPreference)
+    this.carDataProvider.setCurrencyType(this.currencyPreference)
+
   }
-  saveSettingData(settingData){
-    this.settingUpData = settingData;
-    this.settingService.saveSettingData(this.settingUpData);
+  changingGasUnit() {
+    console.log('ccc = ' + this.gasUnit)
+    this.carDataProvider.setGasUnit(this.gasUnit)
+  }
+  changingDistanceUnit() {
+    console.log('ccc = ' + this.distanceUnit);
+    this.carDataProvider.setDistanceUnit(this.distanceUnit)
+
+  }
+  dismissing(){
+    this.viewCtrl.dismiss();
   }
 
 }

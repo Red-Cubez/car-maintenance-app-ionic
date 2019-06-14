@@ -16,16 +16,12 @@ import { EditCarmaintenancePage } from '../pages/edit-carmaintenance/edit-carmai
 import { EditMileagePage } from '../pages/edit-mileage/edit-mileage';
 import { EditCaritemPage } from '../pages/edit-caritem/edit-caritem';
 import { SettingsPage } from '../pages/settings/settings';
-import { MaintenanceDataProvider } from '../providers/maintenance-data/maintenance-data';
-import { MileageDataProvider } from '../providers/mileage-data/mileage-data';
 import { IonicStorageModule } from '@ionic/storage';
 import { ReportPage } from '../pages/report/report';
 import { ChartsModule} from'ng2-charts';
-import { SettingDataProvider } from '../providers/setting-data/setting-data';
-import { RelationDataProvider } from '../providers/relation-data/relation-data';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
-
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @NgModule({
   declarations: [
@@ -74,12 +70,9 @@ import { AdMobPro } from '@ionic-native/admob-pro';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CarDataProvider,
-    MaintenanceDataProvider,
-    MileageDataProvider,
     IonicStorageModule,
-    SettingDataProvider,
-    RelationDataProvider,
-    AdMobPro
+    AdMobPro,
+    FirebaseAnalytics
   ]
 })
 export class AppModule {}

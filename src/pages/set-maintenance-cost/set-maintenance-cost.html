@@ -7,36 +7,48 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-title text-center>Add Maintenance Cost</ion-title>
-  
+    <ion-buttons end>
+      <button ion-button icon-only (click)="gotoSettingPage()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Add
+      Maintenance Record
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
-
-<ion-content padding>
-
-  
-
-
-
+<ion-content>
+  <ion-card>
     <ion-item>
-      <ion-label floating>Item:</ion-label>
+      <ion-label position="fixed">Item:</ion-label>
       <ion-input type="text" [(ngModel)]="maintenanceItem"></ion-input>
     </ion-item>
-
+  </ion-card>
+  <p style='color:red'
+    *ngIf="(this.maintenanceItem == undefined || this.maintenanceItem == '') && this.buttonClicked == true">Please Enter
+    Item
+    Name</p>
+  <ion-card>
     <ion-item>
-      <ion-label floating>Date:</ion-label>
-      <ion-datetime displayFormat=" DDDD MMM D, YYYY" min="2015" max="{{currentDate}}"  donText ="Select" [(ngModel)]="maintenanceDate"></ion-datetime>
+      <ion-label>Date: </ion-label>
+      <ion-datetime displayFormat=" D MMM, YYYY " max="2030" donText="Select" [(ngModel)]="maintenanceDate"></ion-datetime>
     </ion-item>
-    <p  [class.invalid] style="color: #ea6153;" *ngIf=' buttonClicked && ((this.maintenanceDate == null) || (this.maintenanceDate == "") || (this.maintenanceDate == " "))'> Please Enter Name</p>
-  
+  </ion-card>
+  <ion-card>
     <ion-item>
-      <ion-label floating>{{currency}}</ion-label>
+      <ion-label position="fixed">{{currencyPreference}}:</ion-label>
       <ion-input type="number" [(ngModel)]="maintenanceCost"></ion-input>
     </ion-item>
+  </ion-card>
+  <p style='color:red'
+    *ngIf="(this.maintenanceCost == undefined || this.maintenanceCost == '') && this.buttonClicked == true">Please Enter
+    Cost</p>
 
-    <ion-item text-center color="secondary" (click)= "savemaintenancesetting()">
-        Add
-      </ion-item>
-
+  <ion-buttons end style="margin-right:3%;margin-top:7%">
+    <button ion-button icon-only style="padding-left: 8px;margin-left: 5%" (click)="saveRecord()">Add
+      Record<ion-icon name="add-circle">
+      </ion-icon>
+    </button>
+  </ion-buttons>
 </ion-content>

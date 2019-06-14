@@ -5,43 +5,68 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-    <ion-navbar color="secondary">
-        <ion-buttons end>
-            <button ion-button icon-only (click) = "gotoSettingPage()" >
-            <ion-icon name="settings"></ion-icon>
-            </button>
-            </ion-buttons>
-      <ion-title text-center>Edit Item</ion-title>
-    </ion-navbar>
-  </ion-header>
-  
-
-
-<ion-content padding>
-   
-   
-      <ion-item>
-        <ion-label floating>Make:{{carItem.carMake}}</ion-label>
-        <ion-input type="text" required [(ngModel)]="carMake"></ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label floating>Model:{{carItem.carModel}}</ion-label>
-        <ion-input type="text" required  [(ngModel)]="carModel"></ion-input>
-      </ion-item>  
-  
-      <ion-item>
-        <ion-label floating>Year:{{carItem.carYear}}</ion-label>
-        <ion-datetime displayFormat="YYYY" min="1970" max="2020"  donText ="Select" [(ngModel)]="carYear">{{carItem.carYear}}</ion-datetime>
-      </ion-item> 
-  
-      <ion-item>
-        <ion-label floating>Mileage:{{carItem.carMileage}}</ion-label>
-        <ion-input type="number"  [(ngModel)]="carMileage" ></ion-input>
-      </ion-item>
-      <ion-item text-center color="secondary" (click)= "saveitems()">
-          Edit
-        </ion-item>
-
+  <ion-navbar color="secondary">
+    <ion-buttons end>
+      <button ion-button icon-only (click)="editInformation()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Edit Vehicle
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-label position="fixed">Maker:</ion-label>
+      <ion-input type="text" [(ngModel)]="carMake"></ion-input>
+    </ion-item>
+  </ion-card>
+  <p style='color:red' *ngIf="(this.carMake == undefined || this.carMake == '') && this.buttonClicked == true">Please
+    Enter
+    Company Name</p>
+  <ion-card>
+    <ion-item>
+      <ion-label position="fixed">Model:</ion-label>
+      <ion-input type="text" [(ngModel)]="carModel"></ion-input>
+    </ion-item>
+  </ion-card>
+  <p style='color:red' *ngIf="(this.carModel == undefined || this.carModel == '') && this.buttonClicked == true">Please
+    Enter
+    Car Model</p>
+  <ion-card>
+    <ion-item>
+      <ion-label position="fixed">Year:</ion-label>
+      <ion-input type="number" [(ngModel)]="carYear"></ion-input>
+    </ion-item>
+  </ion-card>
+  <p style='color:red' *ngIf="(this.carYear == undefined || this.carYear == '') && this.buttonClicked == true">Please
+    Enter
+    Year of Manufacture</p>
+  <ion-card>
+    <ion-item>
+      <ion-label position="fixed">Mileage:</ion-label>
+      <ion-input type="number" [(ngModel)]="carMileage"></ion-input>
+    </ion-item>
+  </ion-card>
+  <p style='color:red' *ngIf="(this.carMileage == undefined || this.carMileage == '') && this.buttonClicked == true">
+    Please
+    Enter
+    Mileage car Diven</p>
+  <ion-card (click)="gotoAddMaintenanceRecordPage()">
+    <ion-item class="settingButton">
+      Maintenance Detail
+    </ion-item>
+  </ion-card>
+  <ion-card (click)="gotoAddMileageRecordPage()">
+    <ion-item class="settingButton">
+      Consumption Detail
+    </ion-item>
+  </ion-card>
+  <ion-card (click)="gotoReportRecordPage()">
+    <ion-item class="settingButton">
+      Reports
+    </ion-item>
+  </ion-card>
 </ion-content>
