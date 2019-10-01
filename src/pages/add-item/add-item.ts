@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController, ModalController } 
 import { SetMaintenanceCostPage } from '../set-maintenance-cost/set-maintenance-cost';
 import { SetGasMileagePage } from '../set-gas-mileage/set-gas-mileage';
 import { CarDataProvider } from '../../providers/car-data/car-data';
+import { SettingsPage } from "../settings/settings";
 /**
  * Generated class for the AddItemPage page.
  *
@@ -64,9 +65,12 @@ export class AddItemPage {
   dismissing() {
     this.vewiCtrl.dismiss();
   }
-  // saving items data to array and send it to home page
-  saveitems() {
-  }
+
+    //jump to setting page
+    gotoSettingPage() {
+      let modal = this.modalCtrl.create(SettingsPage);
+      modal.present();
+    }
 
   gotoAddMaintenanceRecordPage() {
     let modal = this.modalCtrl.create(SetMaintenanceCostPage);
@@ -115,6 +119,7 @@ export class AddItemPage {
       }
       this.carData.push(data);
       this.carDataProvider.saveCarData(this.carData);
+      alert('Record added successfully!')
       this.vewiCtrl.dismiss();
     }
   }

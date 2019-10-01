@@ -64,6 +64,7 @@ export class EditCarmaintenancePage {
       }
       this.carData[this.indexNumberCar].carMaintenanceDetail[this.indexNumberManitenance] = data;
       this.carDataProvider.saveCarData(this.carData);
+      alert('Record updated successfully!')
       this.viewCtrl.dismiss();
     }
   }

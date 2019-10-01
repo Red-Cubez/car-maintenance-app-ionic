@@ -19,35 +19,25 @@
 </ion-header>
 
 <ion-content >
-    <ion-card>
-        <ion-item>
-          <ion-label position="fixed">{{gasUnit}}:</ion-label>
-          <ion-input type="number" [(ngModel)]="mileageLitre"></ion-input>
-        </ion-item>
-      </ion-card>
-      <p style='color:red'
-        *ngIf="(this.mileageLitre == undefined || this.mileageLitre == '') && this.buttonClicked == true">Please Enter
-        Litre</p>
-      <ion-card>
-        <ion-item>
-          <ion-label>Date: </ion-label>
-          <ion-datetime displayFormat=" D MMM, YYYY " max="2030" donText="Select" [(ngModel)]="mileageDate"></ion-datetime>
-        </ion-item>
-      </ion-card>
-      <ion-card>
-        <ion-item>
-          <ion-label position="fixed">{{currencyPreference}}:</ion-label>
-          <ion-input type="number" [(ngModel)]="mileageCost"></ion-input>
-        </ion-item>
-      </ion-card>
-      <p style='color:red'
-        *ngIf="(this.mileageCost == undefined || this.mileageCost == '') && this.buttonClicked == true">Please Enter
-        Cost</p>
-    
-      <ion-buttons end style="margin-right:3%;margin-top:7%">
-        <button ion-button icon-only style="padding-left: 8px;margin-left: 5%" (click)="saveRecord()">Edit
-          Record<ion-icon name="add-circle">
-          </ion-icon>
-        </button>
-      </ion-buttons>
+
+    <section class="page-main">
+        <div class="form">
+            <div class="thumbnail"><img src="../../assets/imgs/carCM.png"></div>
+            <form class="login-form">
+                <ion-label class='text-left mtb-8 w-25'>DATE</ion-label>
+                <ion-datetime class="inputDate" displayFormat=" D MMM, YYYY " max="2030" name="date" [(ngModel)]="mileageDate"></ion-datetime>
+                <ion-label class='text-left mtb-8 w-25' style="text-transform: uppercase">{{gasUnit}}</ion-label>
+                <ion-input type="text" name="liter" [(ngModel)]="mileageLitre"></ion-input>
+                <p class='errorMsg' *ngIf="(this.mileageLitre == undefined || this.mileageLitre == '') && this.buttonClicked == true">Please
+                    enter amount of liter</p>
+                <ion-label class='text-left mtb-8'>{{currencyPreference}}</ion-label>
+                <ion-input type="number" name="cost" [(ngModel)]="mileageCost"></ion-input>
+                <p class='errorMsg'
+                 *ngIf="(this.mileageCost == undefined || this.mileageCost == '') && this.buttonClicked == true">Please
+                    enter mileage cost</p>
+                <button ion-button class='mt-4' (click)="saveRecord()">Update Record</button>
+            </form>
+        </div>
+    </section>
+
 </ion-content>

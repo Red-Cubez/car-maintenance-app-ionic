@@ -53,6 +53,7 @@ export class SetMaintenanceCostPage {
         maintenanceCost: this.maintenanceCost,
         maintenanceDateString: moment(this.maintenanceDate).get('date') + '-' + (moment(this.maintenanceDate).get('month') + 1) + '-' + moment(this.maintenanceDate).get('year')
       }
+      alert('Record added successfully!');
       this.viewCtrl.dismiss(data);
     }
   }

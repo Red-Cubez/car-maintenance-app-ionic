@@ -7,8 +7,8 @@
 <ion-header>
   <ion-navbar color="secondary">
     <ion-buttons end>
-      <button ion-button icon-only (click)="editInformation()">
-        <ion-icon name="create"></ion-icon>
+      <button ion-button icon-only (click)="gotoSettingPage()">
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>
@@ -16,8 +16,40 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content>
-  <ion-card>
+
+    <section class="page-main">
+        <div class="form">
+            <div class="thumbnail"><img src="../../assets/imgs/carE.png"></div>
+            <form class="login-form">
+                <ion-label class='text-left mtb-8 w-25'>MAKE</ion-label>
+                <ion-input type="text" name="make" [(ngModel)]="carMake"></ion-input>
+                <p class='errorMsg' *ngIf="(this.carMake == undefined || this.carMake == '') && this.buttonClicked == true">Please
+                    enter make</p>
+                <ion-label class='text-left mtb-8 w-25'>MODEL</ion-label>
+                <ion-input type="text" name="model" [(ngModel)]="carModel"></ion-input>
+                <p class='errorMsg' *ngIf="(this.carModel == undefined || this.carModel == '') && this.buttonClicked == true">Please
+                    enter model</p>
+                <ion-label class='text-left mtb-8'>YEAR</ion-label>
+                <ion-input type="number" name="year" [(ngModel)]="carYear"></ion-input>
+                <p class='errorMsg'
+                 *ngIf="(this.carYear == undefined || this.carYear == '') && this.buttonClicked == true">Please
+                    enter year of manufacture</p>
+                <ion-label class='text-left mtb-8'>MILEAGE</ion-label>
+                <ion-input type="number" name="mileage" [(ngModel)]="carMileage"></ion-input>
+                <p class='errorMsg mb-4' *ngIf="(this.carMileage == undefined || this.carMileage == '') && this.buttonClicked == true">Please
+                    enter mileage</p>
+                <button ion-button class='mt-4' (click)="editInformation()">Update Record</button>
+                <br><br>
+                <button ion-button class='mt-4' (click)="gotoAddMaintenanceRecordPage()" color="primary">Maintenance Details</button>
+                <button ion-button class='mt-4' (click)="gotoAddMileageRecordPage()" color='secondary'>Consumption Details</button>
+                <button ion-button class='mt-4' (click)="gotoReportRecordPage()" color='tertiary'>Reports</button>
+            </form>
+        </div>
+    </section>
+
+  <!-- <ion-card>
     <ion-item>
       <ion-label position="fixed">Maker:</ion-label>
       <ion-input type="text" [(ngModel)]="carMake"></ion-input>
@@ -68,5 +100,6 @@
     <ion-item class="settingButton">
       Reports
     </ion-item>
-  </ion-card>
+  </ion-card> -->
+
 </ion-content>

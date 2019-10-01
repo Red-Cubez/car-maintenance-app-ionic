@@ -74,6 +74,7 @@ export class EditMileagePage {
       }
       this.carData[this.indexNumberCar].carMileageDetail[this.indexNumberMileage] = data;
       this.carDataProvider.saveCarData(this.carData);
+      alert('Record updated successfully!')
       this.viewCtrl.dismiss();
     }
   }

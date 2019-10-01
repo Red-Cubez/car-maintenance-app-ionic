@@ -8,8 +8,8 @@
 
   <ion-navbar color="secondary">
     <ion-buttons end>
-      <button ion-button icon-only (click)="saveInformation()">
-        <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+      <button ion-button icon-only (click)="gotoSettingPage()">
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>
@@ -17,54 +17,41 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Make:</ion-label>
-      <ion-input type="text" [(ngModel)]="carMake"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carMake == undefined || this.carMake == '') && this.buttonClicked == true">Please
-    Enter
-    Make</p>
-  <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Model:</ion-label>
-      <ion-input type="text" [(ngModel)]="carModel"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carModel == undefined || this.carModel == '') && this.buttonClicked == true">Please
-    Enter Model</p>
-  <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Year:</ion-label>
-      <ion-input type="number" [(ngModel)]="carYear"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carYear == undefined || this.carYear == '') && this.buttonClicked == true">Please
-    Enter
-    Year of  Manufacture</p>
-  <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Mileage:</ion-label>
-      <ion-input type="number" [(ngModel)]="carMileage"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carMileage == undefined || this.carMileage == '') && this.buttonClicked == true">Please
-      Enter
-      Mileage</p>
-  <ion-card (click)="gotoAddMaintenanceRecordPage()">
-    <ion-item class="settingButton">
-      Add Maintenance
-    </ion-item>
-  </ion-card>
-  <ion-card (click)="gotoAddMileageRecordPage()">
-    <ion-item class="settingButton">
-      Add Consumption
-    </ion-item>
-  </ion-card>
+
+    <section class="page-main">
+        <div class="form">
+            <div class="thumbnail"><img src="../../assets/imgs/ccar.png"></div>
+            <form class="login-form">
+                <ion-label class='text-left mtb-8 w-25'>MAKE</ion-label>
+                <ion-input type="text" name="make" [(ngModel)]="carMake"></ion-input>
+                <p class='errorMsg' *ngIf="(this.carMake == undefined || this.carMake == '') && this.buttonClicked == true">Please
+                    enter make</p>
+                <ion-label class='text-left mtb-8 w-25'>MODEL</ion-label>
+                <ion-input type="text" name="model" [(ngModel)]="carModel"></ion-input>
+                <p class='errorMsg' *ngIf="(this.carModel == undefined || this.carModel == '') && this.buttonClicked == true">Please
+                    enter model</p>
+                <ion-label class='text-left mtb-8'>YEAR</ion-label>
+                <ion-input type="number" name="year" [(ngModel)]="carYear"></ion-input>
+                <p class='errorMsg'
+                 *ngIf="(this.carYear == undefined || this.carYear == '') && this.buttonClicked == true">Please
+                    enter year of manufacture</p>
+                <ion-label class='text-left mtb-8'>MILEAGE</ion-label>
+                <ion-input type="number" name="mileage" [(ngModel)]="carMileage"></ion-input>
+                <p class='errorMsg mb-4' *ngIf="(this.carMileage == undefined || this.carMileage == '') && this.buttonClicked == true">Please
+                    enter mileage</p>
+                <button ion-button class='mt-4' (click)="saveInformation()">Save Record</button>
+            </form>
+            <div class="btn-d-flex">
+                <button ion-button (click)="gotoAddMaintenanceRecordPage()" class="btn bg-blue" >Add Maintenance</button>
+                <button ion-button (click)="gotoAddMileageRecordPage()" class="btn bg-red">Add Consumption</button>
+            </div>
+        </div>
+    </section>
+
   <ion-card *ngIf="this.carMaintenanceDetailLength > 0">
-    <ion-card-header style="text-align: center;background:#32db64">
+    <ion-card-header style="text-align: center;background:#32db64; color: white">
       Maintenance History
     </ion-card-header>
     <ion-card-content>

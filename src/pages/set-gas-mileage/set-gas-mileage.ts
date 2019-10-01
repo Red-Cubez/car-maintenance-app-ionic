@@ -61,6 +61,7 @@ export class SetGasMileagePage {
         mileageCost: this.mileageCost,
         mileageDateString: moment(this.mileageDate).get('date') + '-' + (moment(this.mileageDate).get('month') + 1) + '-' + moment(this.mileageDate).get('year')
       }
+      alert('Record added successfully!');
       this.viewCtrl.dismiss(data);
     }
   }

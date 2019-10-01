@@ -4,6 +4,7 @@ import { CarDataProvider } from '../../providers/car-data/car-data';
 import { MaintenanceCostDetailPage } from '../maintenance-cost-detail/maintenance-cost-detail';
 import { GasMileageDetailPage } from '../gas-mileage-detail/gas-mileage-detail';
 import { ReportPage } from '../report/report';
+import { SettingsPage } from "../settings/settings";
 /**
  * Generated class for the EditCaritemPage page.
  *
@@ -44,6 +45,12 @@ export class EditCaritemPage {
     this.viewCtrl.dismiss();
   }
 
+    //jump to setting page
+    gotoSettingPage() {
+      let modal = this.modalCtrl.create(SettingsPage);
+      modal.present();
+    }
+
   gotoAddMaintenanceRecordPage(){
     let modal = this.modalCtrl.create(MaintenanceCostDetailPage,{
       indexOfRecord: this.indexOfRecord
@@ -81,6 +88,7 @@ export class EditCaritemPage {
       }
       this.carData[this.indexOfRecord] = data;
       this.cardDataProvider.saveCarData(this.carData);
+      alert('Record updated Successfully!')
       this.viewCtrl.dismiss();
     }
   }
