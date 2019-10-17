@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.redcubez.carLog" version="1.0.0" xmlns="http://www.redcubez.com" xmlns:cdv="http://www.redcubez.com">
+<widget id="com.redcubez.carLog" version="2.0.0" xmlns="http://www.redcubez.com" xmlns:cdv="http://www.redcubez.com">
     <name>Car Log</name>
     <description>An application which keeps you update about your your car maintenance and gasoline cost</description>
     <author email="hello@redcubez.com" href="http://www.redcubez.com">Red Cubez Inc.</author>

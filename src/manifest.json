@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "carlog",
+  "short_name": "carlog",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
