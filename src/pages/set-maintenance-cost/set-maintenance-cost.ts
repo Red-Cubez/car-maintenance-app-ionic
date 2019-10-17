@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Events, ModalController } from 'ionic-angular';
-import { SettingDataProvider } from '../../providers/setting-data/setting-data';
-import { parseDate, DateTimeData } from 'ionic-angular/util/datetime-util';
+import * as moment from 'moment';
+import { CarDataProvider } from '../../providers/car-data/car-data';
 import { SettingsPage } from '../settings/settings';
 /**
  * Generated class for the SetMaintenanceCostPage page.
@@ -17,70 +17,43 @@ import { SettingsPage } from '../settings/settings';
 })
 export class SetMaintenanceCostPage {
 
-  maintenanceItem: string;
-  maintenanceDate: String;
-  maintenanceCost: string;
-  maintenanceYear: String;
-  currencyType: string
-  public settingDatareq = [];
-  public settingDataMaintenance: any = [];
-
-  currentDate: string = new Date().toISOString();
-  currency;
-  constructor(public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public modalCtrl: ModalController) {
-    let datam = {
-      currencyType: 'USA-Dollar',
-      gasUnit: 'Litre',
-      distanceUnit: 'KiloMeter'
-    }
-
-    console.log(this.currentDate);
-    this.settingService.getdata().then((settingData) =>{
-      this.settingDataMaintenance = JSON.parse(settingData);
-      if(this.settingDataMaintenance == null){
-        this.settingDataMaintenance = datam;
-      }
-      if(this.settingDataMaintenance.currencyType == undefined){
-        this.settingDataMaintenance.currencyType = datam.currencyType;
-      }
-      if(this.settingDataMaintenance.currencyType == "USA-Dollar"){
-        this.currency = '$';
-      }
-      if(this.settingDataMaintenance.currencyType == "British-Pound"){
-        this.currency = '₤';
-      }
-      if(this.settingDataMaintenance.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
-      }
-      if(this.settingDataMaintenance.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
-      }
-      console.log('setting data on maintenance page + ' + this.settingDataMaintenance);
-    });
-    console.log('setting data on setting page - ' + this.settingDatareq);
-    console.log('setting data on setting page  indexx - ' + this.navParams.get('inexxnumber')); 
-       
+  maintenanceItem;
+  maintenanceDate = moment().format();
+  maintenanceCost;
+  buttonClicked = false;
+  currencyPreference
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public events: Events, public modalCtrl: ModalController,public carDataProvider: CarDataProvider) {
   }
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     console.log('ionViewDidLoad SetMaintenanceCostPage');
+    this.carDataProvider.getcurrencytype().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.currencyPreference = 'PKR'
+      }
+      else {
+        this.currencyPreference = res;
+      }
+    });
   }
-  // saving maintenance data to array
-  savemaintenancesetting(){
-    if ((this.maintenanceItem == null) || (this.maintenanceItem == "") || (this.maintenanceItem == " ")){
-      // do nothing if maintenanceItem is empty
-    } // end if
-    else {
-      let maintenanceItems={
-        maintenanceItem:  this.maintenanceItem, 
-        maintenanceDate:  this.maintenanceDate, 
-        maintenanceCost:  this.maintenanceCost,
-        currencyType:     this.currencyType,
-        maintenanceYear:  this.maintenanceDate.slice(0,4)
-      };
-      this.viewCtrl.dismiss(maintenanceItems);
-      
-    } // end else
-  }  
-  
- 
+  gotoSettingPage(){
+    let modal = this.modalCtrl.create(SettingsPage);
+    modal.present();
+  }
+  dismissing() {
+    this.viewCtrl.dismiss();
+  }
+  saveRecord() {
+    this.buttonClicked = true;
+    if (this.maintenanceItem != undefined && this.maintenanceItem != '' && this.maintenanceCost != undefined && this.maintenanceCost != '') {
+      this.maintenanceItem = this.maintenanceItem[0].toUpperCase() + this.maintenanceItem.slice(1);
+      let data = {
+        maintenanceItem: this.maintenanceItem,
+        maintenanceDate: this.maintenanceDate,
+        maintenanceCost: this.maintenanceCost,
+        maintenanceDateString: moment(this.maintenanceDate).get('date') + '-' + (moment(this.maintenanceDate).get('month') + 1) + '-' + moment(this.maintenanceDate).get('year')
+      }
+      this.viewCtrl.dismiss(data);
+    }
+  }
 }

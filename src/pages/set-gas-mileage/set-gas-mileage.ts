@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController, ModalController } from 'ionic-angular';
-import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { SettingsPage } from '../settings/settings';
+import * as moment from 'moment';
+import { CarDataProvider } from '../../providers/car-data/car-data';
 /**
  * Generated class for the SetGasMileagePage page.
  *
@@ -17,69 +18,54 @@ import { SettingsPage } from '../settings/settings';
 export class SetGasMileagePage {
 
 
-  mileageDate:any;
-  mileageFuel: string;
-  mileageCost: string;
-  public settingDataarr = [];
-  public settingDataMileage: any = [];
-  currentDate: string = new Date().toISOString();
-  currency;
-
-  constructor(public modalCtrl: ModalController,public settingService: SettingDataProvider, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController){
-    let datam = {
-      currencyType: 'USA-Dollar',
-      gasUnit: 'Litre',
-      distanceUnit: 'KiloMeter'
-    }
-    this.settingService.getdata().then((settingData) =>{
-      this.settingDataMileage = JSON.parse(settingData);
-      if(this.settingDataMileage == null){
-        this.settingDataMileage = datam;
-      }
-      if(this.settingDataMileage.gasUnit == undefined){
-        this.settingDataMileage.gasUnit = datam.gasUnit;
-      }
-      if(this.settingDataMileage.currencyType == undefined){
-        this.settingDataMileage.currencyType = datam.currencyType;
-      }
-      if(this.settingDataMileage.currencyType == "USA-Dollar"){
-        this.currency = '$';
-      }
-      if(this.settingDataMileage.currencyType == "British-Pound"){
-        this.currency = '₤';
-      }
-      if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
-      }
-      if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
-      }
-      console.log('setting data on mileage page + ' + this.settingDataMileage.gasUnit);
-    });
-   
-  
-  
+  mileageLitre;
+  mileageDate = moment().format();
+  mileageCost
+  buttonClicked = false;
+  currencyPreference;
+  gasUnit
+  constructor(public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public carDataProvider: CarDataProvider){
   }
 
-  ionViewDidLoad(){
+  ionViewWillEnter(){
+    this.carDataProvider.getcurrencytype().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.currencyPreference = 'PKR'
+      }
+      else {
+        this.currencyPreference = res;
+      }
+    });
+    this.carDataProvider.getGasUnit().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.gasUnit = 'Litre(s)'
+      }
+      else {
+        this.gasUnit = res;
+      }
+    })
     console.log('ionViewDidLoad SetGasMileagePage');
   }
-
-
-  // setting gas mileage data to array
-  setgasmileagesetting(){
-    if((this.mileageDate == null) || (this.mileageDate == "") || (this.mileageDate == " " ) ){
-      // di nothing if gasmileage date is empty
-    } // end if
-    else{
-      let mileageItems = {
-        mileageDate: this.mileageDate,
-        mileageFuel: this.mileageFuel,
-        mileageCost: this.mileageCost,
-        mileageYear: this.mileageDate.slice(0,4)
-      };
-      this.viewCtrl.dismiss(mileageItems);
-    } // end else
+  dismissing() {
+    this.viewCtrl.dismiss();
   }
- 
+  saveRecord() {
+    this.buttonClicked = true;
+    if (this.mileageLitre != undefined && this.mileageLitre != '' && this.mileageCost != undefined && this.mileageCost != '') {
+
+      let data = {
+        mileageLitre: this.mileageLitre,
+        mileageDate: this.mileageDate,
+        mileageCost: this.mileageCost,
+        mileageDateString: moment(this.mileageDate).get('date') + '-' + (moment(this.mileageDate).get('month') + 1) + '-' + moment(this.mileageDate).get('year')
+      }
+      this.viewCtrl.dismiss(data);
+    }
+  }
+  gotoSettingPage(){
+    let modal = this.modalCtrl.create(SettingsPage);
+    modal.present();
+  }
 }

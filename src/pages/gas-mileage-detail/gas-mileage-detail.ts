@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController,ViewController } from 'ionic-angular';
+import { CarDataProvider } from '../../providers/car-data/car-data';
 import { SetGasMileagePage } from '../set-gas-mileage/set-gas-mileage';
-import { MileageDataProvider } from '../../providers/mileage-data/mileage-data';
-import { SettingDataProvider } from '../../providers/setting-data/setting-data';
 import { EditMileagePage } from '../edit-mileage/edit-mileage';
-import { RelationDataProvider } from '../../providers/relation-data/relation-data';
 import { SettingsPage } from '../settings/settings';
-
 /**
  * Generated class for the GasMileageDetailPage page.
  *
@@ -21,246 +18,66 @@ import { SettingsPage } from '../settings/settings';
 })
 export class GasMileageDetailPage {
 
-  mileageItemsSave = [];
-  public indexonMileage;
-  public settingDataMileage: any = [];
-  relationArray:any = [];
-  relationNumber;
-  currency;
-  constructor(public relationService: RelationDataProvider,public settingService: SettingDataProvider,public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public mileageService: MileageDataProvider) {
-    this.indexonMileage = this.navParams.get('indexSended');
-    let datam = {
-      currencyType: 'USA-Dollar',
-      gasUnit: 'Litre',
-      distanceUnit: 'KiloMeter'
-    }
-    this.settingService.getdata().then((settingData) =>{
-      this.settingDataMileage = JSON.parse(settingData);
-      if(this.settingDataMileage == null){
-        this.settingDataMileage = datam;
-      }
-      if(this.settingDataMileage.gasUnit == undefined){
-        this.settingDataMileage.gasUnit = datam.gasUnit;
-      }
-      if(this.settingDataMileage.currencyType == undefined){
-        this.settingDataMileage.currencyType = datam.currencyType;
-      }
-      if(this.settingDataMileage.currencyType == "USA-Dollar"){
-        this.currency = '$';
-      }
-      if(this.settingDataMileage.currencyType == "British-Pound"){
-        this.currency = '₤';
-      }
-      if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
-        this.currency = 'Can-$'
-      }
-      if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
-        this.currency = 'Rs'
-      }
-      console.log('setting data on mileage page + ' + this.settingDataMileage);
-    });
-    this.mileageService.getdata().then((finaldata) => {
-      this.mileageItemsSave = JSON.parse(finaldata);
-      console.log('final data on mileage detail page =  ' + this.mileageItemsSave);
-    });
-    this.relationService.getdata().then((relationData)=>{
-      this.relationArray = JSON.parse(relationData);
-      console.log('relationData on mileage detail page =  ' + this.mileageItemsSave);
-      if(this.relationArray != null){
-        for(let i=0;i<this.relationArray.length;i++){
-          if(this.relationArray[i].carIndex == this.indexonMileage){
-            this.relationNumber = this.relationArray[i].relationNumber;
-          }
-        }
-        console.log('relation number on mileage detail page =  ' + this.relationNumber);
-      }
-    });
-    
-    console.log('index on mileage page - ' + this.indexonMileage);
-  }
+  carData = [];
+  indexNumber;
+  mileageRecords = [];
+  currencyPreference
+  gasUnit
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,public viewCtrl:ViewController, public carDataProvider: CarDataProvider) {
 
-  ionViewDidLoad(){
-    console.log('ionViewDidLoad GasMileageDetailPage');
   }
-
-  editMileage(mile){
-    let index = this.mileageItemsSave.indexOf(mile);
-    let modal = this.modalCtrl.create(EditMileagePage,{
-      index
-    });
-    modal.onDidDismiss(dataOn => {
-      if(dataOn == undefined){
+  ionViewWillEnter() {
+    this.carDataProvider.getcurrencytype().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.currencyPreference = 'PKR'
       }
-      else{
-        if(dataOn != undefined){
-          if(dataOn.temprary == 'toDelete'){
-            console.log("data is undefined")
-        
-            let data = {
-              indexNumbermileage: 0,
-              mileageDate: 0,
-              mileageFuel: 0,
-              mileageCost: 0
-            }
-  
-            this.mileageItemsSave[index] = dataOn;
-            this.mileageItemsSave.splice(index,1)
-            this.mileageService.savemileageitems(this.mileageItemsSave);
-            this.navCtrl.resize();
-          }
-          else{
-            let data = {
-              indexNumbermileage: dataOn.indexNumbermileage,
-              mileageDate: dataOn.mileageDate,
-              mileageFuel: dataOn.mileageFuel,
-              mileageCost: dataOn.mileageCost,
-              mileageYear: dataOn.mileageYear
-            }
-            this.mileageItemsSave[index] = dataOn;
-            this.mileageService.savemileageitems(this.mileageItemsSave);
-          }
-        }
+      else {
+        this.currencyPreference = res;
       }
     });
-    modal.present();
+    this.carDataProvider.getGasUnit().then(res => {
+      console.log('res = ' + res);
+      if (res == null || res == undefined) {
+        this.gasUnit = 'Litre(s)'
+      }
+      else {
+        this.gasUnit = res;
+      }
+    })
+    console.log('ionViewDidLoad MaintenanceCostDetailPage');
+    this.indexNumber = this.navParams.get('indexOfRecord');
+    this.carDataProvider.getCardata().then(res => {
+      this.carData = res;
+      this.mileageRecords = this.carData[this.indexNumber].carMileageDetail;
+      console.log('maintenance detail = ' + this.mileageRecords)
+    })
   }
-
-  // go  to mileage setting page
-  gotosetgasmileage(){
+  dismissing() {
+    this.viewCtrl.dismiss();
+  }
+  gotoAddMileagePage() {
     let modal = this.modalCtrl.create(SetGasMileagePage);
-    modal.onDidDismiss(mileageitems =>{
-     if(mileageitems != null){
-        let data = {
-          indexNumbermileage: this.relationNumber,
-          mileageDate: mileageitems.mileageDate,
-          mileageFuel: mileageitems.mileageFuel,
-          mileageCost: mileageitems.mileageCost,
-          mileageYear: mileageitems.mileageYear
-        }
-        this.savemileageitems(data);
-      } // end if
-    });
+
+    modal.onDidDismiss(res =>{
+      if (res != undefined){
+        this.mileageRecords.push(res);
+        this.carData[this.indexNumber].carMileageDetail = this.mileageRecords;
+        this.carDataProvider.saveCarData(this.carData);
+      }
+    })
     modal.present();
   }
-
-
-  // setting maileage data to milage provider
-  savemileageitems(mileageItems){
-    if(this.mileageItemsSave == null){
-      this.mileageItemsSave = [];
-    }
-   this.mileageItemsSave.push(mileageItems);
-   this.mileageService.savemileageitems(this.mileageItemsSave);
+  editMileageRecord(value){
+    let index = this.mileageRecords.indexOf(value)
+    let modal = this.modalCtrl.create(EditMileagePage,{
+      indexOfRecord: this.indexNumber,
+      indexOfMaintenance:index
+    })
+    modal.present();
   }
   gotoSettingPage(){
-    let modal  = this.modalCtrl.create(SettingsPage);
-    modal.onDidDismiss(settingData => {
-      if(settingData != undefined){
-        if((settingData.currencyType == undefined) && (settingData.gasUnit == undefined)){
-          settingData.currencyType = this.settingDataMileage.currencyType;
-          settingData.gasUnit = this.settingDataMileage.gasUnit;
-          let data = {
-            currencyType: settingData.currencyType,
-            gasUnit: settingData.gasUnit,
-            distanceUnit: settingData.distanceUnit
-          }
-          if(settingData.currencyType == "USA-Dollar"){
-            this.currency = '$';
-          }
-          if(settingData.currencyType == "British-Pound"){
-            this.currency = '₤';
-          }
-          if(settingData.currencyType == "Canadian-Dollar"){
-            this.currency = 'Can-$'
-          }
-          if(settingData.currencyType == "Pakistani-Ruppee"){
-            this.currency = 'Rs'
-          }
-
-          this.saveSetting(data);
-        }
-        else if(settingData.currencyType == undefined){
-          let data = {
-            currencyType: this.settingDataMileage.currencyType,
-            gasUnit: settingData.gasUnit,
-            distanceUnit: settingData.distanceUnit
-          }
-          if(this.settingDataMileage.currencyType == "USA-Dollar"){
-            this.currency = '$';
-          }
-          if(this.settingDataMileage.currencyType == "British-Pound"){
-            this.currency = '₤';
-          }
-          if(this.settingDataMileage.currencyType == "Canadian-Dollar"){
-            this.currency = 'Can-$'
-          }
-          if(this.settingDataMileage.currencyType == "Pakistani-Ruppee"){
-            this.currency = 'Rs'
-          }
-
-          this.saveSetting(data);
-        }
-        else if(settingData.gasUnit == undefined){
-          let data = {
-            currencyType: settingData.currencyType,
-            gasUnit: this.settingDataMileage.gasUnit,
-            distanceUnit: settingData.distanceUnit
-          }
-          if(settingData.currencyType == "USA-Dollar"){
-            this.currency = '$';
-          }
-          if(settingData.currencyType == "British-Pound"){
-            this.currency = '₤';
-          }
-          if(settingData.currencyType == "Canadian-Dollar"){
-            this.currency = 'Can-$'
-          }
-          if(settingData.currencyType == "Pakistani-Ruppee"){
-            this.currency = 'Rs'
-          }
-
-           
-          this.saveSetting(data);
-        }
-      
-        else{
-          let data = {
-            currencyType: settingData.currencyType,
-            gasUnit: settingData.gasUnit,
-            distanceUnit: settingData.distanceUnit
-          }
-          if(settingData.currencyType == "USA-Dollar"){
-            this.currency = '$';
-          }
-          if(settingData.currencyType == "British-Pound"){
-            this.currency = '₤';
-          }
-          if(settingData.currencyType == "Canadian-Dollar"){
-            this.currency = 'Can-$'
-          }
-          if(settingData.currencyType == "Pakistani-Ruppee"){
-            this.currency = 'Rs'
-          }
-
-
-          this.saveSetting(data);
-        }
-      }
-      else{
-        let data = {
-          currencyType: this.settingDataMileage.currencyType,
-          gasUnit: this.settingDataMileage.gasUnit,
-          distanceUnit: this.settingDataMileage.distanceUnit
-        }
-
-        this.saveSetting(data);
-
-      }
-    });
+    let modal = this.modalCtrl.create(SettingsPage);
     modal.present();
-  }
-  saveSetting(data){
-    this.settingDataMileage = data;
-    this.settingService.saveSettingData(this.settingDataMileage);
   }
 }

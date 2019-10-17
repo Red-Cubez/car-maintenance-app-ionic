@@ -11,19 +11,46 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class CarDataProvider {
-  newCarData; 
-  
-  constructor( public storage: Storage){
+  newCarData;
+  currencytype;
+  distanceUnit;
+  gasUnit;
+  constructor(public storage: Storage) {
     console.log('Hello CarDataProvider Provider');
   }
 
-  getdata(){
+  getCardata() {
     return this.storage.get('carData');
   }
 
-  save(items){
-    this.newCarData = JSON.stringify(items);
+  saveCarData(items) {
+    this.newCarData = items;
     this.storage.set('carData', this.newCarData);
-    console.log('this is car data' , items);
+    console.log('this is car data', items);
+  }
+  getcurrencytype() {
+    return this.storage.get('currency');
+  }
+  setCurrencyType(settingItem) {
+    this.currencytype = settingItem;
+    this.storage.set('currency', this.currencytype);
+    console.log('this is data here', this.currencytype);
+  }
+
+  getDistanceUnit() {
+    return this.storage.get('distance');
+  }
+  setDistanceUnit(settingItem) {
+    this.distanceUnit = settingItem;
+    this.storage.set('distance', this.distanceUnit);
+    console.log('this is data here', this.distanceUnit);
+  }
+  getGasUnit() {
+    return this.storage.get('gas');
+  }
+  setGasUnit(settingItem) {
+    this.gasUnit = settingItem;
+    this.storage.set('gas', this.gasUnit);
+    console.log('this is data here', this.gasUnit);
   }
 }
