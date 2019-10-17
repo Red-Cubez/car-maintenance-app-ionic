@@ -6,28 +6,28 @@
 -->
 <ion-header>
 
-  <ion-navbar color="secondary">
+  <ion-navbar color="black">
     <ion-title>
-      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Reports
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>REPORTS
     </ion-title>
   </ion-navbar>
 
 </ion-header>
-<ion-content padding>
+<ion-content padding style="background-color: rgb(235, 233, 233)">
 
   <ion-slides pager>
     <ion-slide>
-      Maintenance Report ({{name}})
+      Maintenance Report ({{name}} {{model}} - {{year}}) 
       <canvas #barCanvas></canvas>
     </ion-slide>
 
     <ion-slide>
-      Consumption Report ({{name}})
+      Consumption Report ({{name}} {{model}} - {{year}})
       <canvas #doughnutCanvas></canvas>
     </ion-slide>
 
     <ion-slide>
-      Yearly Report ({{name}})
+      Yearly Report ({{name}} {{model}} - {{year}})
       <canvas #lineCanvas></canvas>
     </ion-slide>
 

@@ -29,7 +29,7 @@ export class SetMaintenanceCostPage {
     this.carDataProvider.getcurrencytype().then(res => {
       console.log('res = ' + res);
       if (res == null || res == undefined) {
-        this.currencyPreference = 'PKR'
+        this.currencyPreference = '$';
       }
       else {
         this.currencyPreference = res;
@@ -47,14 +47,20 @@ export class SetMaintenanceCostPage {
     this.buttonClicked = true;
     if (this.maintenanceItem != undefined && this.maintenanceItem != '' && this.maintenanceCost != undefined && this.maintenanceCost != '') {
       this.maintenanceItem = this.maintenanceItem[0].toUpperCase() + this.maintenanceItem.slice(1);
+
+      this.maintenanceCost = parseInt( this.maintenanceCost);
       let data = {
         maintenanceItem: this.maintenanceItem,
         maintenanceDate: this.maintenanceDate,
         maintenanceCost: this.maintenanceCost,
         maintenanceDateString: moment(this.maintenanceDate).get('date') + '-' + (moment(this.maintenanceDate).get('month') + 1) + '-' + moment(this.maintenanceDate).get('year')
       }
-      alert('Record added successfully!');
+      // alert('Record added successfully!');
+      this.carDataProvider.presentToast('Record added successfully!');
       this.viewCtrl.dismiss(data);
+    }
+    else{
+      alert("Please fill all enteries")
     }
   }
 }

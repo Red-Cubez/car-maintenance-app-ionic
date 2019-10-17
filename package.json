@@ -1,8 +1,8 @@
 {
-  "name": "carmaintenance",
-  "version": "1.0.0",
+  "name": "carlog",
+  "version": "2.0.0",
   "author": "Red Cubez Inc",
-  "homepage": "http://www.redcubez.com/",
+  "homepage": "https://www.redcubez.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",

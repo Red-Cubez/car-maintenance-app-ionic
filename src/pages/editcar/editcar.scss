@@ -1,6 +1,6 @@
-page-edit-carmaintenance {
-  //form css//
-  .page-main{
+page-editcar {
+//form css//
+.page-main{
     min-height: 100%;
     font-family: "Roboto", sans-serif;
     width: 100%;
@@ -30,7 +30,7 @@ page-edit-carmaintenance {
      padding: 1.25rem; 
      display: flex;
      justify-content: left;
-     height: 475px;
+     height: 500px;
    }
     .title {
      text-transform: uppercase;
@@ -76,9 +76,10 @@ page-edit-carmaintenance {
      box-sizing: border-box;
      font-size: 14px;
     }
-    .form button {
+    .mt-4 {
        margin-top: 2rem;
        float: right;
+       background: #005596;
     }
     .btn{
       outline: 0;
@@ -130,48 +131,13 @@ page-edit-carmaintenance {
       width: 100%;
     }
     .btn-block{
-      position: absolute;
-      top: 100%;
-      display: flex;
-      left: 5%;
+      position: relative;
+      text-align: center;
+      width: 100%;
+      padding-top: 1.8rem;
     }
     .button-inner {
       text-transform: capitalize;
     }
-
-    .form select,
-    .form input,
-    .form
-    .inputDate {
-      outline: 0;
-      background: #f2f2f2;
-      width: 100%;
-      border: 0;
-      margin: 0 0 5px;
-      padding: 15px;
-      border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-      border-bottom-left-radius: 3px;
-      border-bottom-right-radius: 3px;
-      box-sizing: border-box;
-      font-size: 14px;
+  
 }
-
-    .text-left
-    {
-      text-align: left;
-      font-size: 1.5rem;
-    }
-    
-    .mtb-8
-    {
-      margin: 8px 8px 13px 0;
-    }
-
-    .mt-4{
-      margin-top: 2rem;
-      float: right;
-      background: #005596;
-    }
-
-  }

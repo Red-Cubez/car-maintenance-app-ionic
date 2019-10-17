@@ -5,6 +5,8 @@ import { MaintenanceCostDetailPage } from '../maintenance-cost-detail/maintenanc
 import { GasMileageDetailPage } from '../gas-mileage-detail/gas-mileage-detail';
 import { ReportPage } from '../report/report';
 import { SettingsPage } from "../settings/settings";
+import { EditcarPage } from "../editcar/editcar";
+
 /**
  * Generated class for the EditCaritemPage page.
  *
@@ -26,17 +28,35 @@ export class EditCaritemPage {
   carYear;
   carMileage;
   buttonClicked = false;
+  hideMe = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public cardDataProvider: CarDataProvider, public viewCtrl: ViewController,public modalCtrl:ModalController) {
   }
 
   ionViewDidLoad() {
-    this.indexOfRecord = this.navParams.get('carItemIndex')
+    console.log('index == ' + this.navParams.get('carItemIndex'));
+    this.indexOfRecord = this.navParams.get('carItemIndex');
+    this.cardDataProvider.setindex(this.indexOfRecord);
+  
+
+    console.log('car data == ' + JSON.stringify(this.cardDataProvider.getCardata()));
     this.cardDataProvider.getCardata().then(res => {
       this.carData = res;
       this.carMake = this.carData[this.indexOfRecord].carMake;
+      console.log('DATA == ' + this.carMake);
+      this.cardDataProvider.setmake(this.carMake);
+
       this.carModel = this.carData[this.indexOfRecord].carModel;
+      console.log('DATA == ' + this.carModel);
+      this.cardDataProvider.setmodel(this.carModel);
+
       this.carYear = this.carData[this.indexOfRecord].carYear;
+      console.log('DATA == ' + this.carYear);
+      this.cardDataProvider.setyear(this.carYear);
+
       this.carMileage = this.carData[this.indexOfRecord].carMileage;
+      console.log('DATA == ' + this.carMileage);
+      this.cardDataProvider.setmileage(this.carMileage);
     })
 
     console.log('ionViewDidLoad EditCaritemPage');
@@ -69,27 +89,50 @@ export class EditCaritemPage {
     });
     modal.present();
   }
-  editInformation(){
-    this.buttonClicked = true;
-    if (this.carMake != undefined && this.carMake != '' && this.carModel != undefined && this.carModel != '' && this.carYear != undefined && this.carYear != '' && this.carMileage != undefined && this.carMileage != '') {
+  gotoEditCarPage(){
+    let modal = this.modalCtrl.create(EditcarPage,{
+      indexOfRecord: this.indexOfRecord
+    });
+    modal.present();
+  }
+
+  // editInformation(){
+  //   this.buttonClicked = true;
+  //   if (this.carMake != undefined && this.carMake != '' && this.carModel != undefined && this.carModel != '' && this.carYear != undefined && this.carYear != '' && this.carMileage != undefined && this.carMileage != '') {
       
-      this.carMake = this.carMake[0].toUpperCase() + this.carMake.slice(1);
-      this.carModel = this.carModel[0].toUpperCase() + this.carModel.slice(1);
-      let data = {
-        carMake: this.carMake,
-        carModel: this.carModel,
-        carYear: this.carYear,
-        carMileage: this.carMileage,
-        carMaintenanceDetail: this.carData[this.indexOfRecord].carMaintenanceDetail,
-        carMileageDetail: this.carData[this.indexOfRecord].carMileageDetail
-      }
-      if (this.carData == null) {
-        this.carData = [];
-      }
-      this.carData[this.indexOfRecord] = data;
-      this.cardDataProvider.saveCarData(this.carData);
-      alert('Record updated Successfully!')
-      this.viewCtrl.dismiss();
+  //     this.carMake = this.carMake[0].toUpperCase() + this.carMake.slice(1);
+  //     this.carModel = this.carModel[0].toUpperCase() + this.carModel.slice(1);
+  //     let data = {
+  //       carMake: this.carMake,
+  //       carModel: this.carModel,
+  //       carYear: this.carYear,
+  //       carMileage: this.carMileage,
+  //       carMaintenanceDetail: this.carData[this.indexOfRecord].carMaintenanceDetail,
+  //       carMileageDetail: this.carData[this.indexOfRecord].carMileageDetail
+  //     }
+  //     if (this.carData == null) {
+  //       this.carData = [];
+  //     }
+  //     this.carData[this.indexOfRecord] = data;
+  //     this.cardDataProvider.saveCarData(this.carData);
+  //     alert('Record updated Successfully!')
+  //     this.viewCtrl.dismiss();
+  //   }
+  //   else{
+  //     alert("Please fill all enteries")
+  //   }
+  // }
+
+  hide() {
+    if(this.hideMe == false)
+    {
+      this.hideMe = true;
     }
+    else
+    if(this.hideMe == true)
+    {
+      this.hideMe = false;
+    }
+   
   }
 }

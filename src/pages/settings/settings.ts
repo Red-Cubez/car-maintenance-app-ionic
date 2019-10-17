@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { CarDataProvider } from '../../providers/car-data/car-data';
+import { DisclaimerPage } from "../disclaimer/disclaimer";
+import { AboutUsPage } from '../about-us/about-us';
 /**
  * Generated class for the SettingsPage page.
  *
@@ -25,7 +27,7 @@ export class SettingsPage {
     this.carDataProvider.getcurrencytype().then(res => {
       console.log('res = ' + res);
       if (res == null || res == undefined) {
-        this.currencyPreference = 'PKR'
+        this.currencyPreference = '$'
       }
       else {
         this.currencyPreference = res;
@@ -49,6 +51,16 @@ export class SettingsPage {
         this.distanceUnit = res;
       }
     })
+  }
+
+  gotoAboutUs()
+  {
+    this.navCtrl.push(AboutUsPage);
+  }
+
+  gotoDisclaimer()
+  {
+    this.navCtrl.push(DisclaimerPage);
   }
 
   changingCurrencyType() {

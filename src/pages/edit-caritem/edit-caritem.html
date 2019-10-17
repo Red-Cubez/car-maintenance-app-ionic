@@ -5,101 +5,99 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="secondary">
+  <ion-navbar color="black">
     <ion-buttons end>
       <button ion-button icon-only (click)="gotoSettingPage()">
         <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>
-      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Edit Vehicle
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>EDIT VEHICLE
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="page-main">
 
     <section class="page-main">
-        <div class="form">
-            <div class="thumbnail"><img src="../../assets/imgs/carE.png"></div>
-            <form class="login-form">
-                <ion-label class='text-left mtb-8 w-25'>MAKE</ion-label>
-                <ion-input type="text" name="make" [(ngModel)]="carMake"></ion-input>
-                <p class='errorMsg' *ngIf="(this.carMake == undefined || this.carMake == '') && this.buttonClicked == true">Please
-                    enter make</p>
-                <ion-label class='text-left mtb-8 w-25'>MODEL</ion-label>
-                <ion-input type="text" name="model" [(ngModel)]="carModel"></ion-input>
-                <p class='errorMsg' *ngIf="(this.carModel == undefined || this.carModel == '') && this.buttonClicked == true">Please
-                    enter model</p>
-                <ion-label class='text-left mtb-8'>YEAR</ion-label>
-                <ion-input type="number" name="year" [(ngModel)]="carYear"></ion-input>
-                <p class='errorMsg'
-                 *ngIf="(this.carYear == undefined || this.carYear == '') && this.buttonClicked == true">Please
-                    enter year of manufacture</p>
-                <ion-label class='text-left mtb-8'>MILEAGE</ion-label>
-                <ion-input type="number" name="mileage" [(ngModel)]="carMileage"></ion-input>
-                <p class='errorMsg mb-4' *ngIf="(this.carMileage == undefined || this.carMileage == '') && this.buttonClicked == true">Please
-                    enter mileage</p>
-                <button ion-button class='mt-4' (click)="editInformation()">Update Record</button>
-                <br><br>
-                <button ion-button class='mt-4' (click)="gotoAddMaintenanceRecordPage()" color="primary">Maintenance Details</button>
-                <button ion-button class='mt-4' (click)="gotoAddMileageRecordPage()" color='secondary'>Consumption Details</button>
-                <button ion-button class='mt-4' (click)="gotoReportRecordPage()" color='tertiary'>Reports</button>
-            </form>
-        </div>
+      
+             <ul class="card-list">
+                 <li>
+                     <div class="media-card media-bg" (click)="gotoEditCarPage()">
+                          <div class="media-header" >
+                            <div class="border-circle">
+                                <ion-icon class='fa' name="create"> </ion-icon>
+                              </div>
+                              <div class="float-left">
+                                <h2 class="sub-title ml-2">Edit Detail</h2>
+                              </div>
+                          </div>
+                            <div class="media-header-right">
+                                <div class="float-right d-flex">
+                                  <div class="arrow-circle mb-2 mr-2">
+                                      <ion-icon class='fa ion-icon' name="arrow-forward" style="color: white" > </ion-icon>
+                                  </div>
+                              </div>
+                            </div>
+                     </div>
+                     <div class="media-card media-bg" (click)="gotoAddMaintenanceRecordPage()">
+                     <div class="media-header" >
+                        <div class="border-circle">
+                           <ion-icon class='fa' name="construct"> </ion-icon>
+                         </div>
+                         <div class="float-left">
+                            <h2 class="sub-title ml-2">Maintenance Records</h2>
+                          </div>
+                     </div>
+                        <div class="media-header-right">
+                            <div class="float-right d-flex">
+                             <div class="arrow-circle mb-2 mr-2">
+                                 <ion-icon class='fa ion-icon' name="arrow-forward" style="color: white" > </ion-icon>
+                             </div>
+                         </div>
+                        </div>
+                     </div>
+                     <div class="media-card media-bg" (click)='gotoAddMileageRecordPage()'>
+                        <div class="media-header" >
+                           <div class="border-circle">
+                              <ion-icon class='fa' name="color-fill"> </ion-icon>
+                            </div>
+                            <div class="float-left">
+                               <h2 class="sub-title ml-2">Consumption Records</h2>
+                             </div>
+                        </div>
+                           <div class="media-header-right">
+                               <div class="float-right d-flex">
+                                <div class="arrow-circle mb-2 mr-2">
+                                    <ion-icon class='fa ion-icon' name="arrow-forward" style="color: white" > </ion-icon>
+                                </div>
+                            </div>
+                           </div>
+                     </div>
+                     <div class="media-card media-bg" (click)='gotoReportRecordPage()'>
+                        <div class="media-header" >
+                           <div class="border-circle">
+                              <ion-icon class='fa' name="document"> </ion-icon>
+                            </div>
+                            <div class="float-left">
+                               <h2 class="sub-title ml-2">Reports</h2>
+                             </div>
+                        </div>
+                           <div class="media-header-right">
+                               <div class="float-right d-flex">
+                                <div class="arrow-circle mb-2 mr-2">
+                                    <ion-icon class='fa ion-icon' name="arrow-forward" style="color: white" > </ion-icon>
+                                </div>
+                            </div>
+                           </div>
+                     </div>
+
+                 </li>
+             </ul>
+      
+
+        
     </section>
 
-  <!-- <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Maker:</ion-label>
-      <ion-input type="text" [(ngModel)]="carMake"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carMake == undefined || this.carMake == '') && this.buttonClicked == true">Please
-    Enter
-    Company Name</p>
-  <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Model:</ion-label>
-      <ion-input type="text" [(ngModel)]="carModel"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carModel == undefined || this.carModel == '') && this.buttonClicked == true">Please
-    Enter
-    Car Model</p>
-  <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Year:</ion-label>
-      <ion-input type="number" [(ngModel)]="carYear"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carYear == undefined || this.carYear == '') && this.buttonClicked == true">Please
-    Enter
-    Year of Manufacture</p>
-  <ion-card>
-    <ion-item>
-      <ion-label position="fixed">Mileage:</ion-label>
-      <ion-input type="number" [(ngModel)]="carMileage"></ion-input>
-    </ion-item>
-  </ion-card>
-  <p style='color:red' *ngIf="(this.carMileage == undefined || this.carMileage == '') && this.buttonClicked == true">
-    Please
-    Enter
-    Mileage car Diven</p>
-  <ion-card (click)="gotoAddMaintenanceRecordPage()">
-    <ion-item class="settingButton">
-      Maintenance Detail
-    </ion-item>
-  </ion-card>
-  <ion-card (click)="gotoAddMileageRecordPage()">
-    <ion-item class="settingButton">
-      Consumption Detail
-    </ion-item>
-  </ion-card>
-  <ion-card (click)="gotoReportRecordPage()">
-    <ion-item class="settingButton">
-      Reports
-    </ion-item>
-  </ion-card> -->
 
 </ion-content>

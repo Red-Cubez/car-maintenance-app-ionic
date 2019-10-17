@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="secondary">
+  <ion-navbar color="black">
     <ion-buttons end>
       <button ion-button icon-only (click)="gotoSettingPage()">
         <ion-icon name="settings"></ion-icon>
@@ -18,71 +18,79 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="page-main">
 
-    <section class="page-main">
-        <div class="form">
-            <div class="thumbnail"><img src="../../assets/imgs/ccar.png"></div>
-            <form class="login-form">
-                <ion-label class='text-left mtb-8 w-25'>MAKE</ion-label>
-                <ion-input type="text" name="make" [(ngModel)]="carMake"></ion-input>
-                <p class='errorMsg' *ngIf="(this.carMake == undefined || this.carMake == '') && this.buttonClicked == true">Please
-                    enter make</p>
-                <ion-label class='text-left mtb-8 w-25'>MODEL</ion-label>
-                <ion-input type="text" name="model" [(ngModel)]="carModel"></ion-input>
-                <p class='errorMsg' *ngIf="(this.carModel == undefined || this.carModel == '') && this.buttonClicked == true">Please
-                    enter model</p>
-                <ion-label class='text-left mtb-8'>YEAR</ion-label>
-                <ion-input type="number" name="year" [(ngModel)]="carYear"></ion-input>
-                <p class='errorMsg'
-                 *ngIf="(this.carYear == undefined || this.carYear == '') && this.buttonClicked == true">Please
-                    enter year of manufacture</p>
-                <ion-label class='text-left mtb-8'>MILEAGE</ion-label>
-                <ion-input type="number" name="mileage" [(ngModel)]="carMileage"></ion-input>
-                <p class='errorMsg mb-4' *ngIf="(this.carMileage == undefined || this.carMileage == '') && this.buttonClicked == true">Please
-                    enter mileage</p>
-                <button ion-button class='mt-4' (click)="saveInformation()">Save Record</button>
-            </form>
-            <div class="btn-d-flex">
-                <button ion-button (click)="gotoAddMaintenanceRecordPage()" class="btn bg-blue" >Add Maintenance</button>
-                <button ion-button (click)="gotoAddMileageRecordPage()" class="btn bg-red">Add Consumption</button>
+
+    <section>
+        <!-- <div class="btn-block">
+            <button ion-button (click)="gotoAddMaintenanceRecordPage()" class="btn-brown btn btn-primary" >Add <br> Maintenance</button>
+            <button ion-button (click)="gotoAddMileageRecordPage()"  class="btn-brown btn btn-primary">Add  <br> Consumption</button>
+          </div> -->
+      <div class="card-img-overlay">
+          <div class="form">
+              <form class="login-form">
+                  <div class="d-flex flex-column">
+                      <ion-label class="text-white">Make  <span style="font-size: 1.5rem">(i.e Suzuki, Honda, Toyota)</span></ion-label>
+                      <ion-input type="text" name="make" [(ngModel)]="carMake"></ion-input>
+                  </div>
+                  <div class="d-flex flex-column">
+                      <ion-label class="text-white">Model   <span style="font-size: 1.5rem">(i.e Ciaz, Civic, Prius)</span></ion-label>
+                      <ion-input type="text" name="model" [(ngModel)]="carModel"></ion-input>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <ion-label class="text-white">Year</ion-label>
+                    <ion-input type="number" name="year" [(ngModel)]="carYear"></ion-input>
+                </div>
+                <div class="d-flex flex-column">
+                    <ion-label class="text-white">Mileage</ion-label>
+                    <ion-input type="number" name="mileage" [(ngModel)]="carMileage"></ion-input>
+                </div>
+                <!-- <button ion-button class='mt-4' (click)="saveInformation()">Save Record</button> -->
+                <button ion-button (click)="gotoAddMaintenanceRecordPage()" class="btn-brown btn btn-primary" >Add <br> Maintenance</button>
+                <button ion-button (click)="gotoAddMileageRecordPage()"  class="btn-brown btn btn-primary">Add  <br> Consumption</button>
+              </form>
             </div>
-        </div>
-    </section>
+      </div>
+  </section>
 
   <ion-card *ngIf="this.carMaintenanceDetailLength > 0">
-    <ion-card-header style="text-align: center;background:#32db64; color: white">
+    <ion-card-header style="text-align: center;background:#9C1B30; color: white">
       Maintenance History
     </ion-card-header>
     <ion-card-content>
-      <ion-row style="color:#32db64">
-        <ion-col>Item</ion-col>
-        <ion-col>Date</ion-col>
-        <ion-col>{{currencyPreference}}</ion-col>
+      <ion-row style="color:#9C1B30; border: 1px solid #e0dbdb">
+        <ion-col style="border: 1px solid #e0dbdb">Item</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">Date</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{currencyPreference}}</ion-col>
       </ion-row>
       <ion-row *ngFor="let record of carMaintenanceDetail">
-        <ion-col>{{record.maintenanceItem}}</ion-col>
-        <ion-col>{{record.maintenanceDateString }}</ion-col>
-        <ion-col>{{record.maintenanceCost}}</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{record.maintenanceItem}}</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{record.maintenanceDateString }}</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{record.maintenanceCost}}</ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
+  <br>
   <ion-card *ngIf="this.carMileageDetailLength > 0">
-    <ion-card-header style="text-align: center;background:#32db64">
+    <ion-card-header style="text-align: center;background:#9C1B30; color: white">
         Consumption History
     </ion-card-header>
     <ion-card-content>
-      <ion-row style="color:#32db64">
-        <ion-col>{{gasUnit}}</ion-col>
-        <ion-col>Date</ion-col>
-        <ion-col>{{currencyPreference}}</ion-col>
+      <ion-row style="color:#9C1B30; border: 1px solid #e0dbdb">
+        <ion-col style="border: 1px solid #e0dbdb">{{gasUnit}}</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">Date</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{currencyPreference}}</ion-col>
       </ion-row>
       <ion-row *ngFor="let record of carMileageDetail">
-        <ion-col>{{record.mileageLitre}}</ion-col>
-        <ion-col>{{record.mileageDateString}}</ion-col>
-        <ion-col>{{record.mileageCost}}</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{record.mileageLitre}}</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{record.mileageDateString}}</ion-col>
+        <ion-col style="border: 1px solid #e0dbdb">{{record.mileageCost}}</ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
+
+  <div class='btn-save'>
+   <button ion-button (click)="saveInformation()">Save Record</button>
+  </div>
 
 </ion-content>

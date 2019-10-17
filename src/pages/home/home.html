@@ -1,32 +1,75 @@
 <ion-header>
-  <ion-navbar color="secondary">
+  <ion-navbar color="black">
     <ion-buttons end>
       <button ion-button icon-only (click)="gotoSettingPage()">
         <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Car Log</ion-title>
+    <ion-title>CAR LOG</ion-title>
   </ion-navbar>
+
+
 </ion-header>
-<ion-content>
-  <h2 style="margin-left: 3%">Vehicles</h2>
-  <ion-card style="box-shadow: 0 0 6px gray">
-    <ion-card *ngFor="let car of carData" (click)="editRecord(car)">
-      <ion-row>
-        <ion-col col-10 class="fontSize" style="padding-left:5%;font-size:1.7rem">
-          {{car.carModel}}
-        </ion-col>
-        <ion-col style="justify-content:center">
-          <ion-icon style="font-size:2.2em;color:red" name="trash">
-          </ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </ion-card>
-  <ion-buttons end style="margin-right:3%;margin-top:7%">
-    <button ion-button icon-only style="padding-left: 8px;margin-left: 5%" (click)="gotoAddRecordPage()">Create
-      Vehicle<ion-icon name="add-circle">
-      </ion-icon>
-    </button>
-  </ion-buttons>
+
+<ion-content class="page-main">
+
+    <section *ngIf="should_show == 0">
+        <div class="card-img-overlay">
+            <div class="welcome">
+                <div class="car-image"></div>
+                 <h1 class="card-title">Add New</h1>
+                 <div class="add-image" (click)="gotoAddRecordPage()"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-main" *ngIf="should_show == 1" >
+         <ion-card class="bg">
+                <h1>Vehicles
+                <button class="fl-6" ion-button (click)="gotoAddRecordPage()" style="background-color: white"><span style="color: #005596; margin-right: 1rem; font-size: 2rem; text-transform: capitalize ">Add</span>
+                <ion-icon name="add-circle" style="color: #9C1B30; font-size: 3rem"></ion-icon> </button>
+                </h1>
+        </ion-card>
+
+        <ul class="card-list">
+            <li *ngFor="let car of carData; let i = index">
+                <div class="media-bg shrink" id="{{i}}" (click)="changeHeight(i)"> 
+                <div class="media-header" >
+                   <div class="border-circle">
+                      <ion-icon class='fa' name="car"> </ion-icon>
+                    </div>
+                    <div class="float-left">
+                        <h2 class="sub-title ml-2">{{car.carModel}}</h2>
+                        <h2 class="sub-title-copy ml-2">{{car.carMake}} | {{car.carYear}} | {{car.carMileage}}</h2>
+                        <h2 class="sub-title ml-2" *ngIf= "car.carMaintenanceDetail !=0">Maintenance Detail</h2>
+                        <h2 class="sub-title-copy ml-2" *ngFor="let maint of car.carMaintenanceDetail">{{maint.maintenanceItem}} | {{currencyPreference}} {{maint.maintenanceCost}}</h2>
+                        <h2 class="sub-title ml-2" *ngIf= "car.carMileageDetail !=0">Consumption Detail</h2>
+                        <h2 class="sub-title-copy ml-2" *ngFor="let mil of car.carMileageDetail">{{mil.mileageLitre}} {{gasUnit}} | {{currencyPreference}} {{mil.mileageCost}}</h2>
+                    </div>
+                    <div class="border-arrow">
+                    <ion-icon class='fa' id="down_{{i}}" name="arrow-down"> </ion-icon>
+                    <ion-icon class='fa' id="up_{{i}}" name="arrow-up" style="display: none"> </ion-icon>
+                    </div>
+                </div>
+                   <div class="media-header-right">
+                       <div class="float-right d-flex">
+                        <div class="arrow-circle mb-2 mr-2">
+                            <ion-icon class='fa ion-icon' name="create" style="color: white" (click)="editRecord(car)"> </ion-icon>
+                        </div>
+                        <div class="arrow-circle mb-2 mr-2">
+                            <ion-icon class='fa ion-icon' name="trash" style="color: white" (click)="deleteRecord(car)"> </ion-icon>
+                        </div>
+                        <div>
+                            <button ion-button style="color: white; background-color: #9C1B30" (click)="gotoReportRecordPage(car)">Reports </button>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </li>
+        </ul>
+
+    </section>
+
+
+
 </ion-content>

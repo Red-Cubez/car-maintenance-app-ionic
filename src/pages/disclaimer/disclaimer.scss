@@ -1,5 +1,4 @@
-page-report {
-
+page-disclaimer {
     .page-main{
         min-height: 100%;
         font-family: "Roboto", sans-serif;
@@ -13,7 +12,18 @@ page-report {
          background-size: cover;
          height: 100%;
          width: 100%;
-         opacity: 2rem;
          background-position: 80% 20%;
+        }
+
+        .item-md {
+            background-color: transparent; 
+        }
+
+        ion-img {
+            display: table;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background: none;
         }
 }

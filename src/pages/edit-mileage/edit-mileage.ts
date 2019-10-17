@@ -34,7 +34,7 @@ export class EditMileagePage {
     this.carDataProvider.getcurrencytype().then(res => {
       console.log('res = ' + res);
       if (res == null || res == undefined) {
-        this.currencyPreference = 'PKR'
+        this.currencyPreference = '$';
       }
       else {
         this.currencyPreference = res;
@@ -74,8 +74,11 @@ export class EditMileagePage {
       }
       this.carData[this.indexNumberCar].carMileageDetail[this.indexNumberMileage] = data;
       this.carDataProvider.saveCarData(this.carData);
-      alert('Record updated successfully!')
+      this.carDataProvider.presentToast('Record updated successfully!');
       this.viewCtrl.dismiss();
+    }
+    else{
+      alert("Please fill all enteries");
     }
   }
   gotoSettingPage(){

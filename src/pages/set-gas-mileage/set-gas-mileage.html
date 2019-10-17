@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="secondary">
+    <ion-navbar color="black">
         <ion-buttons end>
           <button ion-button icon-only (click)="gotoSettingPage()">
             <ion-icon name="settings"></ion-icon>
@@ -13,22 +13,22 @@
         </ion-buttons>
         <ion-title>
           <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Add
-          Consumption Record
+          Record
         </ion-title>
       </ion-navbar>
 
 </ion-header>
 
-<ion-content >
+<ion-content class="page-main">
 
-    <section class="page-main">
+    <!-- <section class="page-main">
         <div class="form">
-            <div class="thumbnail"><img src="../../assets/imgs/carC.png"></div>
+            <div class="thumbnail"><img src="../assets/imgs/carC.png"></div>
             <form class="login-form">
                 <ion-label class='text-left mtb-8 w-25'>DATE</ion-label>
                 <ion-datetime class="inputDate" displayFormat=" D MMM, YYYY " max="2030" name="date" [(ngModel)]="mileageDate"></ion-datetime>
                 <ion-label class='text-left mtb-8 w-25' style="text-transform: uppercase">{{gasUnit}}</ion-label>
-                <ion-input type="text" name="liter" [(ngModel)]="mileageLitre"></ion-input>
+                <ion-input type="number" name="liter" [(ngModel)]="mileageLitre"></ion-input>
                 <p class='errorMsg' *ngIf="(this.mileageLitre == undefined || this.mileageLitre == '') && this.buttonClicked == true">Please
                     enter amount of liter</p>
                 <ion-label class='text-left mtb-8'>{{currencyPreference}}</ion-label>
@@ -39,6 +39,28 @@
                 <button ion-button class='mt-4' (click)="saveRecord()">Save Record</button>
             </form>
         </div>
-    </section>
+    </section> -->
     
+    <section>
+        <div class="card-img-overlay">
+            <div class="form">
+                <form class="login-form">
+                    <div class="d-flex flex-column">
+                        <ion-label class="text-white">Date</ion-label>
+                        <ion-datetime class="inputDate" displayFormat=" D MMM, YYYY " max="2030" name="date" [(ngModel)]="mileageDate"></ion-datetime>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <ion-label class='text-left mtb-8 w-25 text-white'>{{gasUnit}} Consumed</ion-label>
+                        <ion-input type="number" name="liter" [(ngModel)]="mileageLitre"></ion-input>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <ion-label class='text-left mtb-8 text-white'>{{currencyPreference}}</ion-label>
+                      <ion-input type="number" name="cost" [(ngModel)]="mileageCost"></ion-input>
+                  </div>
+                  <button ion-button class='mt-4' (click)="saveRecord()">Save Record</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
 </ion-content>

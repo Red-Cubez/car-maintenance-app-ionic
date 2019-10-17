@@ -5,41 +5,86 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="secondary">
+  <ion-navbar color="black">
     <ion-buttons end>
       <button ion-button icon-only (click)="gotoSettingPage()">
         <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>
-      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>Consumption
-      Detail
+      <ion-icon (click)="dismissing()" style="font-size:1em;margin-right:7%" name="arrow-back"></ion-icon>CONSUMPTION
+      DETAIL
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-card>
-    <ion-card-header style="text-align: center;background:#32db64">
-      Consumption History
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row style="color:#32db64">
-        <ion-col>{{gasUnit}}</ion-col>
-        <ion-col>Date</ion-col>
-        <ion-col>{{currencyPreference}}</ion-col>
-      </ion-row>
-      <ion-row *ngFor="let record of mileageRecords" (click)=" editMileageRecord(record)">
-        <ion-col>{{record.mileageLitre}}</ion-col>
-        <ion-col>{{record.mileageDateString}}</ion-col>
-        <ion-col>{{record.mileageCost}}</ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-  <ion-buttons end style="margin-right:3%;margin-top:7%">
-    <button ion-button icon-only style="padding-left: 8px;margin-left: 5%" (click)="gotoAddMileagePage()">Add
-      Consumption<ion-icon name="add-circle">
-      </ion-icon>
-    </button>
-  </ion-buttons>
+<ion-content class="page-main">
+
+    <!-- <section class="page-main">
+        <h1 class="title border-bottom">CONSUMPTION HISTORY
+            <button class="fl-6" ion-button (click)="gotoAddMileagePage()">Add New</button>
+        </h1>
+        <ul class="card-list" >
+            <li>
+                <div class="media-card media-bg" *ngFor="let record of mileageRecords">
+                <div class="media-header" >
+                   <div class="border-circle">
+                      <ion-icon class='fa' name="water"> </ion-icon>
+                    </div>
+                    <div class="float-left">
+                        <h2 class="sub-title ml-2">{{record.mileageLitre}} {{gasUnit}}</h2>
+                        <h2 class="sub-title-copy ml-2">{{currencyPreference}} {{record.mileageCost}} | {{record.mileageDateString}}</h2>
+                    </div>
+                </div>
+                   <div class="media-header-right">
+                       <div class="float-right d-flex">
+                        <div class="arrow-circle mb-2 mr-2">
+                            <ion-icon class='fa ion-icon' name="create" style="color: green" (click)="editMileageRecord(record)"> </ion-icon>
+                        </div>
+                        <div class="arrow-circle">
+                            <ion-icon class='fa ion-icon' name="trash" style="color: red" (click)="deleteMileageRecord(record)"> </ion-icon>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </li>
+        </ul>
+    </section> -->
+
+    <section class="page-main">
+        <ion-card class="bg">
+               <h1>Consumption
+               <button class="fl-6" ion-button (click)="gotoAddMileagePage()" style="background-color: white"><span style="color: #005596; margin-right: 1rem; font-size: 2rem; text-transform: capitalize ">Add  </span>
+               <ion-icon name="add-circle" style="color: #9C1B30; font-size: 3rem"></ion-icon> </button>
+               </h1>
+       </ion-card>
+
+       <ul class="card-list">
+           <li>
+               <div class="media-card media-bg" *ngFor="let record of mileageRecords">
+               <div class="media-header" (click) = "editMileageRecord(record)">
+                  <div class="border-circle">
+                     <ion-icon class='fa' name="water"> </ion-icon>
+                   </div>
+                   <div class="float-left">
+                      <h2 class="sub-title ml-2">{{record.mileageLitre}} {{gasUnit}}</h2>
+                      <h2 class="sub-title-copy ml-2">{{currencyPreference}} {{record.mileageCost}} | {{record.mileageDateString}}</h2>
+                  </div>
+               </div>
+                  <div class="media-header-right">
+                      <div class="float-right d-flex">
+                       <div class="arrow-circle mb-2 mr-2">
+                           <ion-icon class='fa ion-icon' name="create" style="color: white" (click)="editMileageRecord(record)"> </ion-icon>
+                       </div>
+                       <div class="arrow-circle">
+                           <ion-icon class='fa ion-icon' name="trash" style="color: white" (click)="deleteMileageRecord(record)"> </ion-icon>
+                       </div>
+                   </div>
+                  </div>
+               </div>
+           </li>
+       </ul>
+
+   </section>
+
 </ion-content>

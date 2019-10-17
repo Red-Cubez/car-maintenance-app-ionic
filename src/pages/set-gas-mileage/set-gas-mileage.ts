@@ -31,7 +31,7 @@ export class SetGasMileagePage {
     this.carDataProvider.getcurrencytype().then(res => {
       console.log('res = ' + res);
       if (res == null || res == undefined) {
-        this.currencyPreference = 'PKR'
+        this.currencyPreference = '$';
       }
       else {
         this.currencyPreference = res;
@@ -53,7 +53,9 @@ export class SetGasMileagePage {
   }
   saveRecord() {
     this.buttonClicked = true;
-    if (this.mileageLitre != undefined && this.mileageLitre != '' && this.mileageCost != undefined && this.mileageCost != '') {
+    if (this.mileageLitre != undefined && this.mileageLitre != '' && this.mileageCost != undefined && this.mileageCost != '') 
+    {
+      this.mileageCost = parseInt( this.mileageCost);
 
       let data = {
         mileageLitre: this.mileageLitre,
@@ -61,8 +63,12 @@ export class SetGasMileagePage {
         mileageCost: this.mileageCost,
         mileageDateString: moment(this.mileageDate).get('date') + '-' + (moment(this.mileageDate).get('month') + 1) + '-' + moment(this.mileageDate).get('year')
       }
-      alert('Record added successfully!');
+      // alert('Record added successfully!');
+      this.carDataProvider.presentToast('Record added successfully!');
       this.viewCtrl.dismiss(data);
+    }
+    else{
+      alert("Please fill all enteries");
     }
   }
   gotoSettingPage(){

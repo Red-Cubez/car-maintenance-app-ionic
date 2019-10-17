@@ -31,7 +31,7 @@ export class EditCarmaintenancePage {
     this.carDataProvider.getcurrencytype().then(res => {
       console.log('res = ' + res);
       if (res == null || res == undefined) {
-        this.currencyPreference = 'PKR'
+        this.currencyPreference = '$';
       }
       else {
         this.currencyPreference = res;
@@ -64,8 +64,11 @@ export class EditCarmaintenancePage {
       }
       this.carData[this.indexNumberCar].carMaintenanceDetail[this.indexNumberManitenance] = data;
       this.carDataProvider.saveCarData(this.carData);
-      alert('Record updated successfully!')
+      this.carDataProvider.presentToast('Record updated successfully!');
       this.viewCtrl.dismiss();
+    }
+    else{
+      alert("Please fill all enteries");
     }
   }
   gotoSettingPage(){

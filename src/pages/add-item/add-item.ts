@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, ToastController } from 'ionic-angular';
 import { SetMaintenanceCostPage } from '../set-maintenance-cost/set-maintenance-cost';
 import { SetGasMileagePage } from '../set-gas-mileage/set-gas-mileage';
 import { CarDataProvider } from '../../providers/car-data/car-data';
@@ -66,46 +66,55 @@ export class AddItemPage {
     this.vewiCtrl.dismiss();
   }
 
-    //jump to setting page
-    gotoSettingPage() {
-      let modal = this.modalCtrl.create(SettingsPage);
-      modal.present();
-    }
-
-  gotoAddMaintenanceRecordPage() {
-    let modal = this.modalCtrl.create(SetMaintenanceCostPage);
-    modal.onDidDismiss(res => {
-      if (res != undefined) {
-        if (this.carMaintenanceDetail == null) {
-          this.carMaintenanceDetail = [];
-        }
-        this.carMaintenanceDetail.push(res);
-        this.carMaintenanceDetailLength = this.carMaintenanceDetail.length;
-      }
-    })
+  //jump to setting page
+  gotoSettingPage() {
+    let modal = this.modalCtrl.create(SettingsPage);
     modal.present();
   }
-  gotoAddMileageRecordPage() {
-    let modal = this.modalCtrl.create(SetGasMileagePage);
-    modal.onDidDismiss(res => {
-      if (res != undefined) {
-        if (this.carMileageDetail == null) {
-          this.carMileageDetail = [];
-        }
-        this.carMileageDetail.push(res);
-        this.carMileageDetailLength = this.carMileageDetail.length;
-      }
 
-    })
-    modal.present();
+  gotoAddMaintenanceRecordPage() {
+    if (this.carMake != undefined && this.carMake != '' && this.carModel != undefined && this.carModel != '' && this.carYear != undefined && this.carYear != '' && this.carMileage != undefined && this.carMileage != '') {
+      let modal = this.modalCtrl.create(SetMaintenanceCostPage);
+      modal.onDidDismiss(res => {
+        if (res != undefined) {
+          if (this.carMaintenanceDetail == null) {
+            this.carMaintenanceDetail = [];
+          }
+          this.carMaintenanceDetail.push(res);
+          this.carMaintenanceDetailLength = this.carMaintenanceDetail.length;
+        }
+      })
+      modal.present();
+    }
+    else {
+      alert("You need to fill all enteries to move next");
+    }
+  }
+  gotoAddMileageRecordPage() {
+    if (this.carMake != undefined && this.carMake != '' && this.carModel != undefined && this.carModel != '' && this.carYear != undefined && this.carYear != '' && this.carMileage != undefined && this.carMileage != '') {
+      let modal = this.modalCtrl.create(SetGasMileagePage);
+      modal.onDidDismiss(res => {
+        if (res != undefined) {
+          if (this.carMileageDetail == null) {
+            this.carMileageDetail = [];
+          }
+          this.carMileageDetail.push(res);
+          this.carMileageDetailLength = this.carMileageDetail.length;
+        }
+
+      })
+      modal.present();
+    }
+    else {
+      alert("You need to fill all enteries to move next");
+    }
   }
   saveInformation() {
     this.buttonClicked = true;
     if (this.carMake != undefined && this.carMake != '' && this.carModel != undefined && this.carModel != '' && this.carYear != undefined && this.carYear != '' && this.carMileage != undefined && this.carMileage != '') {
-    
-     this.carMake = this.carMake[0].toUpperCase() + this.carMake.slice(1);
-     this.carModel = this.carModel[0].toUpperCase() + this.carModel.slice(1);
-     console.log('car make = ' + this.carMake)
+      this.carMake = this.carMake[0].toUpperCase() + this.carMake.slice(1);
+      this.carModel = this.carModel[0].toUpperCase() + this.carModel.slice(1);
+      console.log('car make = ' + this.carMake)
       let data = {
         carMake: this.carMake,
         carModel: this.carModel,
@@ -119,9 +128,14 @@ export class AddItemPage {
       }
       this.carData.push(data);
       this.carDataProvider.saveCarData(this.carData);
-      alert('Record added successfully!')
+      // alert('Record added successfully!');
+      this.carDataProvider.presentToast('Record added successfully!');
       this.vewiCtrl.dismiss();
     }
+    else {
+      alert("Please fill all enteries");
+    }
   }
+
 
 }

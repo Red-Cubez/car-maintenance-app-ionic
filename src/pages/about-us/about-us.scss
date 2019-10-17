@@ -1,4 +1,7 @@
-page-report {
+page-about-us {
+    .md {
+        font-family: Verdana, Geneva, Tahoma, sans-serif
+    }
 
     .page-main{
         min-height: 100%;
@@ -13,7 +16,6 @@ page-report {
          background-size: cover;
          height: 100%;
          width: 100%;
-         opacity: 2rem;
          background-position: 80% 20%;
         }
 }

@@ -10,12 +10,15 @@ import { SetGasMileagePage } from '../pages/set-gas-mileage/set-gas-mileage';
 import { GasMileageDetailPage } from '../pages/gas-mileage-detail/gas-mileage-detail';
 import { MaintenanceCostDetailPage } from '../pages/maintenance-cost-detail/maintenance-cost-detail';
 import { SetMaintenanceCostPage } from '../pages/set-maintenance-cost/set-maintenance-cost';
-import { CarDetailPage } from '../pages/car-detail/car-detail';
 import { CarDataProvider } from '../providers/car-data/car-data';
 import { EditCarmaintenancePage } from '../pages/edit-carmaintenance/edit-carmaintenance';
 import { EditMileagePage } from '../pages/edit-mileage/edit-mileage';
 import { EditCaritemPage } from '../pages/edit-caritem/edit-caritem';
 import { SettingsPage } from '../pages/settings/settings';
+import { EditcarPage } from "../pages/editcar/editcar";
+import { DisclaimerPage } from "../pages/disclaimer/disclaimer";
+import { AboutUsPage } from "../pages/about-us/about-us";
+
 import { IonicStorageModule } from '@ionic/storage';
 import { ReportPage } from '../pages/report/report';
 import { ChartsModule} from'ng2-charts';
@@ -32,13 +35,14 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
     GasMileageDetailPage,
     MaintenanceCostDetailPage,
     SetMaintenanceCostPage,
-    CarDetailPage,
     ReportPage,
     SettingsPage,
     EditCarmaintenancePage,
     EditMileagePage,
-    EditCaritemPage
-
+    EditCaritemPage,
+    EditcarPage,
+    DisclaimerPage,
+    AboutUsPage
   ],
   
   imports: [
@@ -58,12 +62,14 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
     GasMileageDetailPage,
     MaintenanceCostDetailPage,
     SetMaintenanceCostPage,
-    CarDetailPage,
     ReportPage,
     SettingsPage,
     EditCarmaintenancePage,
     EditMileagePage,
-    EditCaritemPage
+    EditCaritemPage,
+    EditcarPage,
+    DisclaimerPage,
+    AboutUsPage
   ],
   providers: [
     StatusBar,

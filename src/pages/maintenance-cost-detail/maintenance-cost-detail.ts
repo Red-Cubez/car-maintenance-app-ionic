@@ -31,7 +31,7 @@ export class MaintenanceCostDetailPage {
     this.carDataProvider.getcurrencytype().then(res => {
       console.log('res = ' + res);
       if (res == null || res == undefined) {
-        this.currencyPreference = 'PKR'
+        this.currencyPreference = '$';
       }
       else {
         this.currencyPreference = res;
@@ -71,6 +71,37 @@ export class MaintenanceCostDetailPage {
   gotoSettingPage(){
     let modal = this.modalCtrl.create(SettingsPage);
     modal.present();
+  }
+
+  deleteMaintenanceRecord(value) {
+    let index = this.maintenanceRecords.indexOf(value);
+    console.log('index = ' + index);
+
+    console.log('Detail List' + JSON.stringify(this.maintenanceRecords[index]));
+
+    let alrt = this.alertCtrl.create({
+      title: 'Delete Record',
+      message: 'Do you want to delete ' + this.maintenanceRecords[index].maintenanceItem + '`s ' + 'record ?',
+      buttons: [{
+        text: 'No'
+      }, {
+        text: 'Yes',
+        handler: () => {
+          let ids = [];
+          let pres = this.maintenanceRecords[index];
+          console.log('pres = ' + JSON.stringify(pres))
+          for (let i = 0; i < this.maintenanceRecords.length; i++) {
+            if (i == index) {
+              this.maintenanceRecords.splice(index, 1)
+            }
+          }
+          this.carDataProvider.setmanufactureDetail(this.maintenanceRecords);
+          this.carDataProvider.saveCarData(this.carData);
+        }
+      }]
+    })
+    alrt.present();
+
   }
 
 }

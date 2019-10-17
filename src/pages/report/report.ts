@@ -35,7 +35,15 @@ export class ReportPage {
   yearDate = [''];
   years = [];
   indexNumber;
-name;
+  name;
+  year;
+  model;
+  r;
+  g;
+  b;
+  loop_counter;
+  mileage_loop_counter;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public cardDataProvider: CarDataProvider, ) {
 
   }
@@ -45,6 +53,8 @@ name;
       this.mileageDataOriginal = res[this.indexNumber].carMileageDetail;
       this.maintenanceDataOriginal = res[this.indexNumber].carMaintenanceDetail;
       this.name = res[this.indexNumber].carMake;
+      this.model = res[this.indexNumber].carModel;
+      this.year = res[this.indexNumber].carYear;
 
 
       this.maintenanceDataSetting();
@@ -59,10 +69,30 @@ name;
 
   }
 
+  getColor(loop_counter)
+  {
+    let colorList= [];
+    for(let i = 0; i<loop_counter;i++)
+    {
+      this.r = Math.floor(Math.random()*256);         
+      this.g = Math.floor(Math.random()*256);          
+      this.b = Math.floor(Math.random()*256); 
+
+       colorList.push('rgba(' + this.r + ',' + this.g + ',' + this.b + ','+'0.5)');
+    }
+
+    console.log('Colour == ' + 'rgba(' + this.r + ',' + this.g + ',' + this.b + ','+'0.2)');
+    return colorList;
+  }
+  
   dismissing() {
     this.viewCtrl.dismiss();
   }
   createMaintenanceGraph() {
+    console.log("date == " + this.maintenanceDate);
+    let colorList = this.getColor(this.loop_counter);
+    
+
     this.barChartMaintenance = new Chart(this.barCanvas.nativeElement, {
 
       type: 'bar',
@@ -71,23 +101,9 @@ name;
         datasets: [{
           label: "Cost",
           data: this.maintenanceCost,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          backgroundColor: colorList,
+          borderColor:colorList,
+          borderWidth: 2
         }]
       },
       options: {
@@ -102,34 +118,30 @@ name;
 
   createMileageGraph() {
 
+    let colorList = this.getColor(this.mileage_loop_counter);
+
     this.barChartMileage = new Chart(this.doughnutCanvas.nativeElement, {
 
-      type: 'doughnut',
+      type: 'bar',
       data: {
         labels: this.mileageDate,
         datasets: [{
-          label: '# of Votes',
+          label: "Consumption",
           data: this.mileageCost,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ]
+          backgroundColor: colorList,
+          borderColor: colorList,
+          borderWidth: 1
         }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            title: 'Consumption'
+          }]
+        }
       }
-
     });
+
   }
   createYearlyGraph() {
 
@@ -143,17 +155,17 @@ name;
             label: "Cost",
             fill: false,
             lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            backgroundColor: "rgba(0, 111, 179, 0.4)",
+            borderColor: "rgba(0, 111, 179, 1)",
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
+            pointBorderColor: "rgba(0, 111, 179, 1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBackgroundColor: "rgba(0, 111, 179, 1)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
             pointRadius: 1,
@@ -167,12 +179,14 @@ name;
     });
   }
   maintenanceDataSetting() {
+    this.loop_counter = 0;
     if (this.maintenanceDataOriginal.length > 0) {
       this.maintenanceDataOriginal.forEach(element => {
         let date = element.maintenanceDateString;
         console.log('date = ' + date)
         let spliteDate = date.split('-')
         this.maintenanceData.push({ cost: element.maintenanceCost, date: spliteDate[2] })
+        this.loop_counter++;
       });
       for (let i = 0; i < this.maintenanceData.length - 1; i++) {
         for (let j = (i + 1); j < this.maintenanceData.length; j++) {
@@ -213,15 +227,19 @@ name;
       }
       console.log('consoole of = ' + JSON.stringify(this.maintenanceData));
       this.maintenanceData.forEach(element => {
+
         this.maintenanceCost.push(element.cost);
         this.maintenanceDate.push(element.date);
         this.years.push(element);
       });
-
+      // to start maintenance graph value from 0
+      this.maintenanceCost.push(0);
     }
 
   }
   mileageDataSetting() {
+
+    this.mileage_loop_counter = 0;
 
     if (this.mileageDataOriginal.length > 0) {
       this.mileageDataOriginal.forEach(element => {
@@ -229,6 +247,7 @@ name;
         console.log('date = ' + date)
         let spliteDate = date.split('-')
         this.mileageData.push({ cost: element.mileageCost, date: spliteDate[2] })
+        this.mileage_loop_counter ++;
       });
 
       let costOf = [];
@@ -262,10 +281,10 @@ name;
       this.mileageData.forEach(element => {
         this.mileageCost.push(element.cost);
         this.mileageDate.push(element.date);
-        // this.yearCost.push(element.cost)
-        // this.yearDate.push(element.date)
         this.years.push(element);
       });
+      // to start milegae graph value from 0
+      this.mileageCost.push(0);
 
     }
 
