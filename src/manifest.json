@@ -1,6 +1,6 @@
 {
-  "name": "carlog",
-  "short_name": "carlog",
+  "name": "carmaintenance",
+  "short_name": "carmaintenance",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

@@ -96,33 +96,6 @@ export class EditCaritemPage {
     modal.present();
   }
 
-  // editInformation(){
-  //   this.buttonClicked = true;
-  //   if (this.carMake != undefined && this.carMake != '' && this.carModel != undefined && this.carModel != '' && this.carYear != undefined && this.carYear != '' && this.carMileage != undefined && this.carMileage != '') {
-      
-  //     this.carMake = this.carMake[0].toUpperCase() + this.carMake.slice(1);
-  //     this.carModel = this.carModel[0].toUpperCase() + this.carModel.slice(1);
-  //     let data = {
-  //       carMake: this.carMake,
-  //       carModel: this.carModel,
-  //       carYear: this.carYear,
-  //       carMileage: this.carMileage,
-  //       carMaintenanceDetail: this.carData[this.indexOfRecord].carMaintenanceDetail,
-  //       carMileageDetail: this.carData[this.indexOfRecord].carMileageDetail
-  //     }
-  //     if (this.carData == null) {
-  //       this.carData = [];
-  //     }
-  //     this.carData[this.indexOfRecord] = data;
-  //     this.cardDataProvider.saveCarData(this.carData);
-  //     alert('Record updated Successfully!')
-  //     this.viewCtrl.dismiss();
-  //   }
-  //   else{
-  //     alert("Please fill all enteries")
-  //   }
-  // }
-
   hide() {
     if(this.hideMe == false)
     {
